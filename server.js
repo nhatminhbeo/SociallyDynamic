@@ -79,3 +79,25 @@ server.listen(PORT, function() {
 // =========================
 // Routings
 // =========================
+
+// ================================================================================================
+// Public Routes
+//
+//    Path          |   Method    |   Purpose / Description
+// ================================================================================================
+//    /             |   GET       |   Home page -- sends public/view/index.html
+//    /login        |   GET       |   Login page -- sends public/view/login.hmtl
+//    /groups       |   GET       |   General Group page -- sends public/view/groups.html
+//    /groups/:id   |   GET       |   A Specific Group page -- sends public/view/group.html
+//    /user         |   GET       |   View current user's profile + edit -- sends public/view/user.html
+//    /user/:id     |   GET       |   View other user's profile -- sends public/view/user.html
+//    /match        |   GET       |   Show possible matches page -- sends public/view/match.html
+// ================================================================================================
+
+// ================================================================================================
+// RESTful API endpoints
+//
+//    Path          |   Method    |   Purpose / Description
+// ================================================================================================
+//    /x            |   X       |   X
+// ================================================================================================
