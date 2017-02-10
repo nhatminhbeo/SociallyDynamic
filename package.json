@@ -1,0 +1,28 @@
+{
+  "name": "SociallyDynamic",
+  "version": "1.0.0",
+  "description": "Socially Dynamic Team Project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "Brendon Chen": "Project Manager",
+    "Minh Tran Quoc": "Software Architect",
+    "Ruohan Hu": "Software Development Lead",
+    "Eyvonne Chia-Chien Hu": "Quality Assurance Lead",
+    "Shiva Kannan": "Business Analyst",
+    "Brian L Nguyen": "Senior System Analyst",
+    "Jusitn Huynh": "Algorithm Specialist",
+    "Khiem Tran": "Database Specialist",
+    "Lillian Lan Nguyen Thio": "User Interface Specialist"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "latest",
+    "express": "latest",
+    "morgan": "latest",
+    "mongodb": "latest",
+    "mongoose": "latest"
+  }
+}

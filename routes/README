@@ -1,0 +1,3 @@
+This folder should contains javascript files that routes user to a specific url endpoint and provide back-end logic to connect the models (database) to the controller layer.
+
+// TODO (list all files + descriptions)
