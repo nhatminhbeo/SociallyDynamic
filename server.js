@@ -1,3 +1,12 @@
+// ===========================================================================
+// File: server.js
+// Description: Main javascript file for the app.
+//              Contains server configuration, server startup, server error
+//              handling
+// Author: Minh Tran Quoc
+// Last updated: Feb 12 2017
+// ===========================================================================
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -5,10 +14,7 @@ var logger = require('morgan');
 var http = require('http');
 var app = express();
 
-var PORT = process.env.PORT || 3000;
-app.set('port', PORT);
-
-var server = http.createServer(app);
+var port = process.env.PORT || 3000;
 
 
 // =========================
@@ -35,6 +41,13 @@ app.use(function(req,res,next) {
   next();
 });
 app.enable('trust proxy');
+
+// =========================
+// Start Listening Requests
+// =========================
+server.listen(port, function() {
+  console.log('Server running!');
+});
 
 
 // =========================
@@ -69,37 +82,60 @@ app.use(function(err, req, res, next) {
   res.sendFile(__dirname + "/public/404.html");
 });
 
-
-// =========================
-// Start Listening Requests
-// =========================
-server.listen(PORT, function() {
-  console.log('Server running!');
-});
-
-
 // =========================
 // Routings
 // =========================
 
-// ================================================================================================
-// Public Routes
-//
-//    Path          |   Method    |   Purpose / Description
-// ================================================================================================
-//    /             |   GET       |   Home page -- sends public/view/index.html
-//    /login        |   GET       |   Login page -- sends public/view/login.hmtl
-//    /groups       |   GET       |   General Group page -- sends public/view/groups.html
-//    /groups/:id   |   GET       |   A Specific Group page -- sends public/view/group.html
-//    /user         |   GET       |   View current user's profile + edit -- sends public/view/user.html
-//    /user/:id     |   GET       |   View other user's profile -- sends public/view/user.html
-//    /match        |   GET       |   Show possible matches page -- sends public/view/match.html
-// ================================================================================================
 
-// ================================================================================================
+// ===============================================================================================================================================
 // RESTful API endpoints
+// ===============================================================================================================================================
 //
-//    Path          |   Method    |   Purpose / Description
-// ================================================================================================
-//    /x            |   X       |   X
-// ================================================================================================
+//    Path                    |   Method    |   Purpose / Brief Description
+// ===============================================================================================================================================
+//                                   Student (USA + UPV + MS + MUP)
+// ===============================================================================================================================================
+//    /api/student/           |   POST      |   Create a student with criteria(JSON) in request body
+//    /api/student/:id        |   PUT       |   Modify a student defined by id with new criteria(JSON) in request body
+//    /api/student/:id        |   DELETE    |   Delete a student defined by id
+//    /api/student/:id        |   GET       |   Get profile of a student as JSON object
+//    /api/student/friend/:id |   GET       |   Get a list of friends (name, profile pic, id) of user defined by id
+// ===============================================================================================================================================
+//                                   Inbox (IB)
+// ===============================================================================================================================================
+//    /api/inbox/message/:id  |   GET       |   Get list of message boxes of student described by id with other students or groups
+//    /api/inbox/friend/:id   |   GET       |   Get list of friend request of student described by id from other students
+//    /api/inbox/group/:id    |   GET       |   Get list of group invitation of student described by id from other students
+// ===============================================================================================================================================
+//                                   Friendship (MF + UPV + PM)
+// ===============================================================================================================================================
+//    /api/friend/            |   GET       |   Get the friendship between two students described in request body
+//    /api/friend/            |   POST      |   Create new friendship between two students described in request body
+//    /api/friend/            |   DELETE    |   Delete a friendship between two students described in request body 
+//    /api/friend/request     |   POST      |   Create new friend request from sender to receiver described in request body
+//    /api/friend/request     |   DELETE    |   Delete a friend request from sender to receiver described in request body
+// ===============================================================================================================================================
+//                                   Group (MSG)
+// ===============================================================================================================================================
+//    /api/group/             |   POST      |   Create a group with criteria(JSON) in request body
+//    /api/group/:id          |   GET       |   Get information of a group defined by id
+//    /api/group/:id          |   PUT       |   Change info of a group defined by id with new criteria(JSON) in request body
+//    /api/group/:id          |   DELETE    |   Delete a group defined by id
+//    /api/group/:id/user     |   POST      |   Add a student (described by request body) to group described by id
+//    /api/group/:id/user     |   DELETE    |   Delete a student (described by request body) from group described by id
+//    /api/group/:id/request  |   POST      |   Create a new invitation to group desribed by id from sender to receiver in body
+//    /api/group/:id/request  |   DELETE    |   Delete an invitation to group desribed by id from sender to receiver in body
+//    /api/group/user/:id     |   GET       |   Get list of groups of a student
+// ===============================================================================================================================================
+//                                   Partner match (PM)
+// ===============================================================================================================================================
+//    /api/match/class/:id    |   GET       |   Get a list of potential partners for student described by id, priority class
+//    /api/match/habit/:id    |   GET       |   Get a list of potential partners for student described by id, priority habit
+//    /api/match/major/:id    |   GET       |   Get a list of potential partners for student described by id, priority major
+// ===============================================================================================================================================
+//                                   Message systems (PM)
+// ===============================================================================================================================================
+//    /api/message/           |   GET       |   Return messages in an interval (from most interval) between two students defined in request body.
+//    /api/message/           |   PUT       |   Check all messages between two students, sent by a student desribed in request body as seen. 
+//    /api/message/           |   POST      |   Post a message between two students, one is the sender, in request body
+// ===============================================================================================================================================
