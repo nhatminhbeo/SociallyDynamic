@@ -91,51 +91,51 @@ app.use(function(err, req, res, next) {
 // RESTful API endpoints
 // ===============================================================================================================================================
 //
-//    Path                    |   Method    |   Purpose / Brief Description
+//    Path                    |   Method    |   Purpose / Brief Description                             |   File:function
 // ===============================================================================================================================================
 //                                   Student (USA + UPV + MS + MUP)
 // ===============================================================================================================================================
-//    /api/student/           |   POST      |   Create a student with criteria(JSON) in request body
-//    /api/student/:id        |   PUT       |   Modify a student defined by id with new criteria(JSON) in request body
-//    /api/student/:id        |   DELETE    |   Delete a student defined by id
-//    /api/student/:id        |   GET       |   Get profile of a student as JSON object
-//    /api/student/friend/:id |   GET       |   Get a list of friends (name, profile pic, id) of user defined by id
+//    /api/student/           |   POST      |   Create a student profile.                               |
+//    /api/student/:id        |   PUT       |   Modify a student profile.                               |
+//    /api/student/:id        |   DELETE    |   Delete a student profile.                               |
+//    /api/student/:id        |   GET       |   Get a student profile.                                  |
+//    /api/student/friend/:id |   GET       |   Get friend list of a student.                           |
 // ===============================================================================================================================================
 //                                   Inbox (IB)
 // ===============================================================================================================================================
-//    /api/inbox/message/:id  |   GET       |   Get list of message boxes of student described by id with other students or groups
-//    /api/inbox/friend/:id   |   GET       |   Get list of friend request of student described by id from other students
-//    /api/inbox/group/:id    |   GET       |   Get list of group invitation of student described by id from other students
+//    /api/inbox/message/:id  |   GET       |   Get list of conversations of a student.                 |
+//    /api/inbox/friend/:id   |   GET       |   Get list of friend request of a student.                |
+//    /api/inbox/group/:id    |   GET       |   Get list of group invitation of a student.              |
 // ===============================================================================================================================================
 //                                   Friendship (MF + UPV + PM)
 // ===============================================================================================================================================
-//    /api/friend/            |   GET       |   Get the friendship between two students described in request body
-//    /api/friend/            |   POST      |   Create new friendship between two students described in request body
-//    /api/friend/            |   DELETE    |   Delete a friendship between two students described in request body 
-//    /api/friend/request     |   POST      |   Create new friend request from sender to receiver described in request body
-//    /api/friend/request     |   DELETE    |   Delete a friend request from sender to receiver described in request body
+//    /api/friend/            |   GET       |   Get the friendship between two students.
+//    /api/friend/            |   POST      |   Create new friendship between two students.
+//    /api/friend/            |   DELETE    |   Delete a friendship between two students.
+//    /api/friend/request     |   POST      |   Create new friend request from sender to receiver.
+//    /api/friend/request     |   DELETE    |   Delete a friend request from sender to receiver.
 // ===============================================================================================================================================
 //                                   Group (MSG)
 // ===============================================================================================================================================
-//    /api/group/             |   POST      |   Create a group with criteria(JSON) in request body
-//    /api/group/:id          |   GET       |   Get information of a group defined by id
-//    /api/group/:id          |   PUT       |   Change info of a group defined by id with new criteria(JSON) in request body
-//    /api/group/:id          |   DELETE    |   Delete a group defined by id
-//    /api/group/:id/user     |   POST      |   Add a student (described by request body) to group described by id
-//    /api/group/:id/user     |   DELETE    |   Delete a student (described by request body) from group described by id
-//    /api/group/:id/request  |   POST      |   Create a new invitation to group desribed by id from sender to receiver in body
-//    /api/group/:id/request  |   DELETE    |   Delete an invitation to group desribed by id from sender to receiver in body
-//    /api/group/user/:id     |   GET       |   Get list of groups of a student
+//    /api/group/             |   POST      |   Create a group profile.
+//    /api/group/:id          |   GET       |   Get a group profile.
+//    /api/group/:id          |   PUT       |   Modify a group profile.
+//    /api/group/:id          |   DELETE    |   Delete a group profile.
+//    /api/group/:id/user     |   POST      |   Add a student to a group.
+//    /api/group/:id/user     |   DELETE    |   Delete a student from a group.
+//    /api/group/:id/request  |   POST      |   Create a new invitation of a user to a group.
+//    /api/group/:id/request  |   DELETE    |   Delete an invitation of a user to a group.
+//    /api/group/user/:id     |   GET       |   Get list of groups of a student.
 // ===============================================================================================================================================
 //                                   Partner match (PM)
 // ===============================================================================================================================================
-//    /api/match/class/:id    |   GET       |   Get a list of potential partners for student described by id, priority class
-//    /api/match/habit/:id    |   GET       |   Get a list of potential partners for student described by id, priority habit
-//    /api/match/major/:id    |   GET       |   Get a list of potential partners for student described by id, priority major
+//    /api/match/class/:id    |   GET       |   Get a list of potential partners prioritizing class.
+//    /api/match/habit/:id    |   GET       |   Get a list of potential partners prioritizing habit.
+//    /api/match/major/:id    |   GET       |   Get a list of potential partners prioritizing major.
 // ===============================================================================================================================================
 //                                   Message systems (PM)
 // ===============================================================================================================================================
-//    /api/message/           |   GET       |   Return messages in an interval (from most interval) between two students defined in request body.
-//    /api/message/           |   PUT       |   Check all messages between two students, sent by a student desribed in request body as seen. 
-//    /api/message/           |   POST      |   Post a message between two students, one is the sender, in request body
+//    /api/message/           |   GET       |   Return messages in an interval between two students.
+//    /api/message/           |   PUT       |   Check conversation between two students as seen. 
+//    /api/message/           |   POST      |   Create a message between two students.
 // ===============================================================================================================================================
