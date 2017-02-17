@@ -21,4 +21,15 @@
 // ===============================================================================================================================================
 
 var api = require('../logic/group');
+module.exports.route = function(app) {
+	app.post('/api/group', api.postGroup);
+	app.get('/api/group/:id', api.getGroupWithId);
+	app.put('/api/group/:id', api.putGroupWithId);
+	app.delete('/api/group/:id', api.deleteGroupWithId);
+	app.post('api/group/:id/user', api.postGroupWithIdUser);
+	app.delete('api/group/:id/user', api.deleteGroupWithIdUser);
+	app.post('api/group/:id/request', api.postGroupWithIdRequest);
+	app.delete('api/group/:id/request', api.postGroupWithIdRequest);
+	app.get('api/group/user/:id', api.postGroupUserWithId);
+};
 // TODO

@@ -17,4 +17,11 @@
 // ===============================================================================================================================================
 
 var api = require('../logic/friend.js');
+module.exports.route = function(app) {
+	app.get('/api/friend', api.getFriend);
+	app.post('/api/friend', api.postFriend);
+	app.delete('/api/friend', api.deleteFriend);
+	app.post('/api/friend/request', api.postFriendRequest);
+	app.delete('/api/friend/request', api.deleteFriendRequest);
+};
 // TODO

@@ -139,3 +139,15 @@ app.use(function(err, req, res, next) {
 //    /api/message/           |   PUT       |   Check conversation between two students as seen. 
 //    /api/message/           |   POST      |   Create a message between two students.
 // ===============================================================================================================================================
+
+
+// =========================
+// Routings
+// =========================
+var stu = require('./routes/student');  stu.route(app);
+var mat = require('./routes/match');    mat.route(app);
+var fri = require('./routes/friend');   fri.route(app);
+var mes = require('./routes/message');  mes.route(app);
+var gro = require('./routes/group');    gro.route(app);
+var inb = require('./routes/inbox');    inb.route(app);
+var pub = require('./routes/public');   pub.route(app);

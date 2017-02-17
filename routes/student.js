@@ -17,4 +17,10 @@
 // ===============================================================================================================================================
 
 var api = require('../logic/student.js');
-// TODO
+module.exports.route = function(app) {
+	app.post('/api/student', api.postStudent);
+	app.put('/api/student/:id', api.putStudentWithId);
+	app.delete('/api/student/:id', api.deleteStudentWithId);
+	app.get('/api/student/:id', api.getStudentWithId);
+	app.get('/api/student/friend/:id', api.getStudentFriendWithId);
+};

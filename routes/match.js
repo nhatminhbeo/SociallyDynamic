@@ -15,4 +15,8 @@
 // ===============================================================================================================================================
 
 var api = require('../logic/match.js');
-// TODO
+module.exports.route = function(app) {
+	app.get('/api/match/class/:id', api.getMatchClassWithId);
+	app.get('/api/match/habit/:id', api.getMatchHabitWithId);
+	app.get('/api/match/major/:id', api.getMatchMajorWithId);
+};
