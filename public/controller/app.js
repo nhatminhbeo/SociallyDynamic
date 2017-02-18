@@ -26,6 +26,7 @@ app.config(['$routeProvider',
 			otherwise({
 				templateUrl: 'scenes/404.html'
 			});
+
 }]);
 
 
