@@ -45,7 +45,7 @@ app.enable('trust proxy');
 // =========================
 // Start Listening Requests
 // =========================
-server.listen(port, function() {
+app.listen(port, function() {
   console.log('Server running!');
 });
 
@@ -53,7 +53,7 @@ server.listen(port, function() {
 // =========================
 // 404 Handlers
 // =========================
-
+/*
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -79,9 +79,9 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.sendFile(__dirname + "/public/404.html");
+  res.sendFile(__dirname + "/view/404.html");
 });
-
+*/
 // =========================
 // Routings
 // =========================
@@ -144,10 +144,13 @@ app.use(function(err, req, res, next) {
 // =========================
 // Routings
 // =========================
+/*
 var stu = require('./routes/student');  stu.route(app);
 var mat = require('./routes/match');    mat.route(app);
 var fri = require('./routes/friend');   fri.route(app);
 var mes = require('./routes/message');  mes.route(app);
 var gro = require('./routes/group');    gro.route(app);
 var inb = require('./routes/inbox');    inb.route(app);
-var pub = require('./routes/public');   pub.route(app);
+*/
+
+var pub = require('./routes/public');   pub.route(app, __dirname);
