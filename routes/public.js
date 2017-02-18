@@ -18,5 +18,15 @@
 //    /match        |   GET       |   Show possible matches page -- sends public/view/match.html
 // ==============================================================================================================================
 
+module.exports.route = function (app, dirname) {
 
-// TODO
+	app.get('/', function (req, res) {
+		console.log('hello world');
+		console.log(dirname + "/view/index.html");
+		res.sendFile(dirname + "/view/index.html");
+	});
+
+	app.get('/scenes/:name', function(req, res) {
+		res.sendFile(dirname + "../view/scenes/" + name + "html");
+	});
+};
