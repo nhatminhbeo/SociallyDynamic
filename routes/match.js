@@ -1,7 +1,7 @@
 // ===========================================================================
 // File: /routes/match.js
 // Description: Serve API functions to requests at route /api/match/*
-// Author:
+// Author: Minh Tran Quoc
 // Last updated: Feb 12 2017
 // ===========================================================================
 

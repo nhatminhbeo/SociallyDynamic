@@ -1,7 +1,7 @@
 // ===========================================================================
 // File: /routes/inbox.js
 // Description: Serve API functions to requests at route /api/inbox/*
-// Author:
+// Author: Minh Tran Quoc
 // Last updated: Feb 12 2017
 // ===========================================================================
 

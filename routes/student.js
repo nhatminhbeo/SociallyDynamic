@@ -1,7 +1,7 @@
 // ===========================================================================
 // File: /routes/student.js
 // Description: Serve API functions to requests at route /api/student/*
-// Author:
+// Author: Minh Tran Quoc
 // Last updated: Feb 12 2017
 // ===========================================================================
 
