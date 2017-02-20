@@ -1,12 +1,11 @@
-var app = angular.module('SD', [])
-
-app.config(['$routeProvider',
-	function($routeProvider) {
+var SD = angular.module('SD' , [])
+.config(['$routeProvider','$locationProvider',function($routeProvider , $locationProvider){
 		$routeProvider.
 			when('/', {
-				templateUrl: 'scenes/index.html',
+				templateUrl: 'view/scenes/login.html',
 				controller: indexController
 			}).
+			/*
 			when('/login', {
 				templateUrl: 'scenes/login.html',
 				controller: loginController
@@ -23,9 +22,11 @@ app.config(['$routeProvider',
 				templateUrl: 'scenes/profile.html',
 				controller: profileController
 			}).
+			*/
 			otherwise({
-				templateUrl: 'scenes/404.html'
+				redirectTo: 'scenes/404.html'
 			});
+			$locationProvider.html5Mode(true);
 
 }]);
 
