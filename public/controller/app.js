@@ -1,8 +1,8 @@
-var SD = angular.module('SD' , [])
+var SD = angular.module('SD' , ['ngRoute'])
 .config(['$routeProvider','$locationProvider',function($routeProvider , $locationProvider){
 		$routeProvider.
 			when('/', {
-				templateUrl: 'view/scenes/login.html',
+				templateUrl: 'scenes/login',
 				controller: indexController
 			}).
 			/*
