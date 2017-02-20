@@ -16,6 +16,8 @@
 //    /api/student/friend/:id |   GET       |   Get a list of friends (name, profile pic, id) of user defined by id
 // ===============================================================================================================================================
 
+var User = require('general').User;
+
 // ================================================================================
 //  Function: postStudent
 //  REST: POST:/api/student/
@@ -61,7 +63,6 @@ exports.putStudentWithId = function (req, res) {
 //  Author: Minh Tran Quoc
 // ================================================================================
 exports.deleteStudentWithId = function (req, res) {
-
 };
 
 
@@ -74,7 +75,14 @@ exports.deleteStudentWithId = function (req, res) {
 //  Author: Ruohan Hu
 // ================================================================================
 exports.getStudentWithId = function (req, res) {
-
+	var studentID = req.params.id;
+	
+	// get a user with the ID
+	User.findById(studentID, function(err, user) {
+		if (err) throw err;
+		// show the user
+		console.log(user);
+	}
 };
 
 
@@ -87,5 +95,12 @@ exports.getStudentWithId = function (req, res) {
 //  Author: Ruohan Hu
 // ================================================================================
 exports.getStudentFriendWithId = function (req, res) {
+	var stduentFriendID = req.params.id;
 
-}
+	// get a user with the ID
+	User.findById(studentFriendID, function(err, user) {
+		if (err) throw err;
+		// show the user
+		console.log(user);
+	}
+};
