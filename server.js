@@ -6,7 +6,7 @@
 // Author: Minh Tran Quoc
 // Last updated: Feb 12 2017
 // ===========================================================================
-
+// backend
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
