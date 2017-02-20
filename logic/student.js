@@ -83,6 +83,9 @@ exports.getStudentWithId = function (req, res) {
 		// show the user
 		console.log(user);
 	}
+	res.json({
+		user;
+	})
 };
 
 
@@ -103,4 +106,7 @@ exports.getStudentFriendWithId = function (req, res) {
 		// show the user
 		console.log(user);
 	}
+	res.json({
+		user;
+	})
 };
