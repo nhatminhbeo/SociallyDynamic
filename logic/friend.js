@@ -23,7 +23,7 @@
 //  Description:
 //  Expected input (req.body):
 //  Expected output (res):
-//  Author: 
+//  Author: Khiem Tran
 // ================================================================================
 exports.getFriend = function (req, res) {
 
@@ -36,7 +36,7 @@ exports.getFriend = function (req, res) {
 //  Description:
 //  Expected input (req.body):
 //  Expected output (res):
-//  Author: 
+//  Author: Khiem Tran
 // ================================================================================
 exports.postFriend = function (req, res) {
 
@@ -48,7 +48,7 @@ exports.postFriend = function (req, res) {
 //  Description:
 //  Expected input (req.body):
 //  Expected output (res):
-//  Author: 
+//  Author: Khiem Tran
 // ================================================================================
 exports.deleteFriend = function (req, res) {
 
@@ -61,7 +61,7 @@ exports.deleteFriend = function (req, res) {
 //  Description:
 //  Expected input (req.body):
 //  Expected output (res):
-//  Author: 
+//  Author: Justin Huynh
 // ================================================================================
 exports.postFriendRequest = function (req, res) {
 
