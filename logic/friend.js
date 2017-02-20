@@ -64,7 +64,26 @@ exports.deleteFriend = function (req, res) {
 //  Author: Justin Huynh
 // ================================================================================
 exports.postFriendRequest = function (req, res) {
+	var Schema = mongoose.Schema;
+	var friendRequestSchema = new Schema({
+		id: String,
+		Sender: String,
+		Receiver: String
+	});
+	var FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
 
+	//this could break. 
+	var friendRequest = new FriendRequest({
+		id: req.body.id,
+		Sender: req.body.Sender,
+		Receiver: req.body.Receiver
+	});
+
+	friendRequest.save(function(err){
+		if (err) throw err;
+
+		res.status(200).send('Saved friendRequest');
+	});
 };
 
 // ================================================================================
@@ -76,5 +95,11 @@ exports.postFriendRequest = function (req, res) {
 //  Author: 
 // ================================================================================
 exports.deleteFriendRequest = function(req, res) {
+	// find the user with id 4
+	User.findByIdAndRemove(4, function(err) {
+	  if (err) throw err;
 
+	  // we have deleted the user
+	  console.log('User deleted!');
+	});
 };
