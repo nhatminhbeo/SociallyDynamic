@@ -3,7 +3,7 @@ var SD = angular.module('SD' , ['ngRoute'])
 		$routeProvider.
 			when('/', {
 				templateUrl: 'scenes/login',
-				controller: indexController
+				controller: loginController
 			}).
 			/*
 			when('/login', {
