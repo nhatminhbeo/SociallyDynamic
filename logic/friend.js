@@ -69,14 +69,14 @@ exports.postFriendRequest = function (req, res) {
 	var FriendRequest = models.FriendRequest;
 	//this could break. 
 	var friendRequest = new FriendRequest({
-		id: req.body.id,
 		Sender: req.body.Sender,
 		Receiver: req.body.Receiver
 	});
 
 	friendRequest.save(function(err){
-		if (err) throw err;
-		//TODO is this how we are going to send success? What about error
+		if (err) 
+			res.status(400).send(err);
+
 		res.status(200).send('Saved friendRequest');
 	});
 };
@@ -84,19 +84,30 @@ exports.postFriendRequest = function (req, res) {
 // ================================================================================
 //  Function: deleteFriendRequest
 //  REST: DELETE:/api/friend/request
-//  Description:
+//  Description: delete a friend request using sender and receiver
 //  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
+//		req.body.id = _id
+//		req.body.Sender = Sender
+//		req.body.Receiver = Receiver
+//  Expected output (res): success(200) or error(400) code
+//  Author: Justin Huynh
 // ================================================================================
 exports.deleteFriendRequest = function(req, res) {
 	var FriendRequest = models.FriendRequest;
-	var friendRequestId = req.body.id;
+	var friendRequestSender = req.body.Sender;
+	var friendRequestReceiver = req.body.Receiver;
 	// find the user with id 4
-	FriendRequest.findByIdAndRemove(friendRequestId, function(err) {
-	  if (err) throw err;
-
-	  // we have deleted the user
-	  res.status(200).send('Deleted friendRequest');
-	});
+	FriendRequest.findOneAndRemove(
+		{ 
+			Sender: friendRequestSender, 
+			Receiver: friendRequestReceiver
+		}, 
+		function(err) {
+			if (err) 
+				res.status(400).send(err);
+			
+			// we have deleted the user
+			res.status(200).send('Deleted friendRequest');	
+		}
+	);
 };
