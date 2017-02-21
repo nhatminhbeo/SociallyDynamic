@@ -4,7 +4,8 @@
 // Author:
 // Last updated: Feb 12 2017
 // ===========================================================================
-
+//currently, general.js exports the FriendRequest model. 
+var models = require('./general');
 var mongoose = require('mongoose');
 
 // ===============================================================================================================================================
@@ -65,7 +66,19 @@ exports.deleteFriend = function (req, res) {
 //  Author: Justin Huynh
 // ================================================================================
 exports.postFriendRequest = function (req, res) {
+	var FriendRequest = models.FriendRequest;
+	//this could break. 
+	var friendRequest = new FriendRequest({
+		id: req.body.id,
+		Sender: req.body.Sender,
+		Receiver: req.body.Receiver
+	});
 
+	friendRequest.save(function(err){
+		if (err) throw err;
+		//TODO is this how we are going to send success? What about error
+		res.status(200).send('Saved friendRequest');
+	});
 };
 
 // ================================================================================
@@ -77,5 +90,13 @@ exports.postFriendRequest = function (req, res) {
 //  Author: 
 // ================================================================================
 exports.deleteFriendRequest = function(req, res) {
+	var FriendRequest = models.FriendRequest;
+	var friendRequestId = req.body.id;
+	// find the user with id 4
+	FriendRequest.findByIdAndRemove(friendRequestId, function(err) {
+	  if (err) throw err;
 
+	  // we have deleted the user
+	  res.status(200).send('Deleted friendRequest');
+	});
 };
