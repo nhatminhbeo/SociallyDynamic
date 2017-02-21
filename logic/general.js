@@ -4,4 +4,19 @@
 // Author:
 // Last updated: Feb 12 2017
 // ===========================================================================
-module.exports.User = mongoose.model();
+
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+//for use in the postFriendRequest and deleteFriendRequest, friend.js
+var friendRequestSchema = new Schema({
+	id: String,
+	Sender: String,
+	Receiver: String
+});
+var FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
+
+//This seems like how you export multiple models 
+module.exports = {
+	FriendRequest : FriendRequest
+}
