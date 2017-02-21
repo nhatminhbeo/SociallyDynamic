@@ -20,3 +20,5 @@ var FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
 module.exports = {
 	FriendRequest : FriendRequest
 }
+//you could also do it this way, which one is better tho? 
+//exports.FriendRequest = FriendRequest;
