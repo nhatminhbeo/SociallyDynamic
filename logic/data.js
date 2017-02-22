@@ -24,7 +24,7 @@
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getDataClass = function (req, res) {
+module.exports.getDataClass = function (req, res) {
 
 };
 
@@ -37,7 +37,7 @@ exports.getDataClass = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getDataMajor = function (req, res) {
+module.exports.getDataMajor = function (req, res) {
 
 };
 
@@ -50,6 +50,6 @@ exports.getDataMajor = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getDataHabit = function (req, res) {
+module.exports.getDataHabit = function (req, res) {
 
 };

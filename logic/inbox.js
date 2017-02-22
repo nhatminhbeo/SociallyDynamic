@@ -21,7 +21,7 @@
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getInboxMessageWithId = function (req, res) {
+module.exports.getInboxMessageWithId = function (req, res) {
 
 };
 
@@ -33,7 +33,7 @@ exports.getInboxMessageWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getInboxFriendWithId = function (req, res) {
+module.exports.getInboxFriendWithId = function (req, res) {
 
 };
 
@@ -46,6 +46,6 @@ exports.getInboxFriendWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getInboxGroupWithId = function (req, res) {
+module.exports.getInboxGroupWithId = function (req, res) {
 
 };

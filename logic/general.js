@@ -14,7 +14,7 @@ var Schema = mongoose.Schema;
 // Friendship Schema
 // for use in all friendship functions, friend.js
 // ===========================================================================
-exports.Friendship = mongoose.model('Friendship', new Schema({
+module.exports.Friendship = mongoose.model('Friendship', new Schema({
 	UserID = Array;
     StartDate = String;	
 }));
@@ -24,7 +24,7 @@ exports.Friendship = mongoose.model('Friendship', new Schema({
 // FriendRequest Schema
 // for use in the postFriendRequest and deleteFriendRequest, friend.js
 // ===========================================================================
-exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
+module.exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
 	Sender: String,
 	Receiver: String
 }));
@@ -34,7 +34,7 @@ exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
 // Student schema
 // For use in USA, UPV, MUP
 // ===========================================================================
-exports.Student = mongoose.model('Student', new Schema({
+module.exports.Student = mongoose.model('Student', new Schema({
 	_id: ObjectId,
 	Email: String,
 	FirstName: String,
@@ -47,7 +47,7 @@ exports.Student = mongoose.model('Student', new Schema({
 // ===========================================================================
 // StudentStudyHabit schema
 // ===========================================================================
-exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schema({
+module.exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schema({
 	Habit: String,
 	StudentID: ObjectId
 }));
@@ -55,7 +55,7 @@ exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schema({
 // ===========================================================================
 // ClassStudent schema
 // ===========================================================================
-exports.ClassStudent = mongoose.model('ClassStudent', Schema({
+module.exports.ClassStudent = mongoose.model('ClassStudent', Schema({
 	ClassID: ObjectId,
 	StudentID: ObjectId,
 }));

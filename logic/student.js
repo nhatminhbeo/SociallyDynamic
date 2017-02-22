@@ -38,7 +38,7 @@ var User = require('general').User;
 //							400 for failed
 //  Author: Minh Tran Quoc
 // ================================================================================
-exports.postStudent = function (req, res) {
+module.exports.postStudent = function (req, res) {
 
 };
 
@@ -64,7 +64,7 @@ exports.postStudent = function (req, res) {
 //							400 for failed
 //  Author: Minh Tran Quoc
 // ================================================================================
-exports.putStudentWithId = function (req, res) {
+module.exports.putStudentWithId = function (req, res) {
 
 };
 
@@ -79,7 +79,7 @@ exports.putStudentWithId = function (req, res) {
 //							400 for failed
 //  Author: Minh Tran Quoc
 // ================================================================================
-exports.deleteStudentWithId = function (req, res) {
+module.exports.deleteStudentWithId = function (req, res) {
 };
 
 
@@ -91,7 +91,7 @@ exports.deleteStudentWithId = function (req, res) {
 //  Expected output (res):
 //  Author: Ruohan Hu
 // ================================================================================
-exports.getStudentWithId = function (req, res) {
+module.exports.getStudentWithId = function (req, res) {
 	var studentID = req.params.id;
 	
 	// get a user with the ID
@@ -111,7 +111,7 @@ exports.getStudentWithId = function (req, res) {
 //  Expected output (res):
 //  Author: Ruohan Hu
 // ================================================================================
-exports.getStudentFriendWithId = function (req, res) {
+module.exports.getStudentFriendWithId = function (req, res) {
 	var stduentFriendID = req.params.id;
 
 	// get a user with the ID

@@ -27,7 +27,7 @@ var mongoose = require('mongoose');
 //  Expected output (res):
 //  Author: Khiem Tran
 // ================================================================================
-exports.getFriend = function (req, res) {
+module.exports.getFriend = function (req, res) {
 
 };
 
@@ -40,7 +40,7 @@ exports.getFriend = function (req, res) {
 //  Expected output (res):
 //  Author: Khiem Tran
 // ================================================================================
-exports.postFriend = function (req, res) {
+module.exports.postFriend = function (req, res) {
 
 };
 
@@ -65,7 +65,7 @@ exports.deleteFriend = function (req, res) {
 //  Expected output (res):
 //  Author: Justin Huynh
 // ================================================================================
-exports.postFriendRequest = function (req, res) {
+module.exports.postFriendRequest = function (req, res) {
 	var FriendRequest = models.FriendRequest;
 	//this could break. 
 	var friendRequest = new FriendRequest({
@@ -92,7 +92,7 @@ exports.postFriendRequest = function (req, res) {
 //  Expected output (res): success(200) or error(400) code
 //  Author: Justin Huynh
 // ================================================================================
-exports.deleteFriendRequest = function(req, res) {
+module.exports.deleteFriendRequest = function(req, res) {
 	var FriendRequest = models.FriendRequest;
 	var friendRequestSender = req.body.Sender;
 	var friendRequestReceiver = req.body.Receiver;
