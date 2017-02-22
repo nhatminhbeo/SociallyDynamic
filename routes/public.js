@@ -27,6 +27,6 @@ module.exports.route = function (app, dirname) {
 	});
 
 	app.get('/scenes/:name', function(req, res) {
-		res.sendFile(dirname + "../view/scenes/" + name + "html");
+		res.sendFile(dirname + "/view/scenes/" + req.params.name + ".html");
 	});
 };
