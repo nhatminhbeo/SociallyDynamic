@@ -4,27 +4,37 @@
 // Author:
 // Last updated: Feb 12 2017
 // ===========================================================================
-module.exports.User = mongoose.model();
 
-var mongoose = require('mongoose');
+
+// Initialize Mongodb + Mongoose
+var mongoose = require('mongoose').connect('mongodb://localhost:27017/sociallydynamic');
 var Schema = mongoose.Schema;
 
-//for use in all friendship functions, friend.js
-var friendshipSchema =  mongoose.schema({
+// ===========================================================================
+// Friendship Schema
+// for use in all friendship functions, friend.js
+// ===========================================================================
+exports.Friendship = mongoose.model('Friendship', new Schema({
 	UserID = Array;
     StartDate = String;	
-});
+}));
 
-var Friendship = mongoose.model('Friendship', friendshipSchema);
 
-//for use in the postFriendRequest and deleteFriendRequest, friend.js
-var friendRequestSchema = new Schema({
-	Sender: ObjectId,
-	Receiver: ObjectId
-});
-var FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
+// ===========================================================================
+// FriendRequest Schema
+// for use in the postFriendRequest and deleteFriendRequest, friend.js
+// ===========================================================================
+exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
+	Sender: String,
+	Receiver: String
+}));
 
-var Student = mongoogle.schema({
+
+// ===========================================================================
+// Student schema
+// For use in USA, UPV, MUP
+// ===========================================================================
+exports.Student = mongoose.model('Student', new Schema({
 	_id: ObjectId,
 	Email: String,
 	FirstName: String,
@@ -32,23 +42,20 @@ var Student = mongoogle.schema({
 	Age: Number,
 	Bio: String,
 	Major: String,
-})
+}));
 
-var StudentStudyHabit = mongoose.schema({
+// ===========================================================================
+// StudentStudyHabit schema
+// ===========================================================================
+exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schema({
 	Habit: String,
 	StudentID: ObjectId
-})
+}));
 
-var ClassStudent = mongoose.schema({
+// ===========================================================================
+// ClassStudent schema
+// ===========================================================================
+exports.ClassStudent = mongoose.model('ClassStudent', Schema({
 	ClassID: ObjectId,
 	StudentID: ObjectId,
-})
-
-//This seems like how you export multiple models 
-module.exports = {
-	Friendship: Friendship
-	FriendRequest : FriendRequest
-}
-//you could also do it this way, which one is better tho? 
-//exports.FriendRequest = FriendRequest;
-
+}));
