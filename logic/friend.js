@@ -22,15 +22,23 @@ var mongoose = require('mongoose');
 // ================================================================================
 //  Function: getFriend
 //  REST: GET:/api/friend
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
+//  Description: Returns the start date of the friendship if exists
+//  Expected input (req.body): The id of the sender and receiver in body
+//  Expected output (res): 200 for success and start Date or 400 for failure
 //  Author: Khiem Tran
 // ================================================================================
 exports.getFriend = function (req, res) {
-
+	var Friendship = mongoose.model('Friendship', models.Friendship);
+    var toFind = {
+    	UserID = [req.body.Sender, req.body.receiver]
+    }
+	var found = Friendship.find(toFind, function(err) {
+		if(err)
+			res.status(400).send('Friendship not found');
+	})
+    
+    res.status(200).send(found.StartDate);  
 };
-
 
 // ================================================================================
 //  Function: postFriend
@@ -41,6 +49,10 @@ exports.getFriend = function (req, res) {
 //  Author: Khiem Tran
 // ================================================================================
 exports.postFriend = function (req, res) {
+	var Friendship = mongoose.model('Friendship', model.Friendship);
+	var toPost = {
+		UserID = [req.body.sender,req.body.receiver]
+	}
 
 };
 
