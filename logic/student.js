@@ -5,6 +5,7 @@
 // Last updated: Feb 12 2017
 // ===========================================================================
 
+// ===============================================================================================================================================
 //    Path                    |   Method    |   Purpose / Brief Description
 // ===============================================================================================================================================
 //                                   Student (USA + UPV + MS + MUP)
@@ -16,7 +17,7 @@
 //    /api/student/friend/:id |   GET       |   Get a list of friends (name, profile pic, id) of user defined by id
 // ===============================================================================================================================================
 
-var User = require('general').User;
+var User = require('./general').User;
 
 // ================================================================================
 //  Function: postStudent
@@ -39,7 +40,7 @@ var User = require('general').User;
 //  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.postStudent = function (req, res) {
-
+	res.status(200).json(req.body);
 };
 
 
@@ -99,7 +100,7 @@ module.exports.getStudentWithId = function (req, res) {
 		if (err) throw err;
 		// show the user
 		console.log(user);
-	}
+	});
 };
 
 
@@ -119,5 +120,5 @@ module.exports.getStudentFriendWithId = function (req, res) {
 		if (err) throw err;
 		// show the user
 		console.log(user);
-	}
+	});
 };

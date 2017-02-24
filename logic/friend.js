@@ -30,7 +30,7 @@ var mongoose = require('mongoose');
 module.exports.getFriend = function (req, res) {
 	var Friendship = mongoose.model('Friendship', models.Friendship);
     var toFind = {
-    	UserID = [req.body.sender, req.body.receiver]
+    	UserID: [req.body.sender, req.body.receiver]
     };
 
 	var found = Friendship.find(toFind, function(err) {
@@ -52,7 +52,7 @@ module.exports.getFriend = function (req, res) {
 module.exports.postFriend = function (req, res) {
 	var Friendship = mongoose.model('Friendship', model.Friendship);
 	var toPost = {
-		UserID = [req.body.sender,req.body.receiver]
+		UserID: [req.body.sender,req.body.receiver]
 	};
 
 	var Post = Friendship.Create(toPost, function(err) {
@@ -74,7 +74,7 @@ module.exports.postFriend = function (req, res) {
 module.exports.deleteFriend = function (req, res) {
     var Friendship = mongoose.model('Friendship', model.Friendship);
     var toDelete = {
-    	UserID = [req.body.sender, req.body.receiver]
+    	UserID: [req.body.sender, req.body.receiver]
     };
     
     var Delete = Friendship.findOneAndRemove(toDelete, function(err){
