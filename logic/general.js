@@ -55,6 +55,6 @@ module.exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schem
 // ClassStudent schema
 // ===========================================================================
 module.exports.ClassStudent = mongoose.model('ClassStudent', new Schema({
-	ClassID: Schema.Types.ObjectId,
+	Class: String,
 	StudentID: Schema.Types.ObjectId,
 }));
