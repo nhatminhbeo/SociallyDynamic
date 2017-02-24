@@ -1,9 +1,10 @@
-var SD = angular.module('SD' , ['ngRoute'])
+// var SD = 
+angular.module('SD' , ['ngRoute', 'firebase', 'auth'])
 .config(['$routeProvider','$locationProvider',function($routeProvider , $locationProvider){
 		$routeProvider.
 			when('/', {
 				templateUrl: 'scenes/login',
-				controller: loginController
+				controller: 'loginController'
 			}).
 			/*
 			when('/login', {
