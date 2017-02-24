@@ -44,7 +44,7 @@ var StudentStudyHabit = general.StudentStudyHabit;
 //  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.postStudent = function (req, res) {
-	
+
 	var ref = req.body;
 
 	// Put necessary fields into a student model.
@@ -185,7 +185,7 @@ module.exports.getStudentWithId = function (req, res) {
 	User.findById(studentID, function(err, user) {
 		if (err) throw err;
 		// show the user
-		console.log(user);
+		res.status(200).
 	});
 };
 
