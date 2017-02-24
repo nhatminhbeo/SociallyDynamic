@@ -3,15 +3,7 @@
 
 }]);
 */
-function loginController($scope, Auth){
+function loginController($scope){
     $scope.testvar = 'hi';
-    Auth.$onAuth(function(authData){
-        console.log(authData);
-    })
-    $scope.login = function(){
-        
-    }
-
-    $scope.signUp = 
 
 }

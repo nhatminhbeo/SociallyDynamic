@@ -1,4 +1,4 @@
-var SD = angular.module('SD' , ['ngRoute','firebase'])
+var SD = angular.module('SD' , ['ngRoute'])
 .config(['$routeProvider','$locationProvider',function($routeProvider , $locationProvider){
 		$routeProvider.
 			when('/', {
