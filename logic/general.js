@@ -35,6 +35,7 @@ module.exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
 // For use in USA, UPV, MUP
 // ===========================================================================
 module.exports.Student = mongoose.model('Student', new Schema({
+	_id: String,
 	Email: String,
 	FirstName: String,
 	LastName: String,
@@ -48,7 +49,7 @@ module.exports.Student = mongoose.model('Student', new Schema({
 // ===========================================================================
 module.exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schema({
 	Habit: String,
-	StudentID: Schema.Types.ObjectId
+	StudentID: String,
 }));
 
 // ===========================================================================
@@ -56,5 +57,5 @@ module.exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schem
 // ===========================================================================
 module.exports.ClassStudent = mongoose.model('ClassStudent', new Schema({
 	Class: String,
-	StudentID: Schema.Types.ObjectId,
+	StudentID: String,
 }));
