@@ -4,7 +4,11 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 			when('/', {
 				templateUrl: 'scenes/login',
 				controller: 'loginController',
-		
+				resolve: {
+					loggedIn: ['authService', function(authService){
+						return authService.Auth.$waitForSignIn();
+					}]
+				}
 			}).
 			/*
 			when('/login', {

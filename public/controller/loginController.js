@@ -1,6 +1,11 @@
 //angular.module('SD')
-app.controller('loginController', ['$scope', 'authService', '$location', function($scope, authService, $location){
-	
+app.controller('loginController', ['$scope', 'authService', '$location', 'loggedIn', function($scope, authService, $location, loggedIn){
+
+	console.log(loggedIn);
+	if(loggedIn){
+		$location.path('/profile');
+	}
+
 	$scope.isLogin = true; // display login form first to user 
 	$scope.email = '';
 	$scope.password = '';

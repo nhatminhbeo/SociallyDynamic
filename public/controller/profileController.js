@@ -1,5 +1,7 @@
-app.controller('profileController', ['$scope', 'authService', function($scope, authService) {
+app.controller('profileController', ['$scope', 'authService', '$location', function($scope, authService, $location) {
     $scope.logout = function() {
-        console.log("Logged out!");
+        // log user out
+        authService.Auth.$signOut();
+        $location.path('/');
     };
 }]);
