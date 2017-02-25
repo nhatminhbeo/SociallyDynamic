@@ -149,10 +149,12 @@ app.use(function(err, req, res, next) {
 // =========================
 // Routings
 // =========================
-/*
+
 var stu = require('./routes/student');  stu.route(app);
-var mat = require('./routes/match');    mat.route(app);
 var fri = require('./routes/friend');   fri.route(app);
+/*
+var mat = require('./routes/match');    mat.route(app);
+
 var mes = require('./routes/message');  mes.route(app);
 var gro = require('./routes/group');    gro.route(app);
 var inb = require('./routes/inbox');    inb.route(app);

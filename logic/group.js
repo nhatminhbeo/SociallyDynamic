@@ -28,7 +28,7 @@
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getGroup = function (req, res) {
+module.exports.getGroup = function (req, res) {
 
 };
 
@@ -40,7 +40,7 @@ exports.getGroup = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getGroupWithId = function (req, res) {
+module.exports.getGroupWithId = function (req, res) {
 
 };
 
@@ -53,7 +53,7 @@ exports.getGroupWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.putGroupWithId = function (req, res) {
+module.exports.putGroupWithId = function (req, res) {
 
 };
 
@@ -66,7 +66,7 @@ exports.putGroupWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.deleteGroupWithId = function (req, res) {
+module.exports.deleteGroupWithId = function (req, res) {
 
 };
 
@@ -79,7 +79,7 @@ exports.deleteGroupWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.postGroupWithIdUser = function (req, res) {
+module.exports.postGroupWithIdUser = function (req, res) {
 
 };
 
@@ -92,7 +92,7 @@ exports.postGroupWithIdUser = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.deleteGroupWithIdUser = function (req, res) {
+module.exports.deleteGroupWithIdUser = function (req, res) {
 
 };
 
@@ -104,7 +104,7 @@ exports.deleteGroupWithIdUser = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.postGroupWithIdRequest = function (req, res) {
+module.exports.postGroupWithIdRequest = function (req, res) {
 
 };
 
@@ -117,7 +117,7 @@ exports.postGroupWithIdRequest = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.deleteGroupWithIdRequest = function (req, res) {
+module.exports.deleteGroupWithIdRequest = function (req, res) {
 
 };
 
@@ -129,6 +129,6 @@ exports.deleteGroupWithIdRequest = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getGroupUserWithId = function (req, res) {
+module.exports.getGroupUserWithId = function (req, res) {
 
 };

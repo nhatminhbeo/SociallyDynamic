@@ -4,7 +4,8 @@
 // Author:
 // Last updated: Feb 12 2017
 // ===========================================================================
-
+//currently, general.js exports the FriendRequest model. 
+var models = require('./general');
 var mongoose = require('mongoose');
 
 // ===============================================================================================================================================
@@ -21,15 +22,24 @@ var mongoose = require('mongoose');
 // ================================================================================
 //  Function: getFriend
 //  REST: GET:/api/friend
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
+//  Description: Returns the start date of the friendship if exists
+//  Expected input (req.body): The id of the sender and receiver in body
+//  Expected output (res): 200 for success and start Date or 400 for failure
 //  Author: Khiem Tran
 // ================================================================================
-exports.getFriend = function (req, res) {
+module.exports.getFriend = function (req, res) {
+	var Friendship = mongoose.model('Friendship', models.Friendship);
+    var toFind = {
+    	UserID: [req.body.sender, req.body.receiver]
+    };
 
+	var found = Friendship.find(toFind, function(err) {
+		if(err)
+			res.status(400).send('Friendship not found');
+	});
+    
+    res.status(200).send(found.StartDate);  
 };
-
 
 // ================================================================================
 //  Function: postFriend
@@ -39,8 +49,18 @@ exports.getFriend = function (req, res) {
 //  Expected output (res):
 //  Author: Khiem Tran
 // ================================================================================
-exports.postFriend = function (req, res) {
+module.exports.postFriend = function (req, res) {
+	var Friendship = mongoose.model('Friendship', model.Friendship);
+	var toPost = {
+		UserID: [req.body.sender,req.body.receiver]
+	};
 
+	var Post = Friendship.Create(toPost, function(err) {
+		if(err)
+			res.status(400).send('Friendship was not created');
+	});
+
+	res.status(200).send(Post._id);
 };
 
 // ================================================================================
@@ -51,8 +71,18 @@ exports.postFriend = function (req, res) {
 //  Expected output (res):
 //  Author: Khiem Tran
 // ================================================================================
-exports.deleteFriend = function (req, res) {
+module.exports.deleteFriend = function (req, res) {
+    var Friendship = mongoose.model('Friendship', model.Friendship);
+    var toDelete = {
+    	UserID: [req.body.sender, req.body.receiver]
+    };
+    
+    var Delete = Friendship.findOneAndRemove(toDelete, function(err){
+    	if(err)
+    		res.status(400).send('Friendship was not deleted');
+    });
 
+    res.status(200).send('Deleted'); 
 };
 
 
@@ -64,24 +94,17 @@ exports.deleteFriend = function (req, res) {
 //  Expected output (res):
 //  Author: Justin Huynh
 // ================================================================================
-exports.postFriendRequest = function (req, res) {
-	var Schema = mongoose.Schema;
-	var friendRequestSchema = new Schema({
-		id: String,
-		Sender: String,
-		Receiver: String
-	});
-	var FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
-
+module.exports.postFriendRequest = function (req, res) {
+	var FriendRequest = models.FriendRequest;
 	//this could break. 
 	var friendRequest = new FriendRequest({
-		id: req.body.id,
 		Sender: req.body.Sender,
 		Receiver: req.body.Receiver
 	});
 
 	friendRequest.save(function(err){
-		if (err) throw err;
+		if (err) 
+			res.status(400).send(err);
 
 		res.status(200).send('Saved friendRequest');
 	});
@@ -90,17 +113,30 @@ exports.postFriendRequest = function (req, res) {
 // ================================================================================
 //  Function: deleteFriendRequest
 //  REST: DELETE:/api/friend/request
-//  Description:
+//  Description: delete a friend request using sender and receiver
 //  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
+//		req.body.id = _id
+//		req.body.Sender = Sender
+//		req.body.Receiver = Receiver
+//  Expected output (res): success(200) or error(400) code
+//  Author: Justin Huynh
 // ================================================================================
-exports.deleteFriendRequest = function(req, res) {
+module.exports.deleteFriendRequest = function(req, res) {
+	var FriendRequest = models.FriendRequest;
+	var friendRequestSender = req.body.Sender;
+	var friendRequestReceiver = req.body.Receiver;
 	// find the user with id 4
-	User.findByIdAndRemove(4, function(err) {
-	  if (err) throw err;
-
-	  // we have deleted the user
-	  console.log('User deleted!');
-	});
+	FriendRequest.findOneAndRemove(
+		{ 
+			Sender: friendRequestSender, 
+			Receiver: friendRequestReceiver
+		}, 
+		function(err) {
+			if (err) 
+				res.status(400).send(err);
+			
+			// we have deleted the user
+			res.status(200).send('Deleted friendRequest');	
+		}
+	);
 };

@@ -22,7 +22,7 @@
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getMatchClassWithId = function (req, res) {
+module.exports.getMatchClassWithId = function (req, res) {
 
 };
 
@@ -35,7 +35,7 @@ exports.getMatchClassWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getMatchHabitWithId = function (req, res) {
+module.exports.getMatchHabitWithId = function (req, res) {
 
 };
 
@@ -48,6 +48,6 @@ exports.getMatchHabitWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getMatchMajorWithId = function (req, res) {
+module.exports.getMatchMajorWithId = function (req, res) {
 
 };
