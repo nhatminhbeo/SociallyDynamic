@@ -1,4 +1,6 @@
-angular.module('SD').service('auth', [function() {
+//angular.module('SD')
+
+app.service('authService', ['$firebaseAuth', function($firebaseAuth) {
 	var config = {
 		apiKey: "AIzaSyDtiFe2ByyvW6WdAG5kZ5N0VSjisERPSTk",
 	    authDomain: "sdauth-613ae.firebaseapp.com",
@@ -6,6 +8,7 @@ angular.module('SD').service('auth', [function() {
 	    storageBucket: "sdauth-613ae.appspot.com",
 	    messagingSenderId: "650339617682"
 	};
-	this.Auth = firebase.initializeApp(config);
+	firebase.initializeApp(config);
+	this.Auth = $firebaseAuth();
 	this.testvar2 = "testvar2 in auth.js";
 }]);

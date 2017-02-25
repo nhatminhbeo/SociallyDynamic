@@ -1,9 +1,10 @@
-angular.module('SD' , ['ngRoute', 'firebase'])
-.config(['$routeProvider','$locationProvider',function($routeProvider , $locationProvider){
+var app = angular.module('SD' , ['ngRoute', 'firebase'])
+.config(['$routeProvider','$locationProvider', function($routeProvider , $locationProvider){
 		$routeProvider.
 			when('/', {
 				templateUrl: 'scenes/login',
-				controller: 'loginController'
+				controller: 'loginController',
+		
 			}).
 			/*
 			when('/login', {
@@ -17,12 +18,11 @@ angular.module('SD' , ['ngRoute', 'firebase'])
 			when('/match', {
 				templateUrl: 'scenes/match.html',
 				controller: matchController
-			}).
+			}).*/
 			when('/profile', {
-				templateUrl: 'scenes/profile.html',
-				controller: profileController
+				templateUrl: 'scenes/profile',
+				controller: 'profileController'
 			}).
-			*/
 			otherwise({
 				redirectTo: 'scenes/404.html'
 			});
