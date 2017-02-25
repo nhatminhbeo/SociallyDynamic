@@ -44,7 +44,7 @@ var Student = general.Student;
 //  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.postStudent = function (req, res) {
-
+/*
 	var ref = req.body;
 
 	// Put necessary fields into a student model.
@@ -60,6 +60,7 @@ module.exports.postStudent = function (req, res) {
 
 	// Create it in database
 	newStudent.save(function(err) {
+*/
 /*
 		// Couldn't create student
 		if (err) {
@@ -125,8 +126,9 @@ module.exports.postStudent = function (req, res) {
 */		
 		// All good! Student created with necessary info. return success !
 		res.sendStatus(200);
-
+/*
 	});
+*/
 };
 
 
@@ -182,10 +184,10 @@ module.exports.getStudentWithId = function (req, res) {
 	var studentID = req.params.id;
 	
 	// get a user with the ID
-	User.findById(studentID, function(err, user) {
-		if (err) throw err;
+	Student.findById(studentID, function(err, user) {
+		if (err) res.status(400);
 		// show the user
-		res.status(200).
+		res.status(200);
 	});
 };
 
@@ -202,8 +204,8 @@ module.exports.getStudentFriendWithId = function (req, res) {
 	var stduentFriendID = req.params.id;
 
 	// get a user with the ID
-	User.findById(studentFriendID, function(err, user) {
-		if (err) throw err;
+	Student.findById(studentFriendID, function(err, user) {
+		if (err) throw res.status(400);
 		// show the user
 		console.log(user);
 	});
