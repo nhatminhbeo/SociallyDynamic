@@ -81,7 +81,7 @@ module.exports.postStudent = function (req, res) {
 				}
 
 				// Valid habit, create StudyHabitStudent relationship
-				var studyHabitStudent = ClassStudent({
+				var classStudent = ClassStudent({
 					StudentID: ref._id,
 					ClassID: thisClass._id
 				});

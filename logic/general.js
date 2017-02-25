@@ -48,7 +48,7 @@ module.exports.Student = mongoose.model('Student', new Schema({
 // ===========================================================================
 // Class schema
 // ===========================================================================
-module.exports.ClassStudent = mongoose.model('Class', new Schema({
+module.exports.Class = mongoose.model('Class', new Schema({
 	Name: String,
 }, {collection: 'Class'}));
 
