@@ -19,8 +19,8 @@
 
 var general = require('./general');
 var Student = general.Student;
-var ClassStudent = general.ClassStudent;
-var StudentStudyHabit = general.StudentStudyHabit;
+//var ClassStudent = general.ClassStudent;
+//var StudentStudyHabit = general.StudentStudyHabit;
 
 
 // ================================================================================
@@ -60,7 +60,7 @@ module.exports.postStudent = function (req, res) {
 
 	// Create it in database
 	newStudent.save(function(err) {
-
+/*
 		// Couldn't create student
 		if (err) {
 			console.log('Can not create new student in mongodb');
@@ -122,7 +122,7 @@ module.exports.postStudent = function (req, res) {
 				});
 			});
 		});
-		
+*/		
 		// All good! Student created with necessary info. return success !
 		res.sendStatus(200);
 
