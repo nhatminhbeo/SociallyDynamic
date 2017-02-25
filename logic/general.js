@@ -17,7 +17,7 @@ var Schema = mongoose.Schema;
 module.exports.Friendship = mongoose.model('Friendship', new Schema({
 	UserID: [String],
     StartDate: String	
-}));
+}, {collection: 'Friendship'}));
 
 
 // ===========================================================================
@@ -27,7 +27,7 @@ module.exports.Friendship = mongoose.model('Friendship', new Schema({
 module.exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
 	Sender: String,
 	Receiver: String
-}));
+}, {collection: 'FriendRequest'}));
 
 
 // ===========================================================================
@@ -42,7 +42,15 @@ module.exports.Student = mongoose.model('Student', new Schema({
 	Age: Number,
 	Bio: String,
 	Major: String,
-}));
+}, {collection: 'Student'}));
+
+
+// ===========================================================================
+// Class schema
+// ===========================================================================
+module.exports.ClassStudent = mongoose.model('Class', new Schema({
+	Name: String,
+}, {collection: 'Class'}));
 
 // ===========================================================================
 // StudentStudyHabit schema
@@ -50,7 +58,7 @@ module.exports.Student = mongoose.model('Student', new Schema({
 module.exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schema({
 	Habit: String,
 	StudentID: String,
-}));
+}, {collection: 'StudentStudyHabit'}));
 
 // ===========================================================================
 // ClassStudent schema
@@ -58,4 +66,4 @@ module.exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schem
 module.exports.ClassStudent = mongoose.model('ClassStudent', new Schema({
 	Class: String,
 	StudentID: String,
-}));
+}, {collection: 'ClassStudent'}));

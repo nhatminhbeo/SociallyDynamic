@@ -19,8 +19,9 @@
 
 var general = require('./general');
 var Student = general.Student;
-//var ClassStudent = general.ClassStudent;
-//var StudentStudyHabit = general.StudentStudyHabit;
+var ClassStudent = general.ClassStudent;
+var StudentStudyHabit = general.StudentStudyHabit;
+var Class = general.Class;
 
 
 // ================================================================================
@@ -60,12 +61,7 @@ module.exports.postStudent = function (req, res) {
 
 	// Create it in database
 	newStudent.save(function(err) {
-		if (err) res.sendStatus(400);
-		// All good! Student created with necessary info. return success !
-		res.sendStatus(200);
-	});
 
-/*
 		// Couldn't create student
 		if (err) {
 			console.log('Can not create new student in mongodb');
@@ -73,7 +69,7 @@ module.exports.postStudent = function (req, res) {
 		}
 
 		// Student created, making studentclass relationships
-		ref.class.forEach(function (each) {
+		ref.Class.forEach(function (each) {
 
 			// Find to see if the habit is a valid habit in database
 			Class.find({"Name": each}, function(err, thisClass) {
@@ -86,8 +82,8 @@ module.exports.postStudent = function (req, res) {
 
 				// Valid habit, create StudyHabitStudent relationship
 				var studyHabitStudent = ClassStudent({
-					StudentID: ref._id;
-					ClassID: thisClass._id;
+					StudentID: ref._id,
+					ClassID: thisClass._id
 				});
 
 				classStudent.save(function(err) {
@@ -95,10 +91,14 @@ module.exports.postStudent = function (req, res) {
 						console.log('Can not create new ClassStudent in mongodb');
 						res.sendStatus(400);
 					}
+
+					// All good! Student created with necessary info. return success !
+					res.sendStatus(200);
+					});
 				});
 			});
 		});
-
+/*
 		// Create student habit relationships for each habit
 		ref.habit.forEach(function (each) {
 
