@@ -22,6 +22,7 @@ var Student = general.Student;
 var ClassStudent = general.ClassStudent;
 var StudentStudyHabit = general.StudentStudyHabit;
 var Class = general.Class;
+var StudyHabit = general.StudyHabit;
 
 
 // ================================================================================
@@ -46,6 +47,11 @@ var Class = general.Class;
 // ================================================================================
 module.exports.postStudent = function (req, res) {
 
+	var done1 = false;
+	var done2 = false;
+	var count1 = 0;
+	var count2 = 0;
+
 	var ref = req.body;
 
 	// Put necessary fields into a student model.
@@ -65,73 +71,87 @@ module.exports.postStudent = function (req, res) {
 		// Couldn't create student
 		if (err) {
 			console.log('Can not create new student in mongodb');
-			res.sendStatus(400);
+			return res.status(400).send();
 		}
+		else {
+			// Student created, making studentclass relationships
+			ref.Class.forEach(function (each) {
+				// Find to see if the class is a valid class in database
+				Class.findOne({"Name": each}, function(err, thisClass) {
+					console.log(thisClass);
 
-		// Student created, making studentclass relationships
-		ref.Class.forEach(function (each) {
-
-			// Find to see if the habit is a valid habit in database
-			Class.find({"Name": each}, function(err, thisClass) {
-
-				// Not a valid class
-				if (err) {
-					console.log('Can not find class ' + each);
-					res.sendStatus(400);
-				}
-
-				// Valid habit, create StudyHabitStudent relationship
-				var classStudent = ClassStudent({
-					StudentID: ref._id,
-					ClassID: thisClass._id
-				});
-
-				classStudent.save(function(err) {
+					// Not a valid class
 					if (err) {
-						console.log('Can not create new ClassStudent in mongodb');
-						res.sendStatus(400);
+						console.log('Can not find class ' + each);
+						return res.status(400).send();
+					}
+					else {
+						// Valid student, create ClassStudent relationship
+						var classStudent = ClassStudent({
+							StudentID: ref._id,
+							Class: thisClass.Name
+						});
+
+						classStudent.save(function(err) {
+							if (err) {
+								console.log('Can not create new ClassStudent in mongodb');
+								console.log(err);
+								return res.status(400).send();
+							}
+
+							if (count1 === ref.Class.length - 1) {
+								done1 = true;
+								if (done2) {
+									return res.status(200).send();
+								}
+							}
+
+							count1++;
+							console.log('count1: ' + count1 + done1);
+						});
+					}
+				});
+			});
+
+			// Create student habit relationships for each habit
+			ref.Habit.forEach(function (each) {
+				// Find if the class is valid
+				StudyHabit.findOne({"Habit": each}, function(err, habit) {
+
+					// Class not valid
+					if (err) {
+						console.log('Can not find study habit ' + each);
+						return res.status(400).send();
 					}
 
-					// All good! Student created with necessary info. return success !
-					res.sendStatus(200);
+					// Found study habit, making StudentStudyHabit relationship
+					var studentStudyHabit = StudentStudyHabit({
+						StudentID: ref._id,
+						Habit: each
+					});
+
+					// Put it in database
+					studentStudyHabit.save(function(err) {
+						// Couldn't create ?
+						if (err) {
+							console.log('Can not create new studentStudyHabit in mongodb');
+							return res.status(400).send();
+						}
+						else {
+							if (count2 === ref.Habit.length - 1) {
+								done2 = true;
+								if (done1) {
+									return res.status(200).send();
+								}
+							}
+						}
+						count2++;
+						console.log('count2: ' + count2 + done2);
 					});
 				});
 			});
-		});
-/*
-		// Create student habit relationships for each habit
-		ref.habit.forEach(function (each) {
-
-			// Find if the class is valid
-			Class.find({"Habit": each}, function(err, habit) {
-
-				// Class not valid
-				if (err) {
-					console.log('Can not find study habit ' + each);
-					res.sendStatus(400);
-				}
-
-				// Found study habit, making StudentStudyHabit relationship
-				var studentStudyHabit = StuedntStudyHabit({
-					StudentID: ref._id;
-					Habit: each;
-				});
-
-				// Put it in database
-				studentStudyHabit.save(function(err) {
-					// Couldn't create ?
-					if (err) {
-						console.log('Can not create new studentStudyHabit in mongodb');
-						res.sendStatus(400);
-					}
-				});
-			});
-		});
-*/		
-
-/*
+		}
 	});
-*/
 };
 
 
@@ -158,6 +178,112 @@ module.exports.postStudent = function (req, res) {
 // ================================================================================
 module.exports.putStudentWithId = function (req, res) {
 
+	// handle async
+	var done1 = false;
+	var done2 = false;
+	var count1 = 0;
+	var count2 = 0;
+
+	var ref = req.body;
+	var entries = {
+		Email: ref.Email,
+		FirstName: ref.FirstName,
+		LastName: ref.LastName,
+		Age: ref.Age,
+		Bio: ref.Bio,
+		Major: ref.Major
+	}
+
+	// Update Student schema
+	Student.findByIdAndUpdate(req.params.id, entries, function (err, result) {
+		if (err) {
+			console.log('Could not find and update user with id ' + req.params.id);
+			return res.status(400).send();
+		}
+	
+		// Delete all student class relationships
+		ClassStudent.remove({StudentID: req.params.id}, function (err) {
+			if (err) {
+				console.log('Could not remove student class relationship');
+				return res.status(400).send();
+			}
+
+			// Find Classes & Add new student class relationships
+			ref.Class.forEach(function (each) {
+				Class.findOne({Name: each}, function (err, thisClass) {
+
+					if (err) {
+						console.log('Can not find class ' + each);
+						return res.status(400).send();
+					}
+
+					// Valid student, create ClassStudent relationship
+					var classStudent = ClassStudent({
+						StudentID: req.params.id,
+						Class: thisClass.Name
+					});
+
+					// Save new ClassStudent relationship
+					classStudent.save(function(err) {
+						if (err) {
+							console.log('Can not create new ClassStudent in mongodb');
+							console.log(err);
+							return res.status(400).send();
+						}
+
+						if (count1 === ref.Class.length - 1) {
+							done1 = true;
+							if (done2) {
+								return res.status(200).send();
+							}
+						}
+						count1++;
+					});
+				});			
+			});
+		});
+
+		//Delete all SudentStudyHabit
+		StudentStudyHabit.remove({StudentID: req.params.id}, function (err) {
+			if (err) {
+				console.log('Could not remove all StudentStudyHabit');
+				return res.status(400).send();
+			}
+
+			// Add new study habits relations
+			ref.Habit.forEach(function (each) {
+				//Verify whether valid study habit
+				StudyHabit.findOne({Habit: each}, function (err, thisHabit) {
+					if (err) {
+						console.log('Could not find habit' + each);
+						return res.status(400).send();
+					}
+
+					// valid habit, create StudentStudyHabit relationship
+					var studentStudyHabit = StudentStudyHabit({
+						StudentID: req.params.id,
+						Habit: thisHabit.Habit
+					});
+
+					// save the new student study habit relationship
+					studentStudyHabit.save(function(err) {
+						if (err) {
+							console.log('Could not create new StudentStudyHabit relationship');
+							return res.status(400).send();
+						}
+
+						if (count2 === ref.Habit.length - 1) {
+							done2 = true;
+							if (done1) {
+								return res.status(200).send();
+							}
+						}
+						count2++;
+					});
+				});
+			});
+		});
+	});
 };
 
 

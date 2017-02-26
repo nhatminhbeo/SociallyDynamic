@@ -52,6 +52,14 @@ module.exports.Class = mongoose.model('Class', new Schema({
 	Name: String,
 }, {collection: 'Class'}));
 
+
+// ===========================================================================
+// StudyHabit Schema
+// ===========================================================================
+module.exports.StudyHabit = mongoose.model('StudyHabit', new Schema({
+	Habit: String,
+}, {collection: 'StudyHabit'}));
+
 // ===========================================================================
 // StudentStudyHabit schema
 // ===========================================================================
