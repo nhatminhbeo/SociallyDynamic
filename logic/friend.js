@@ -7,6 +7,7 @@
 //currently, general.js exports the FriendRequest model. 
 var models = require('./general');
 var mongoose = require('mongoose');
+var Friendship = models.Friendship;
 
 // ===============================================================================================================================================
 //                                   Friendship (MF + UPV + PM)
@@ -22,67 +23,68 @@ var mongoose = require('mongoose');
 // ================================================================================
 //  Function: getFriend
 //  REST: GET:/api/friend
-//  Description: Returns the start date of the friendship if exists
+//  Description: Returns the entry that was found
 //  Expected input (req.body): The id of the sender and receiver in body
-//  Expected output (res): 200 for success and start Date or 400 for failure
+//  Expected output (res): 200 for success and 400 for error
 //  Author: Khiem Tran
 // ================================================================================
 module.exports.getFriend = function (req, res) {
-	var Friendship = mongoose.model('Friendship', models.Friendship);
     var toFind = {
-    	UserID: [req.body.sender, req.body.receiver]
+    	UserID: req.headers.sender
+    };
+    var toFindAlt = {
+    	UserID: req.headers.receiver
     };
 
-	var found = Friendship.find(toFind, function(err) {
-		if(err)
-			res.status(400).send('Friendship not found');
+	Friendship.findOne({ '$and': [toFind, toFindAlt]}, function (err, found) {
+		if(err) 
+			return res.status(400).send('Something broke');
+		return res.status(200).send(found);
 	});
-    
-    res.status(200).send(found.StartDate);  
 };
 
 // ================================================================================
 //  Function: postFriend
 //  REST: POST:/api/friend
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
+//  Description: Returns a statement of completion	 
+//  Expected input (req.body):The id of the sender and the receiver in the body
+//  Expected output (res): 200 for success and 400 for error
 //  Author: Khiem Tran
 // ================================================================================
 module.exports.postFriend = function (req, res) {
-	var Friendship = mongoose.model('Friendship', model.Friendship);
-	var toPost = {
-		UserID: [req.body.sender,req.body.receiver]
-	};
-
-	var Post = Friendship.Create(toPost, function(err) {
-		if(err)
-			res.status(400).send('Friendship was not created');
+	var toPost = Friendship({
+		UserID: [req.body.sender, req.body.receiver],
+		StartDate: Date.now().toString()
 	});
 
-	res.status(200).send(Post._id);
+	toPost.save(function(err) {
+		if(err)
+			return res.status(400).send('Something Broke');
+		return res.status(200).send('Friendship Posted');
+	});
 };
 
 // ================================================================================
 //  Function: deleteFriend
 //  REST: DELETE:/api/friend
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
+//  Description: Returns the entry deleted
+//  Expected input (req.body): The id of the sender and the receiver in the body
+//  Expected output (res): 200 for success and 400 for error
 //  Author: Khiem Tran
 // ================================================================================
 module.exports.deleteFriend = function (req, res) {
-    var Friendship = mongoose.model('Friendship', model.Friendship);
-    var toDelete = {
-    	UserID: [req.body.sender, req.body.receiver]
+    var toDel = {
+    	UserID: req.body.sender
     };
+    var toDelAlt = {
+    	UserID: req.body.receiver
+    }
     
-    var Delete = Friendship.findOneAndRemove(toDelete, function(err){
-    	if(err)
-    		res.status(400).send('Friendship was not deleted');
-    });
-
-    res.status(200).send('Deleted'); 
+    Friendship.findOneAndRemove({ '$and': [toDel, toDelAlt]}, function (err, found) {
+	    if(err) 
+			return res.status(400).send('Something broke');
+		return res.status(200).send(found);
+	}); 
 };
 
 
