@@ -109,6 +109,8 @@ module.exports.getFriendRequest = function (req, res) {
 	var friendRequestSender = req.headers.sender; //auto converted to lowercase in
 	var friendRequestReceiver = req.headers.receiver; //http headers by http 
 	//console.log(req); for debugging: note above 2 comments ie 'Sender'->'sender'
+	//https://github.com/mitre/HTTP-Proxy-Servlet/issues/65
+	//here^^ is a link referring to this issue. pretty interesting~~
 	FriendRequest.findOne(
 		{ 
 			Sender: friendRequestSender, 
@@ -127,9 +129,11 @@ module.exports.getFriendRequest = function (req, res) {
 // ================================================================================
 //  Function: postFriendRequest
 //  REST: POST:/api/friend/request
-//  Description:
+//  Description: Add a new friend request using sender and receiver
 //  Expected input (req.body):
-//  Expected output (res):
+//		req.body.Sender = Sender
+//		req.body.Receiver = Receiver
+//  Expected output (res): success(200) or error(400) code
 //  Author: Justin Huynh
 // ================================================================================
 module.exports.postFriendRequest = function (req, res) {
@@ -153,10 +157,11 @@ module.exports.postFriendRequest = function (req, res) {
 //  REST: DELETE:/api/friend/request
 //  Description: delete a friend request using sender and receiver
 //  Expected input (req.body):
-//		req.body.id = _id
 //		req.body.Sender = Sender
 //		req.body.Receiver = Receiver
-//  Expected output (res): success(200) or error(400) code
+//  Expected output (res): 
+//		success(200) or error(400) code
+//		json object of deleted friend request, null if no request found/deleted
 //  Author: Justin Huynh
 // ================================================================================
 module.exports.deleteFriendRequest = function(req, res) {
