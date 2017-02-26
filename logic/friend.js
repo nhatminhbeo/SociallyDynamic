@@ -85,6 +85,42 @@ module.exports.deleteFriend = function (req, res) {
     res.status(200).send('Deleted'); 
 };
 
+// ================================================================================
+//  Function: postFriendRequest
+//  REST: GET:/api/friend/request
+//  Description: The purpose of this method is to let the front end get all the friend
+//		requests that are made from a certain receiver and sender. However I think 
+//		that they will always put the current user as the receiver. Why? Because in 
+//		the only time the front end will need this method is to display all friend 
+//		requests towards the current user to display in their inbox, ie all the friend
+// 		requests that our user is the recipient of. 
+//		Another use of this function is to check if the current user is allowed to make
+//			a friend request to another user. We know that the user will not be allowed
+//			to do so if they have already made a request to that user. 
+//		Front end will send in a specific friend relationship. 
+//  Expected input (req.body):
+//  Expected output (res):
+//  Author: Justin Huynh
+// ================================================================================
+module.exports.getFriendRequest = function (req, res) {
+	var FriendRequest = models.FriendRequest;
+	var friendRequestSender = req.headers.sender; //auto converted to lowercase in
+	var friendRequestReceiver = req.headers.receiver; //http headers by http 
+	//console.log(req); for debugging: note above 2 comments ie 'Sender'->'sender'
+	FriendRequest.findOne(
+		{ 
+			Sender: friendRequestSender, 
+			Receiver: friendRequestReceiver
+		}, 
+		function(err, data) {
+			if (err) 
+				return res.status(400).send(err);
+
+			// we have found the request
+			return res.status(200).json(data);
+		}
+	);
+};
 
 // ================================================================================
 //  Function: postFriendRequest
@@ -104,9 +140,9 @@ module.exports.postFriendRequest = function (req, res) {
 
 	friendRequest.save(function(err){
 		if (err) 
-			res.status(400).send(err);
+			return res.status(400).send(err);
 
-		res.status(200).send('Saved friendRequest');
+		return res.status(200).send('Saved friendRequest');
 	});
 };
 
@@ -125,18 +161,18 @@ module.exports.deleteFriendRequest = function(req, res) {
 	var FriendRequest = models.FriendRequest;
 	var friendRequestSender = req.body.Sender;
 	var friendRequestReceiver = req.body.Receiver;
-	// find the user with id 4
+	// find the user
 	FriendRequest.findOneAndRemove(
 		{ 
 			Sender: friendRequestSender, 
 			Receiver: friendRequestReceiver
 		}, 
-		function(err) {
+		function(err, data) {
 			if (err) 
-				res.status(400).send(err);
+				return res.status(400).send(err);
 			
 			// we have deleted the user
-			res.status(200).send('Deleted friendRequest');	
+			return res.status(200).json(data);
 		}
 	);
 };
