@@ -75,3 +75,62 @@ module.exports.ClassStudent = mongoose.model('ClassStudent', new Schema({
 	Class: String,
 	StudentID: String,
 }, {collection: 'ClassStudent'}));
+
+
+// ===========================================================================
+// Group schema
+// ===========================================================================
+module.exports.Group = mongoose.model('Group', new Schema({
+	GroupName: String,
+	Owner: String,
+}, {collection: 'Group'}));
+
+// ===========================================================================
+// StudentGroup schema
+// ===========================================================================
+module.exports.StudentGroup = mongoose.model('StudentGroup', new Schema({
+	GroupID: String,
+	StudentID: String,
+}, {collection: 'StudentGroup'}));
+
+
+// ===========================================================================
+// GroupRequest schema
+// ===========================================================================
+module.exports.GroupRequest = mongoose.model('GroupRequest', new Schema({
+	GroupID: Schema.Types.ObjectId,
+	Sender: String,
+	Receiver: String
+}, {collection: 'GroupRequest'}));
+
+// ===========================================================================
+// GroupMessage schema
+// ===========================================================================
+module.exports.GroupMessage = mongoose.model('GroupMessage', new Schema({
+	GroupID: Schema.Types.ObjectId,
+	Sender: String,
+	Content: String,
+	Chronology: int
+}, {collection: 'GroupMessage'}));
+
+
+// ===========================================================================
+// Conversation schema
+// ===========================================================================
+module.exports.Conversation = mongoose.model('Conversation', new Schema({
+	StudentID: String,
+	Student1Seen: Number,
+	Student2Seen: Number,
+	CurrentChronology: Number,
+}, {collection: 'Conversation'}));
+
+
+// ===========================================================================
+// Message schema
+// ===========================================================================
+module.exports.Message = mongoose.model('Message', new Schema({
+	ConversationID: Schema.Types.ObjectId,
+	Sender: String,
+	Content: String,
+	Chronology: Number
+}, {collection: 'Message'}));
