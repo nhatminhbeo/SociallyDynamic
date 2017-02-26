@@ -17,7 +17,7 @@ var Schema = mongoose.Schema;
 module.exports.Friendship = mongoose.model('Friendship', new Schema({
 	UserID: [String],
     StartDate: String	
-}));
+}, {collection: 'Friendship'}));
 
 
 // ===========================================================================
@@ -27,7 +27,7 @@ module.exports.Friendship = mongoose.model('Friendship', new Schema({
 module.exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
 	Sender: String,
 	Receiver: String
-}));
+}, {collection: 'FriendRequest'}));
 
 
 // ===========================================================================
@@ -35,26 +35,35 @@ module.exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
 // For use in USA, UPV, MUP
 // ===========================================================================
 module.exports.Student = mongoose.model('Student', new Schema({
+	_id: String,
 	Email: String,
 	FirstName: String,
 	LastName: String,
 	Age: Number,
 	Bio: String,
 	Major: String,
-}));
+}, {collection: 'Student'}));
+
+
+// ===========================================================================
+// Class schema
+// ===========================================================================
+module.exports.Class = mongoose.model('Class', new Schema({
+	Name: String,
+}, {collection: 'Class'}));
 
 // ===========================================================================
 // StudentStudyHabit schema
 // ===========================================================================
 module.exports.StudentStudyHabit = mongoose.model('StudentStudyHabit', new Schema({
 	Habit: String,
-	StudentID: Schema.Types.ObjectId
-}));
+	StudentID: String,
+}, {collection: 'StudentStudyHabit'}));
 
 // ===========================================================================
 // ClassStudent schema
 // ===========================================================================
 module.exports.ClassStudent = mongoose.model('ClassStudent', new Schema({
 	Class: String,
-	StudentID: Schema.Types.ObjectId,
-}));
+	StudentID: String,
+}, {collection: 'ClassStudent'}));

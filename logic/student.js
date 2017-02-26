@@ -19,8 +19,9 @@
 
 var general = require('./general');
 var Student = general.Student;
-//var ClassStudent = general.ClassStudent;
-//var StudentStudyHabit = general.StudentStudyHabit;
+var ClassStudent = general.ClassStudent;
+var StudentStudyHabit = general.StudentStudyHabit;
+var Class = general.Class;
 
 
 // ================================================================================
@@ -44,24 +45,23 @@ var Student = general.Student;
 //  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.postStudent = function (req, res) {
-/*
+
 	var ref = req.body;
 
 	// Put necessary fields into a student model.
 	var newStudent = Student({
-		_id: ref._id;
-		Email: ref.email,
-		FirstName: ref.firstName,
-		LastName: ref.lastName,
-		Age: ref.age
-		Bio: ref.bio,
-		Major: ref.major
+		_id: ref._id,
+		Email: ref.Email,
+		FirstName: ref.FirstName,
+		LastName: ref.LastName,
+		Age: ref.Age,
+		Bio: ref.Bio,
+		Major: ref.Major
 	});
 
 	// Create it in database
 	newStudent.save(function(err) {
-*/
-/*
+
 		// Couldn't create student
 		if (err) {
 			console.log('Can not create new student in mongodb');
@@ -69,7 +69,7 @@ module.exports.postStudent = function (req, res) {
 		}
 
 		// Student created, making studentclass relationships
-		ref.class.forEach(function (each) {
+		ref.Class.forEach(function (each) {
 
 			// Find to see if the habit is a valid habit in database
 			Class.find({"Name": each}, function(err, thisClass) {
@@ -81,9 +81,9 @@ module.exports.postStudent = function (req, res) {
 				}
 
 				// Valid habit, create StudyHabitStudent relationship
-				var studyHabitStudent = ClassStudent({
-					StudentID: ref._id;
-					ClassID: thisClass._id;
+				var classStudent = ClassStudent({
+					StudentID: ref._id,
+					ClassID: thisClass._id
 				});
 
 				classStudent.save(function(err) {
@@ -91,10 +91,14 @@ module.exports.postStudent = function (req, res) {
 						console.log('Can not create new ClassStudent in mongodb');
 						res.sendStatus(400);
 					}
+
+					// All good! Student created with necessary info. return success !
+					res.sendStatus(200);
+					});
 				});
 			});
 		});
-
+/*
 		// Create student habit relationships for each habit
 		ref.habit.forEach(function (each) {
 
@@ -124,8 +128,7 @@ module.exports.postStudent = function (req, res) {
 			});
 		});
 */		
-		// All good! Student created with necessary info. return success !
-		res.sendStatus(200);
+
 /*
 	});
 */
@@ -185,9 +188,18 @@ module.exports.getStudentWithId = function (req, res) {
 	
 	// get a user with the ID
 	Student.findById(studentID, function(err, user) {
-		if (err) res.status(400);
+		if (err) res.status(400).send(err);
 		// show the user
-		res.status(200);
+		var jsonStudent = Student({
+			_id: user._id,
+			FirstName: user.FirstName,
+			LastName: user.LastName,
+			Age: user.Age,
+			Bio: user.Bio,
+			Email: user.Email,
+			Major: user.Major
+		});
+		res.status(200).json(jsonStudent);
 	});
 };
 
@@ -205,8 +217,17 @@ module.exports.getStudentFriendWithId = function (req, res) {
 
 	// get a user with the ID
 	Student.findById(studentFriendID, function(err, user) {
-		if (err) throw res.status(400);
+		if (err) res.status(400).send(err);
 		// show the user
-		console.log(user);
+		var jsonStudentFriend = Student({
+			_id: user._id,
+			FirstName: user.FirstName,
+			LastName: user.LastName,
+			Age: user.Age,
+			Bio: user.Bio,
+			Email: user.Email,
+			Major: user.Major
+		});
+		res.status(200).json(jsonStudentFriend);
 	});
 };
