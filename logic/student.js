@@ -23,6 +23,8 @@ var ClassStudent = general.ClassStudent;
 var StudentStudyHabit = general.StudentStudyHabit;
 var Class = general.Class;
 var StudyHabit = general.StudyHabit;
+var FriendRequest = general.FriendRequest;
+var Friendship = general.Friendship;
 
 
 // ================================================================================
@@ -74,6 +76,11 @@ module.exports.postStudent = function (req, res) {
 			return res.status(400).send();
 		}
 		else {
+			// Make sure to respond when Class is empty
+			console.log(ref.Class.length + " " + ref.Habit.length);
+			if (ref.Class.length === 0 && ref.Habit.length ===0 ) {
+				return res.status(200).send();
+			}
 			// Student created, making studentclass relationships
 			ref.Class.forEach(function (each) {
 				// Find to see if the class is a valid class in database
@@ -233,7 +240,7 @@ module.exports.putStudentWithId = function (req, res) {
 
 						if (count1 === ref.Class.length - 1) {
 							done1 = true;
-							if (done2) {
+							if (ref.Habit.length - count2 === 0) {
 								return res.status(200).send();
 							}
 						}
@@ -274,7 +281,7 @@ module.exports.putStudentWithId = function (req, res) {
 
 						if (count2 === ref.Habit.length - 1) {
 							done2 = true;
-							if (done1) {
+							if (ref.Class.length - count1 === 0) {
 								return res.status(200).send();
 							}
 						}
@@ -283,6 +290,11 @@ module.exports.putStudentWithId = function (req, res) {
 				});
 			});
 		});
+		// Make sure to respond when Class is empty
+		console.log(ref.Class.length + " " + ref.Habit.length);
+		if (ref.Class.length === 0 && ref.Habit.length ===0 ) {
+			return res.status(200).send();
+		}
 	});
 };
 
@@ -298,6 +310,76 @@ module.exports.putStudentWithId = function (req, res) {
 //  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.deleteStudentWithId = function (req, res) {
+
+	var id = req.params.id;
+
+	// Deleting all friendship request of student
+	FriendRequest.remove({'$or': [{Sender: id}, {Receiver: id}]}).exec()
+
+	// Deleting all friendships of student
+	.then(function() {
+		return Friendship.remove({UserID: id}).exec();
+	})
+
+	// Deleting all study habits of student
+	.then(function() {
+		return StudentStudyHabit.remove({StudentID: id}).exec();
+	})
+
+	// Deleting all classes of student
+	.then(function() {
+		return ClassStudent.remove({StudentID: id}).exec();
+	})
+
+/* FUTURE FUNCTIONALITIES
+	// Removing student from all groups
+	.then(function() {
+		return StudentGroup.remove({StudentID: id}).exec();
+	})
+
+	// Removing all group request of the user
+	.then(function() {
+		return GroupRequest.remove({'$or': [{Sender: id}, {Receiver: id}]}).exec();
+	})
+
+	// Removing all group the user owns
+	.then(function() {
+		return Group.find({Owner: id}, '_id').exec();
+	}).then(function(group) {
+		StudentGroup.remove({GroupID: group._id}), function (err){
+			if (!err) {
+				GroupMessage.remove({GroupID: group._id}, function (err) {
+					if (!err) return Group.remove({_id: group._id}).exec();
+				});
+			}
+		});
+	})
+
+	// Remove all conversations of the user
+	.then(function() {
+		return Conversation.find({StudentID: id}, '_id').exec();
+	}).then(function (conversation) {
+		return Message.remove({ConversatoinID: conversatoin._id});
+	}).then(function () {
+		return Conversation.remove({StudentID: id}).exec();
+	})
+*/
+
+	// Removing the actual the user
+	.then(function () {
+		return Student.remove({_id: id}).exec();
+	})
+
+	// Student removed successfully
+	.then(function () {
+		return res.status(200).send();
+	})
+
+	// Failed to remove student
+	.then(null, function() {
+		res.status(400).send();
+	});
+
 };
 
 
