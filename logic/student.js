@@ -316,7 +316,7 @@ module.exports.getStudentWithId = function (req, res) {
 	Student.findById(studentID, function(err, user) {
 		if (err) res.status(400).send(err);
 		// show the user
-		var jsonStudent = {
+		var jsonStudent = Student({
 			_id: user._id,
 			FirstName: user.FirstName,
 			LastName: user.LastName,
@@ -324,7 +324,7 @@ module.exports.getStudentWithId = function (req, res) {
 			Bio: user.Bio,
 			Email: user.Email,
 			Major: user.Major
-		};
+		});
 		res.status(200).json(jsonStudent);
 	});
 };
@@ -345,7 +345,7 @@ module.exports.getStudentFriendWithId = function (req, res) {
 	Student.findById(studentFriendID, function(err, user) {
 		if (err) res.status(400).send(err);
 		// show the user
-		var jsonStudentFriend = {
+		var jsonStudentFriend = Student({
 			_id: user._id,
 			FirstName: user.FirstName,
 			LastName: user.LastName,
@@ -353,7 +353,7 @@ module.exports.getStudentFriendWithId = function (req, res) {
 			Bio: user.Bio,
 			Email: user.Email,
 			Major: user.Major
-		};
+		});
 		res.status(200).json(jsonStudentFriend);
 	});
 };
