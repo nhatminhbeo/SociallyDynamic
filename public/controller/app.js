@@ -10,15 +10,11 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 					}]
 				}
 			}).
-			/*
-			when('/login', {
-				templateUrl: 'scenes/login.html',
-				controller: loginController
-			}).
 			when('/group', {
 				templateUrl: 'scenes/group.html',
-				controller: groupController
+				controller: 'profileController'
 			}).
+			/*
 			when('/match', {
 				templateUrl: 'scenes/match.html',
 				controller: matchController

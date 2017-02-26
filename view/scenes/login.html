@@ -4,7 +4,7 @@
 <div ng-show="isLogin">
 	<input type="text" placeholder="Email" ng-model="email"></input>
 	<input type="password" placeholder="Password" ng-model="password"></input>
-	<button>Sign In</button>
+	<button ng-click="signIn()">Sign In</button>
 	<button ng-click="changeForm()">Don't have an account? Sign Up!</button>
 </div>
 <div ng-hide="isLogin">

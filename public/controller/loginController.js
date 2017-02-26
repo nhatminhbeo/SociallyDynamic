@@ -18,6 +18,16 @@ app.controller('loginController', ['$scope', 'authService', '$location', 'logged
 		$scope.password = '';
 	};
 
+	// this function is responsible for logging in to the application 
+	$scope.signIn = function(){
+		authService.Auth.$signInWithEmailAndPassword($scope.email, $scope.password).then(function(data){
+			console.log(data);
+			$location.path('/profile');
+		}).catch(function(error){
+			console.log(error);
+		});
+	}
+
 	$scope.testvar = "testvar in loginController.js";
 	$scope.yo = authService.testvar2;
 	console.log("Touched in loginController.js");
@@ -30,10 +40,9 @@ app.controller('loginController', ['$scope', 'authService', '$location', 'logged
 		// create the user with email and password 
 		authService.Auth.$createUserWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 				console.log(data);
+				$location.path('/profile');
 			}).catch(function(error){
 				console.log(error);
 		});
-
-		$location.path('/profile');
 	};
 }]);
