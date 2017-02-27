@@ -16,7 +16,7 @@ var Schema = mongoose.Schema;
 // ===========================================================================
 module.exports.Friendship = mongoose.model('Friendship', new Schema({
 	UserID: [String],
-    StartDate: String	
+    StartDate: String,	
 }, {collection: 'Friendship'}));
 
 
@@ -26,7 +26,7 @@ module.exports.Friendship = mongoose.model('Friendship', new Schema({
 // ===========================================================================
 module.exports.FriendRequest = mongoose.model('FriendRequest', new Schema({
 	Sender: String,
-	Receiver: String
+	Receiver: String,
 }, {collection: 'FriendRequest'}));
 
 
@@ -110,7 +110,7 @@ module.exports.GroupMessage = mongoose.model('GroupMessage', new Schema({
 	GroupID: Schema.Types.ObjectId,
 	Sender: String,
 	Content: String,
-	Chronology: int
+	Chronology: Number
 }, {collection: 'GroupMessage'}));
 
 

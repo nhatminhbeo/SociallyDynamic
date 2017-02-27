@@ -30,6 +30,6 @@ module.exports.route = function(app) {
 	app.delete('api/group/:id/user', api.deleteGroupWithIdUser);
 	app.post('api/group/:id/request', api.postGroupWithIdRequest);
 	app.delete('api/group/:id/request', api.postGroupWithIdRequest);
-	app.get('api/group/user/:id', api.postGroupUserWithId);
+	app.get('api/group/user/:id', api.getGroupUserWithId);
 };
 // TODO

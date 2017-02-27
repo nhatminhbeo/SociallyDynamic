@@ -24,7 +24,7 @@ var Friendship = models.Friendship;
 //  Function: getFriend
 //  REST: GET:/api/friend
 //  Description: Returns the entry that was found
-//  Expected input (req.body): The id of the sender and receiver in body
+//  Expected input (req.headers): The id of the sender and receiver in body
 //  Expected output (res): 200 for success and 400 for error
 //  Author: Khiem Tran
 // ================================================================================
@@ -57,10 +57,10 @@ module.exports.postFriend = function (req, res) {
 		StartDate: Date.now().toString()
 	});
 
-	toPost.save(function(err) {
+	toPost.save(function(err, entry) {
 		if(err)
 			return res.status(400).send('Something Broke');
-		return res.status(200).send('Friendship Posted');
+		return res.status(200).send(entry);
 	});
 };
 
