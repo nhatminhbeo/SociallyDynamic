@@ -159,4 +159,3 @@ var gro = require('./routes/group');    gro.route(app);
 
 
 var pub = require('./routes/public');   pub.route(app, __dirname);
-

@@ -1,31 +1,32 @@
-var app = angular.module('SD', [])
-
-app.config(['$routeProvider',
-	function($routeProvider) {
+var app = angular.module('SD' , ['ngRoute', 'firebase'])
+.config(['$routeProvider','$locationProvider', function($routeProvider , $locationProvider){
 		$routeProvider.
 			when('/', {
-				templateUrl: 'scenes/index.html',
-				controller: indexController
+				templateUrl: 'scenes/login',
+				controller: 'loginController',
+				resolve: {
+					loggedIn: ['authService', function(authService){
+						return authService.Auth.$waitForSignIn();
+					}]
+				}
 			}).
-			when('/login', {
-				templateUrl: 'scenes/login.html',
-				controller: loginController
+			when('/group/:id', {
+				templateUrl: 'scenes/group',
+				controller: 'groupController'
 			}).
-			when('/group', {
-				templateUrl: 'scenes/group.html',
-				controller: groupController
+			when('/profile/:id', {
+				templateUrl: 'scenes/profile',
+				controller: 'profileController'
 			}).
-			when('/match', {
-				templateUrl: 'scenes/match.html',
-				controller: matchController
-			}).
-			when('/profile', {
-				templateUrl: 'scenes/profile.html',
-				controller: profileController
+			when('/conversation/:id', {
+				templateUrl: 'scenes/conversation',
+				controller: 'conversationController'
+
 			}).
 			otherwise({
-				templateUrl: 'scenes/404.html'
+				templateUrl: 'scenes/404'
 			});
+			$locationProvider.html5Mode(true);
 
 }]);
 
