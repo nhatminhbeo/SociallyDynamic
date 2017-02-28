@@ -16,9 +16,6 @@ var logger = require('morgan');
 var http = require('http');
 var app = express();
 
-mongoose.connect('mongodb://localhost/sociallydynamic');
-var db = mongoose.connection;
- 
 var port = process.env.PORT || 3000;
 
 
