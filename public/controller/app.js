@@ -2,7 +2,7 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 .config(['$routeProvider','$locationProvider', function($routeProvider , $locationProvider){
 		$routeProvider.
 			when('/', {
-				templateUrl: 'scenes/login.html',
+				templateUrl: 'scenes/login',
 				controller: 'loginController',
 				resolve: {
 					loggedIn: ['authService', function(authService){
@@ -10,29 +10,21 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 					}]
 				}
 			}).
-			when('/contacts', {
-				templateUrl: 'scenes/contacts',
-				controller: 'profileController'
-			}).
-			when('/group', {
+			when('/group/:id', {
 				templateUrl: 'scenes/group',
 				controller: 'groupController'
 			}).
-			/*
-			when('/match', {
-				templateUrl: 'scenes/match.html',
-				controller: matchController
-			}).*/
 			when('/profile/:id', {
 				templateUrl: 'scenes/profile',
 				controller: 'profileController'
 			}).
 			when('/conversation/:id', {
-				templateUrl: 'scenes/conversation'	
+				templateUrl: 'scenes/conversation',
+				controller: 'conversationController'
 
 			}).
 			otherwise({
-				redirectTo: 'scenes/404.html'
+				templateUrl: 'scenes/404'
 			});
 			$locationProvider.html5Mode(true);
 
