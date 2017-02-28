@@ -1,4 +1,5 @@
-app.controller('conversationController', ['$scope', 'authService', '$location', function($scope, authService, $location) {
+app.controller('conversationController', ['$scope', 'authService', '$location','$http', function($scope, authService, $location,
+ $http) {
     $scope.conversationController = "conversationController";
     $scope.logout = function() {
         // log user out

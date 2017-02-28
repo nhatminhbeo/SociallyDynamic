@@ -1,4 +1,5 @@
-app.controller('groupController', ['$scope', 'authService', '$location', function($scope, authService, $location) {
+app.controller('groupController', ['$scope', 'authService', '$location','$http', function($scope, authService, $location,
+$http) {
     $scope.groupController = "groupController";
     $scope.logout = function() {
         // log user out

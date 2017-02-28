@@ -1,5 +1,6 @@
 //angular.module('SD')
-app.controller('loginController', ['$scope', 'authService', '$location', 'loggedIn', function($scope, authService, $location, loggedIn){
+app.controller('loginController', ['$scope', 'authService', '$location', 'loggedIn','$http', function($scope, authService, $location, 
+loggedIn, $http){
 
 	console.log(loggedIn);
 	if(loggedIn){
