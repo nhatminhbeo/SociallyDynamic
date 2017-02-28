@@ -26,7 +26,19 @@ module.exports.route = function (app, dirname) {
 		res.sendFile(dirname + "/view/index.html");
 	});
 
+	// this is to make sure our 404 page gets displayed if some random route is typed in the URL bar 
+	app.get('/:name', function (req, res) {
+			console.log('hello world');
+			console.log(dirname + "/view/index.html");
+			res.sendFile(dirname + "/view/index.html");
+	});
+
 	app.get('/scenes/:name', function(req, res) {
-		res.sendFile(dirname + "../view/scenes/" + name + "html");
+		res.sendFile(dirname + "/view/scenes/" + req.params.name + ".html");
+	});
+	
+	app.get('/:name/:id', function(req,res){
+		console.log(dirname + "/view/index.html");
+		res.sendFile(dirname + "/view/index.html");
 	});
 };
