@@ -1,51 +1,55 @@
 // ===========================================================================
-// File: /logic/inbox.js
-// Description: Export API functions that handle requests at /api/inbox/*
+// File: /logic/data.js
+// Description: Export API functions that handle requests at /api/data/*
 // Author:
 // Last updated: Feb 12 2017
 // ===========================================================================
 
-//                                   Inbox (IB)
-// ===============================================================================================================================================
-//    /api/inbox/message/:id  |   GET       |   Get list of message boxes of student described by id with other students or groups
-//    /api/inbox/friend/:id   |   GET       |   Get list of friend request of student described by id from other students
-//    /api/inbox/group/:id    |   GET       |   Get list of group invitation of student described by id from other students
-// ===============================================================================================================================================
 
+// ===============================================================================================================================================
+//    Path                    |   Method    |   Purpose / Brief Description
+// ===============================================================================================================================================
+//                                   Data (major, class, habits)
+// ===============================================================================================================================================
+//    /api/data/class         |   GET       |   Get list of classes
+//    /api/data/major         |   GET       |   Get list of majors
+//    /api/data/habit         |   GET       |   Get list of habits
+// ===============================================================================================================================================
 
 // ================================================================================
-//  Function: getInboxMessageWithId
-//  REST: GET:/api/inbox/message/:id
-//  Description:
+//  Function: getDataClass
+//  REST: GET:/api/data/class
+//  Description: Return list of all possible classes
 //  Expected input (req.body):
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-module.exports.getInboxMessageWithId = function (req, res) {
-
-};
-
-// ================================================================================
-//  Function: getInboxFriendWithId
-//  REST: GET:/api/inbox/friend/:id
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
-// ================================================================================
-module.exports.getInboxFriendWithId = function (req, res) {
+module.exports.getDataClass = function (req, res) {
 
 };
 
 
 // ================================================================================
-//  Function: getInboxGroupWithId
-//  REST: GET:/api/inbox/group/:id
-//  Description:
+//  Function: getDataMajor
+//  REST: GET:/api/data/major
+//  Description: Return list of all possible majors
 //  Expected input (req.body):
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-module.exports.getInboxGroupWithId = function (req, res) {
+module.exports.getDataMajor = function (req, res) {
+
+};
+
+
+// ================================================================================
+//  Function: getDataHabit
+//  REST: GET:/api/data/habit
+//  Description: Return list of all possible habits
+//  Expected input (req.body):
+//  Expected output (res):
+//  Author: 
+// ================================================================================
+module.exports.getDataHabit = function (req, res) {
 
 };

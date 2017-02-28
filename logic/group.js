@@ -4,6 +4,9 @@
 // Author:
 // Last updated: Feb 12 2017
 // ===========================================================================
+var models = require('./general');
+var mongoose = require('mongoose');
+var Group = models.Group;
 
 // ===============================================================================================================================================
 //                                   Group (MSG)
@@ -19,17 +22,25 @@
 //    /api/group/user/:id     |   GET       |   Get list of groups of a student
 // ===============================================================================================================================================
 
-
 // ================================================================================
-//  Function: getGroup
-//  REST: GET:/api/group
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
+//  Function: postGroup
+//  REST: POST:/api/group
+//  Description: Create a new group entry and post it into the database
+//  Expected input (req.body): Expects groupname and owner
+//  Expected output (res): Sends back the json of the entry
+//  Author: Khiem Tran
 // ================================================================================
-exports.getGroup = function (req, res) {
+module.exports.postGroup = function (req, res) {
+    var toPost = Group({
+    	GroupName: req.body.groupname,
+    	Owner: req.body.owner
+    });
 
+    toPost.save(function(err, entry) {
+    	if(err)
+    		res.status(400).send('Something Broke');
+    	res.status(200).send(entry);
+    });
 };
 
 // ================================================================================
@@ -38,9 +49,9 @@ exports.getGroup = function (req, res) {
 //  Description:
 //  Expected input (req.body):
 //  Expected output (res):
-//  Author: 
+//  Author: Khiem Tran
 // ================================================================================
-exports.getGroupWithId = function (req, res) {
+module.exports.getGroupWithId = function (req, res) {
 
 };
 
@@ -51,9 +62,9 @@ exports.getGroupWithId = function (req, res) {
 //  Description:
 //  Expected input (req.body):
 //  Expected output (res):
-//  Author: 
+//  Author: Khiem Tran
 // ================================================================================
-exports.putGroupWithId = function (req, res) {
+module.exports.putGroupWithId = function (req, res) {
 
 };
 
@@ -64,9 +75,9 @@ exports.putGroupWithId = function (req, res) {
 //  Description:
 //  Expected input (req.body):
 //  Expected output (res):
-//  Author: 
+//  Author: Khiem Tran
 // ================================================================================
-exports.deleteGroupWithId = function (req, res) {
+module.exports.deleteGroupWithId = function (req, res) {
 
 };
 
@@ -79,7 +90,7 @@ exports.deleteGroupWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.postGroupWithIdUser = function (req, res) {
+module.exports.postGroupWithIdUser = function (req, res) {
 
 };
 
@@ -92,7 +103,7 @@ exports.postGroupWithIdUser = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.deleteGroupWithIdUser = function (req, res) {
+module.exports.deleteGroupWithIdUser = function (req, res) {
 
 };
 
@@ -104,7 +115,7 @@ exports.deleteGroupWithIdUser = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.postGroupWithIdRequest = function (req, res) {
+module.exports.postGroupWithIdRequest = function (req, res) {
 
 };
 
@@ -117,7 +128,7 @@ exports.postGroupWithIdRequest = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.deleteGroupWithIdRequest = function (req, res) {
+module.exports.deleteGroupWithIdRequest = function (req, res) {
 
 };
 
@@ -129,6 +140,6 @@ exports.deleteGroupWithIdRequest = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getGroupUserWithId = function (req, res) {
+module.exports.getGroupUserWithId = function (req, res) {
 
 };

@@ -21,8 +21,7 @@
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.getMessage = function (req, res) {
-
+module.exports.getMessage = function (req, res) {
 };
 
 
@@ -34,7 +33,7 @@ exports.getMessage = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.putMessage = function (req, res) {
+module.exports.putMessage = function (req, res) {
 
 };
 
@@ -47,6 +46,6 @@ exports.putMessage = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-exports.postMessage = function (req, res) {
+module.exports.postMessage = function (req, res) {
 
 };
