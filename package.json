@@ -4,6 +4,9 @@
   "description": "Socially Dynamic Team Project",
   "main": "server.js",
   "scripts": {
+    "prestart": "mongod --dbpath db --fork --logpath /dev/null",
+    "start": "node server.js server",
+    "stop": "killall -SIGINT mongod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
