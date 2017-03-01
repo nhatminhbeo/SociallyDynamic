@@ -10,9 +10,25 @@
 
 <div id="info">
 
-	<h2>{{name}}</h2>
+	<h1>{{name}}</h1>
 
+	<h2>{{classList}}</h2>
 	<div ng-show="isSelf">
-		<button ng-click="editName()">Edit</button>	
+		<button ng-click="modifyClassList()">Edit</button>	
 	</div>
+
+	<h2>{{userBio}}</h2>
+	<div ng-show="isSelf">
+		<button ng-click="modifyUserBio()">Edit</button>	
+	</div>
+	
+	<h2>{{studyHabit}}</h2>
+	<div ng-show="isSelf">
+		<button ng-click="modifyStudyHabit()">Edit</button>	
+	</div>
+	
+	<div ng-show="isSelf">
+		<button ng-click="deleteUserProfile()">Delete Profile</button>	
+	</div>
+	
 </div>
