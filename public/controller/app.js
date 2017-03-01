@@ -10,9 +10,9 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 					}]
 				}
 			}).
-			when('/group/:id', {
+			when('/createGroup/:id', {
 				templateUrl: 'scenes/group',
-				controller: 'groupController'
+				controller: 'createGroupController'
 			}).
 			when('/profile/:id', {
 				templateUrl: 'scenes/profile',
@@ -22,6 +22,10 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 				templateUrl: 'scenes/conversation',
 				controller: 'conversationController'
 
+			}).
+			when('/group/conversation/:id', {
+				templateUrl: 'scenes/groupConversation',
+				controller: 'groupConversationController'
 			}).
 			otherwise({
 				templateUrl: 'scenes/404'
