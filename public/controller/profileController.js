@@ -6,4 +6,12 @@ $http) {
             $location.path('/');
         });
     }
+    
+    $scope.name = function() {
+        // Get the name
+    }
+
+    $scope.editName = function() {
+        // Edit the name
+    }
 }]);
