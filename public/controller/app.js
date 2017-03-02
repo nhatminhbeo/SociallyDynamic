@@ -11,7 +11,7 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 				}
 			}).
 			when('/createGroup/:id', {
-				templateUrl: 'scenes/group',
+				templateUrl: 'scenes/createGroup',
 				controller: 'createGroupController'
 			}).
 			when('/profile/:id', {
