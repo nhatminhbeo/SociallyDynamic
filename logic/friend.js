@@ -8,6 +8,7 @@
 var models = require('./general');
 var mongoose = require('mongoose');
 var Friendship = models.Friendship;
+var FriendRequest = models.FriendRequest;
 
 // ===============================================================================================================================================
 //                                   Friendship (MF + UPV + PM)
@@ -137,7 +138,6 @@ module.exports.getFriendRequest = function (req, res) {
 //  Author: Justin Huynh
 // ================================================================================
 module.exports.postFriendRequest = function (req, res) {
-	var FriendRequest = models.FriendRequest;
 	//this could break. 
 	var friendRequest = new FriendRequest({
 		Sender: req.body.Sender,
@@ -165,7 +165,6 @@ module.exports.postFriendRequest = function (req, res) {
 //  Author: Justin Huynh
 // ================================================================================
 module.exports.deleteFriendRequest = function(req, res) {
-	var FriendRequest = models.FriendRequest;
 	var friendRequestSender = req.body.Sender;
 	var friendRequestReceiver = req.body.Receiver;
 	// find the user

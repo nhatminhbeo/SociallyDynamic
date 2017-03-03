@@ -7,6 +7,8 @@
 var models = require('./general');
 var mongoose = require('mongoose');
 var Group = models.Group;
+var StudentGroup = models.StudentGroup;
+var GroupRequest = models.GroupRequest;
 
 // ===============================================================================================================================================
 //                                   Group (MSG)
@@ -15,10 +17,10 @@ var Group = models.Group;
 //    /api/group/:id          |   GET       |   Get information of a group defined by id
 //    /api/group/:id          |   PUT       |   Change info of a group defined by id with new criteria(JSON) in request body
 //    /api/group/:id          |   DELETE    |   Delete a group defined by id
-//    /api/group/:id/user     |   POST      |   Add a student (described by request body) to group described by id
-//    /api/group/:id/user     |   DELETE    |   Delete a student (described by request body) from group described by id
-//    /api/group/:id/request  |   POST      |   Create a new invitation to group desribed by id from sender to receiver in body
-//    /api/group/:id/request  |   DELETE    |   Delete an invitation to group desribed by id from sender to receiver in body
+//    /api/group/user/:id     |   POST      |   Add a student (described by request body) to group described by id
+//    /api/group/user/:id     |   DELETE    |   Delete a student (described by request body) from group described by id
+//    /api/group/request/:id  |   POST      |   Create a new invitation to group desribed by id from sender to receiver in body
+//    /api/group/request/:id  |   DELETE    |   Delete an invitation to group desribed by id from sender to receiver in body
 //    /api/group/user/:id     |   GET       |   Get list of groups of a student
 // ===============================================================================================================================================
 
@@ -84,52 +86,85 @@ module.exports.deleteGroupWithId = function (req, res) {
 
 // ================================================================================
 //  Function: postGroupWithIdUser
-//  REST: POST:/api/group/:id/user
-//  Description:
+//  REST: POST:/api/group/user/:id
+//  Description: Add a student (described by request body) to group described by id
 //  Expected input (req.body):
 //  Expected output (res):
 //  Author: 
 // ================================================================================
 module.exports.postGroupWithIdUser = function (req, res) {
+	var studentGroup = new StudentGroup({
+		GroupID: req.params.id,
+		StudentID: req.body.id //TODO need to verify name of this field. studentID?
+	});
 
+	studentGroup.save(function(err){
+		if (err) 
+			return res.status(400).send(err);
+
+		return res.status(200).send('Saved student in group(postGroupWithIdUser)');
+	});
 };
 
 
 // ================================================================================
 //  Function: deleteGroupWithIdUser
-//  REST: DELETE:/api/group/:id/user
-//  Description:
+//  REST: DELETE:/api/group/user/:id
+//  Description: Delete a student (described by request body) from group described by id
 //  Expected input (req.body):
 //  Expected output (res):
 //  Author: 
 // ================================================================================
 module.exports.deleteGroupWithIdUser = function (req, res) {
+	StudentGroup.findByIdAndRemove(req.params.id, function(err){
+		if(err) 
+			return res.status(400).send(err);
 
+		return res.status(200).send('Deleted student in group(deleteGroupWithIdUser)');
+	});
 };
 
 // ================================================================================
 //  Function: postGroupWithIdUser
-//  REST: POST:/api/group/:id/user
-//  Description:
+//  REST: POST:/api/group/user/:id
+//  Description: Create a new invitation to group desribed by id from sender to receiver in body
 //  Expected input (req.body):
 //  Expected output (res):
 //  Author: 
 // ================================================================================
 module.exports.postGroupWithIdRequest = function (req, res) {
+	var groupRequest = new GroupRequest({
+		//TODO verify if we need to do any manipulation to convert string to the type
+		//in our schema "GroupID: Schema.Types.ObjectId,"
+		GroupID: req.params.id, 
+		Sender: req.body.Sender, 
+		Receiver: req.body.Receiver
+	});
 
+	groupRequest.save(function(err){
+		if (err) 
+			return res.status(400).send(err);
+
+		return res.status(200).send('Saved group request(postGroupWithIdRequest)');
+	});
 };
 
 
 // ================================================================================
 //  Function: deleteGroupWithIdRequest
-//  REST: DELETE:/api/group/:id/user
-//  Description:
+//  REST: DELETE:/api/group/user/:id
+//  Description: Delete an invitation to group desribed by id from sender to receiver in body
 //  Expected input (req.body):
 //  Expected output (res):
 //  Author: 
 // ================================================================================
 module.exports.deleteGroupWithIdRequest = function (req, res) {
+	GroupRequest.findByIdAndRemove(req.params.id, function(err){
+		if(err)
+			return res.status(400).send(err);
 
+		return res.status(200).send('Deleted group request(deleteGroupWithIdRequest)');
+	});
 };
 
 // ================================================================================
