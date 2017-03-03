@@ -188,7 +188,7 @@ module.exports.getGroupUserWithId = function (req, res) {
 	})
 
 	.then(function (groups) {
-		console.log(groups);
+
 		// Iterate through list of students found
 		Promise.each(groups, function (group) {
 
@@ -201,19 +201,18 @@ module.exports.getGroupUserWithId = function (req, res) {
 
 		// Return if true
 		.then(function() {
-			console.log("sup 2");
-			res.status(200).send(list);
+			return res.status(200).json(list);
 		})
 
 		// Failed to find groups
 		.then(null, function() {
-			res.status(400).send();
+			return res.status(400).send();
 		});
 
 	})
 
 	// Failed to find student
 	.then(null, function() {
-		res.status(400).send();
+		return res.status(400).send();
 	});
 };
