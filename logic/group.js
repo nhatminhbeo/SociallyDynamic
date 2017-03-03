@@ -17,8 +17,8 @@ var GroupRequest = models.GroupRequest;
 //    /api/group/:id          |   GET       |   Get information of a group defined by id
 //    /api/group/:id          |   PUT       |   Change info of a group defined by id with new criteria(JSON) in request body
 //    /api/group/:id          |   DELETE    |   Delete a group defined by id
-//    /api/group/user/:id     |   POST      |   Add a student (described by request body) to group described by id
-//    /api/group/user/:id     |   DELETE    |   Delete a student (described by request body) from group described by id
+//    /api/group/:id/user     |   POST      |   Add a student (described by request body) to group described by id
+//    /api/group/:id/user     |   DELETE    |   Delete a student (described by request body) from group described by id
 //    /api/group/request/:id  |   POST      |   Create a new invitation to group desribed by id from sender to receiver in body
 //    /api/group/request/:id  |   DELETE    |   Delete an invitation to group desribed by id from sender to receiver in body
 //    /api/group/user/:id     |   GET       |   Get list of groups of a student
@@ -86,7 +86,7 @@ module.exports.deleteGroupWithId = function (req, res) {
 
 // ================================================================================
 //  Function: postGroupWithIdUser
-//  REST: POST:/api/group/user/:id
+//  REST: POST:/api/group/:id/user
 //  Description: Add a student (described by request body) to group described by id
 //  Expected input (req.body):
 //  Expected output (res):
@@ -109,7 +109,7 @@ module.exports.postGroupWithIdUser = function (req, res) {
 
 // ================================================================================
 //  Function: deleteGroupWithIdUser
-//  REST: DELETE:/api/group/user/:id
+//  REST: DELETE:/api/group/:id/user
 //  Description: Delete a student (described by request body) from group described by id
 //  Expected input (req.body):
 //  Expected output (res):
