@@ -70,10 +70,11 @@ module.exports.postStudent = function (req, res) {
 	// Create it in database
 	newStudent.save(function(err) {
 
+
 		// Couldn't create student
 		if (err) {
 			console.log('Can not create new student in mongodb');
-			return res.status(400).send();
+			return res.status(400).send(err);
 		}
 		else {
 			// Make sure to respond when Class is empty
@@ -90,7 +91,7 @@ module.exports.postStudent = function (req, res) {
 					// Not a valid class
 					if (err) {
 						console.log('Can not find class ' + each);
-						return res.status(400).send();
+						return res.status(400).send(err);
 					}
 					else {
 						// Valid student, create ClassStudent relationship
@@ -128,7 +129,7 @@ module.exports.postStudent = function (req, res) {
 					// Class not valid
 					if (err) {
 						console.log('Can not find study habit ' + each);
-						return res.status(400).send();
+						return res.status(400).send(err);
 					}
 
 					// Found study habit, making StudentStudyHabit relationship
@@ -142,7 +143,7 @@ module.exports.postStudent = function (req, res) {
 						// Couldn't create ?
 						if (err) {
 							console.log('Can not create new studentStudyHabit in mongodb');
-							return res.status(400).send();
+							return res.status(400).send(err);
 						}
 						else {
 							if (count2 === ref.Habit.length - 1) {
@@ -205,14 +206,14 @@ module.exports.putStudentWithId = function (req, res) {
 	Student.findByIdAndUpdate(req.params.id, entries, function (err, result) {
 		if (err) {
 			console.log('Could not find and update user with id ' + req.params.id);
-			return res.status(400).send();
+			return res.status(400).send(err);
 		}
 	
 		// Delete all student class relationships
 		ClassStudent.remove({StudentID: req.params.id}, function (err) {
 			if (err) {
 				console.log('Could not remove student class relationship');
-				return res.status(400).send();
+				return res.status(400).send(err);
 			}
 
 			// Find Classes & Add new student class relationships
@@ -221,7 +222,7 @@ module.exports.putStudentWithId = function (req, res) {
 
 					if (err) {
 						console.log('Can not find class ' + each);
-						return res.status(400).send();
+						return res.status(400).send(err);
 					}
 
 					// Valid student, create ClassStudent relationship
@@ -235,7 +236,7 @@ module.exports.putStudentWithId = function (req, res) {
 						if (err) {
 							console.log('Can not create new ClassStudent in mongodb');
 							console.log(err);
-							return res.status(400).send();
+							return res.status(400).send(err);
 						}
 
 						if (count1 === ref.Class.length - 1) {
@@ -254,7 +255,7 @@ module.exports.putStudentWithId = function (req, res) {
 		StudentStudyHabit.remove({StudentID: req.params.id}, function (err) {
 			if (err) {
 				console.log('Could not remove all StudentStudyHabit');
-				return res.status(400).send();
+				return res.status(400).send(err);
 			}
 
 			// Add new study habits relations
@@ -276,7 +277,7 @@ module.exports.putStudentWithId = function (req, res) {
 					studentStudyHabit.save(function(err) {
 						if (err) {
 							console.log('Could not create new StudentStudyHabit relationship');
-							return res.status(400).send();
+							return res.status(400).send(err);
 						}
 
 						if (count2 === ref.Habit.length - 1) {
@@ -376,8 +377,8 @@ module.exports.deleteStudentWithId = function (req, res) {
 	})
 
 	// Failed to remove student
-	.then(null, function() {
-		res.status(400).send();
+	.then(null, function(err) {
+		res.status(400).send(err);
 	});
 
 };

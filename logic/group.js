@@ -5,8 +5,11 @@
 // Last updated: Feb 12 2017
 // ===========================================================================
 var models = require('./general');
-var mongoose = require('mongoose');
+var Promise = require('bluebird');
 var Group = models.Group;
+var StudentGroup = models.StudentGroup;
+
+
 
 // ===============================================================================================================================================
 //                                   Group (MSG)
@@ -135,11 +138,44 @@ module.exports.deleteGroupWithIdRequest = function (req, res) {
 // ================================================================================
 //  Function: getGroupUserWithId
 //  REST: GET:/api/group/user/:id
-//  Description:
-//  Expected input (req.body):
+//  Description: Return a list of users belonging to a group.
+//  Expected input (req.params): id: id of a group
 //  Expected output (res):
-//  Author: 
+//  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.getGroupUserWithId = function (req, res) {
+
+
+	var objectID = new models.Schema.Types.ObjectId(req.params.id);
+	var list = [];
+
+	// Find all studentGroup objects
+	StudentGroup.find({_id: objectID}, "StudentID", function (err, students) {
+		if (err)
+			res.status(400).send();
+
+		// Iterate through list of students found
+		Promise.Each(students, function (student) {
+
+			// For each such student
+			return models.Student.findOne({"_id": student.StudentID})
+			.then(function (found) {
+				list.append({
+					"FirstName": found.FirstName,
+					"LastName": found.LastName,
+					"_id": found._id
+					});
+			})
+		})
+
+		// Return
+		.then(function() {
+			res.status(200).send();
+		})
+		.then(null, function() {
+			res.status(400).send();
+		});
+
+	});
 
 };

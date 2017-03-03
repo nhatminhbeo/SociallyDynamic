@@ -6,9 +6,11 @@
 // ===========================================================================
 
 // Initialize Mongodb + Mongoose
-var mongoose = require('mongoose')
-mongoose.createConnection('mongodb://localhost:27017/sociallydynamic');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/sociallydynamic');
 var Schema = mongoose.Schema;
+
+module.exports.Schema = Schema;
 
 // ===========================================================================
 // Friendship Schema
