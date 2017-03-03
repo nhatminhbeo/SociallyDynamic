@@ -4,7 +4,9 @@ loggedIn, $http){
 
 	console.log(loggedIn);
 	if(loggedIn){
-		$location.path('/profile');
+		console.log(authService.Auth.$getAuth());
+		// the current user's profile page 
+		$location.path('/profile/' + authService.Auth.$getAuth().providerData["0"].uid);
 	}
 
 	$scope.isLogin = true; // display login form first to user 
@@ -23,9 +25,10 @@ loggedIn, $http){
 	$scope.signIn = function(){
 		authService.Auth.$signInWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 			console.log(data);
-			$location.path('/profile');
+			$location.path('/profile/' + data.providerData["0"].uid);
 		}).catch(function(error){
 			console.log(error);
+			alert(error);
 		});
 	}
 
@@ -41,9 +44,10 @@ loggedIn, $http){
 		// create the user with email and password 
 		authService.Auth.$createUserWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 				console.log(data);
-				$location.path('/profile');
+				$location.path('/profile/' + data.providerData["0"].uid);
 			}).catch(function(error){
 				console.log(error);
+				alert(error);
 		});
 	};
 }]);
