@@ -1,0 +1,27 @@
+body{
+	margin: 40px auto;
+	max-width: 720px;
+	line-height: 1.6;
+	font-size: 18px;
+	color: #444;
+	padding: 0 10px;
+}
+
+h1, h2, h3{
+	line-height:1.2;
+}
+
+button {
+	border: none;
+	border-radius: 10px;
+	padding: 8px 12px;
+	background-color: #616EEF;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.5s ease;
+}
+
+button:hover {
+	background-color: #41C5D3;
+	transition: background-color 0.5s ease;
+}
