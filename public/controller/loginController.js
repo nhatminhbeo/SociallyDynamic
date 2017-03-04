@@ -3,6 +3,23 @@ app.controller('loginController', ['$scope', 'authService', '$location', 'logged
 function($scope, authService, $location, 
 loggedIn, $http, $rootScope){
 
+	// picking classes that a person is in 
+	$scope.classFilter = '';
+	$scope.selectedClasses = {};
+	$scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
+	$scope.quantity = 5;
+
+	// picking a major that a person is in 
+	$scope.majorFilter = '';
+	$scope.selectedMajor;
+	$scope.majors = ["Computer Science", "Math-Computer Science", "Social Studies", "Swag", "Swole", "Swoon"];
+
+	// picking study habits that a person has 
+	$scope.studyHabitFilter = '';
+	$scope.selectedHabits = {};
+	$scope.studyHabits = ["Bed Programming", "Light Music", "quiet", "I'm cool", "I like everything", "It's awesome"];
+
+
 	console.log(loggedIn);
 	if(loggedIn){
 		console.log(authService.Auth.$getAuth());
@@ -54,4 +71,27 @@ loggedIn, $http, $rootScope){
 				alert(error);
 		});
 	};
+	
+	// class list function
+	$scope.classFunc = function(c) {
+		console.log(c);
+		if(!$scope.selectedClasses[c]){
+			$scope.selectedClasses[c] = c;
+		}
+	};
+
+	// major-related function
+	$scope.majorFunc = function(m){
+		console.log(m);
+		$scope.selectedMajor = m;
+	};
+
+	// studyt habits function
+	$scope.studyHabitFunc = function(s){
+		console.log(s);
+	};
+	$scope.deleteClassFunc = function(c){
+		delete $scope.selectedClasses[c];
+	}
+
 }]);
