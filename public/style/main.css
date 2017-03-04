@@ -12,9 +12,13 @@ h1, h2, h3{
 }
 
 button {
+	-webkit-appearance: none; /* safari */
+	-moz-appearance: none; /* firefox */
+	eppearance: none; /* chrome */
+	
 	border: none;
-	border-radius: 10px;
-	padding: 8px 12px;
+	border-radius: 20px;
+	padding: 12px 16px;
 	background-color: #616EEF;
 	color: white;
 	cursor: pointer;
