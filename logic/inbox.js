@@ -140,22 +140,17 @@ module.exports.getInboxGroupWithId = function (req, res) {
 
 		return models.Promise.each(groupRequests, function (groupRequest) {
 
-			return models.Group.findOne({"_id": groupRequest.GroupID})
-			.then(function (group) {
+			var a = models.Group.findOne({"_id": groupRequest.GroupID});
+			var b = models.Student.findOne({"_id": groupRequest.Sender});
+	
 
-				groupName = group.GroupName;
-				groupId = group._id;
-				return models.Student.findOne({"_id": groupRequest.Sender});
-
-			// Put him/her in to the list
-			}).then (function (student) {
-				console.log(student);
+			return models.Promise.join(a,b, function (group, student) {
 				list.push({
-					_id: student._id,
+					StudentID: student._id,
 					FirstName: student.FirstName,
 					LastName: student.LastName,
-					GroupName: groupName,
-					GroupID: groupID
+					GroupName: group.GroupName,
+					GroupID: group._id
 				});
 			});
 		});
