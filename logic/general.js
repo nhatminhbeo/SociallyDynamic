@@ -123,7 +123,7 @@ module.exports.GroupMessage = mongoose.model('GroupMessage', new Schema({
 // Conversation schema
 // ===========================================================================
 module.exports.Conversation = mongoose.model('Conversation', new Schema({
-	StudentID: String,
+	StudentID: [String],
 	Student1Seen: Number,
 	Student2Seen: Number,
 	CurrentChronology: Number,

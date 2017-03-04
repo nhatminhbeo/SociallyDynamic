@@ -422,17 +422,13 @@ module.exports.getStudentWithId = function (req, res) {
 //  Author: Ruohan Hu
 // ================================================================================
 module.exports.getStudentFriendWithId = function (req, res) {
-	var stduentFriendID = req.params.id;
+	var toFind = {
+    	UserID: req.params.id
+    };
 
-	// get a user with the ID
-	Student.findById(studentFriendID, function(err, user) {
-		if (err) res.status(400).send(err);
-		// show the user
-
-		
-
-
-
-		res.status(200).json(jsonStudentFriend);
+	Friendship.find(toFind, function (err, found) {
+		if(err) 
+			return res.status(400).send('Something broke');
+		return res.status(200).send(found);
 	});
 };
