@@ -130,4 +130,33 @@ module.exports.getInboxFriendWithId = function (req, res) {
 // ================================================================================
 module.exports.getInboxGroupWithId = function (req, res) {
 
+	var list = [];
+	var groupName = "";
+	var groupID = "";
+
+	// Get all GroupRequest of user id
+	models.GroupRequest.find({"Receiver": id}).exec()
+
+	// For each such GroupRequest:
+	.then(function (groupRequests) {
+		return models.Promise.each(groupRequest);
+
+	// Find the student sending the request
+	}).then(function (groupRequest) {
+		return models.Group.findOne({"_id", groupRequest.GroupID})
+		.then(function (group) {
+			groupName = group.Name;
+			groupId = group._id;
+			return models.Student.findOne({"_id": groupRequest.Sender});
+		});
+	// Put him/her in to the list
+	}).then (function (student) {
+		console.log(student);
+		list.push({
+			_id: student._id,
+			FirstName: student.FirstName,
+			LastName: student.LastName,
+			GroupName: 
+		})
+	})
 };
