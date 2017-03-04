@@ -103,7 +103,7 @@ module.exports.StudentGroup = mongoose.model('StudentGroup', new Schema({
 // GroupRequest schema
 // ===========================================================================
 module.exports.GroupRequest = mongoose.model('GroupRequest', new Schema({
-	GroupID: Schema.Types.ObjectId,
+	GroupID: String,
 	Sender: String,
 	Receiver: String
 }, {collection: 'GroupRequest'}));
@@ -112,7 +112,7 @@ module.exports.GroupRequest = mongoose.model('GroupRequest', new Schema({
 // GroupMessage schema
 // ===========================================================================
 module.exports.GroupMessage = mongoose.model('GroupMessage', new Schema({
-	GroupID: Schema.Types.ObjectId,
+	GroupID: String,
 	Sender: String,
 	Content: String,
 	Chronology: Number
@@ -134,7 +134,7 @@ module.exports.Conversation = mongoose.model('Conversation', new Schema({
 // Message schema
 // ===========================================================================
 module.exports.Message = mongoose.model('Message', new Schema({
-	ConversationID: Schema.Types.ObjectId,
+	ConversationID: String,
 	Sender: String,
 	Content: String,
 	Chronology: Number
