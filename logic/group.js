@@ -37,28 +37,22 @@ module.exports.postGroup = function (req, res) {
     	GroupName: req.body.name,
     	Owner: req.body.owner,
     });
-    var id = '';
+    console.log(req.body);
+    var memberList = req.body.member;
+    memberList.push(req.body.owner);
 
     toPost.save()
-    .then(function() {
-    	id = toPost._id;
-        var sGroup = StudentGroup({
-        	StudentID: req.body.owner,
-        	GroupID: id,
-        })
-        return sGroup.save();
-    })
     .then(function() {	
-        return models.Promise.each(req.body.member, function(entry) {
+        return models.Promise.each(memberList, function(entry) {
             var sGroup = StudentGroup({
             	StudentID: entry,
-            	GroupID: id,
+            	GroupID: toPost._id,
             });
             return sGroup.save();
         }) 	 
     })
     .then(function() {
-    	return res.status(200).send(id);
+    	return res.status(200).send(toPost._id);
     })
     .then(null, function() { 
         return res.status(400).send('Something broke');
@@ -74,42 +68,42 @@ module.exports.postGroup = function (req, res) {
 //  Author: Khiem Tran
 // ================================================================================
 module.exports.getGroupWithId = function (req, res) {
-	toFind = Group({
-		._id = req.id,
-	});
+	
 
-	var list;
-	var studentList;
-
-	Group.findById(toFind)
-	.then(function() {
-        sGroup = StudentGroup( {
-        	GroupID: req.id,
-        });
-        return list = sGroup.find(sGroup);
-	})
-    .then(function() {
-    	return models.Promise.each(list, function(entry) {
-            var student = models.Student.findById(entry.StudentID);
-            stuJson = {
-            	_id: student._id,
-            	FirstName: student.FirstName.
-            	LastName: student.LastName,
-            }
-            return studentList.push(stuJson);
+	var list = [];
+	var studentList = [];
+	var group;
+   
+	Group.findById(req.params.id)
+	.then(function(entry) {
+		group = entry;
+        sGroup = {
+        	GroupID: entry.id,
+        };
+        return StudentGroup.find(sGroup)
+    })
+    .then(function(entry) {
+    	return models.Promise.each(entry, function(stu) {
+            return models.Student.findById(stu.StudentID).then(function (student) {
+            	stuJson = {
+					_id: student._id,
+					FirstName: student.FirstName,
+			    	LastName: student.LastName,
+	   			}
+	            studentList.push(stuJson);
+            });
     	});
     })
     .then(function() {
     	sendback = {
-    		Owner: toFind.Owner,
+    		Owner: group.Owner,
     		Member: studentList,
     	}
-    	res.status(200).send(toFind.Owner)
+    	return res.status(200).send(sendback);
     })
-    .then(function() {
-    	res.status(400).send('Something Broke');
+    .then(null, function() {
+        return res.status(400).send('Something Broke');
     })
-
 };
 
 
@@ -122,7 +116,28 @@ module.exports.getGroupWithId = function (req, res) {
 //  Author: Khiem Tran
 // ================================================================================
 module.exports.putGroupWithId = function (req, res) {
+	if(req.body.name && req.body.owner) {
+	    var update = {
+		    GroupName: req.body.name,
+		    Owner: req.body.owner,
+	    }
+	}
+	else if(req.body.name) {
+		var update = {
+			GroupName: req.body.name,
+		}
+	}
+	else {
+		var update = {
+			Owner: req.body.owner,
+		}
+	}
 
+    Group.findByIdAndUpdate(req.params.id, update, function(err) {
+    	if(err)
+    		res.status(400).send('Something Broke');
+    	return res.status(200).send();
+    })
 };
 
 
@@ -135,6 +150,31 @@ module.exports.putGroupWithId = function (req, res) {
 //  Author: Khiem Tran
 // ================================================================================
 module.exports.deleteGroupWithId = function (req, res) {
+	var sGroup = {
+		GroupID: req.params.id,
+	}
+	var gConvo = {
+		GroupID: req.params.id,
+	}
+	var gReq = {
+		GroupID: req.params.id,
+	}
+
+    Group.findByIdAndRemove(req.params.id).then(function {
+    	return Group.remove(sGroup);
+    })
+    .then(function {
+    	return Group.remove(gConvo);
+    })
+    .then(function {
+    	return Group.remove(gReq);
+    })
+    .then(function {
+    	res.status(200).send();
+    })
+    .then(null, function {
+    	res.status(400).send();
+    })
 
 };
 
