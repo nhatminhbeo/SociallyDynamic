@@ -435,7 +435,7 @@ module.exports.getStudentFriendWithId = function (req, res) {
 				FriendID = thisClass.UserID[0];
 			}
 
-			return models.Student.find(_id: FriendID) 
+			return models.Student.find({"_id": FriendID}) 
 			.then(function(user) {
 				var jsonStudent = {
 					_id: user._id,
