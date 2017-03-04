@@ -377,8 +377,8 @@ module.exports.deleteStudentWithId = function (req, res) {
 	})
 
 	// Failed to remove student
-	.then(null, function(err) {
-		res.status(400).send(err);
+	.then(null, function() {
+		res.status(400).send();
 	});
 
 };

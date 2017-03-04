@@ -5,10 +5,10 @@
 // Last updated: Feb 12 2017
 // ===========================================================================
 var models = require('./general');
-var Promise = require('bluebird');
 var Group = models.Group;
 var StudentGroup = models.StudentGroup;
 var GroupRequest = models.GroupRequest;
+var Promise = models.Promise;
 
 // ===============================================================================================================================================
 //                                   Group (MSG)
@@ -200,37 +200,42 @@ module.exports.deleteGroupWithIdRequest = function (req, res) {
 // ================================================================================
 module.exports.getGroupUserWithId = function (req, res) {
 
-
-	var objectID = new models.Schema.Types.ObjectId(req.params.id);
 	var list = [];
 
+	// Check if student exist:
+	models.Student.findOne({"_id": req.params.id}).exec()
+
 	// Find all studentGroup objects
-	StudentGroup.find({_id: objectID}, "StudentID", function (err, students) {
-		if (err)
-			res.status(400).send();
+	.then(function (found) {
+		return models.StudentGroup.find({StudentID: req.params.id});
+	})
+
+	.then(function (groups) {
 
 		// Iterate through list of students found
-		Promise.Each(students, function (student) {
+		Promise.each(groups, function (group) {
 
 			// For each such student
-			return models.Student.findOne({"_id": student.StudentID})
+			return models.Group.findOne({"_id": group.GroupID})
 			.then(function (found) {
-				list.append({
-					"FirstName": found.FirstName,
-					"LastName": found.LastName,
-					"_id": found._id
-					});
-			})
+				list.push(found);
+			});
 		})
 
-		// Return
+		// Return if true
 		.then(function() {
-			res.status(200).send();
+			return res.status(200).json(list);
 		})
+
+		// Failed to find groups
 		.then(null, function() {
-			res.status(400).send();
+			return res.status(400).send();
 		});
 
-	});
+	})
 
+	// Failed to find student
+	.then(null, function() {
+		return res.status(400).send();
+	});
 };

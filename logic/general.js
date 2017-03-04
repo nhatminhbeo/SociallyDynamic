@@ -8,9 +8,12 @@
 // Initialize Mongodb + Mongoose
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/sociallydynamic');
+Promise = require('bluebird');
+mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 
 module.exports.Schema = Schema;
+module.exports.Promise = Promise;
 
 // ===========================================================================
 // Friendship Schema
