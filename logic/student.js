@@ -453,9 +453,9 @@ module.exports.getStudentFriendWithId = function (req, res) {
 					Email: user.Email,
 					Major: user.Major
 				}
-			}
+			});
 			list.push(jsonStudent);
 		}
 	return res.status(200).send(list);
-	}
+	});
 };

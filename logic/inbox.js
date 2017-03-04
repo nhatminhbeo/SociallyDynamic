@@ -25,13 +25,10 @@ module.exports.getInboxMessageWithId = function (req, res) {
 	var jsonStudent = {};
 
 	var toFind = {
-    	UserID[0]: req.params.id
-    };
-    var toFindAlt = {
-    	UserID[1]: req.params.id
+    	UserID: req.params.id
     };
 
-	models.Conversation.find({ '$and': [toFind, toFindAlt]}).exec()
+	models.Conversation.find(toFind).exec()
 
 	.then(function (classes) {
 
@@ -56,7 +53,7 @@ module.exports.getInboxMessageWithId = function (req, res) {
 				LastName: user.LastName,
 				};
 			});
-		}
+		});
 	}
 
 	// succeed
