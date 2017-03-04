@@ -21,7 +21,14 @@
 
 	<h2>Class List</h2>
 
-	<textarea class="classList" disabled="true" ng-repeat="class in classList">{{class}}</textarea>
+	<div ng-repeat="class in classList">
+		<div class="profile_classList">
+			<p class="classList">{{class}}</p>
+			<button ng-show="isEdit_classList">X</button>
+		</div>
+	</div>
+
+	<p ng-show="isEdit_classList">Some Box</p>
 	<div ng-show="isSelf">
 		<button ng-click="modifyClassList()">{{classListBtn}}</button>	
 	</div>
@@ -36,6 +43,7 @@
 	<h2>Study Habits</h2>
 
 	<textarea id="studyHabit" disabled="true" rows="8">{{studyHabit}}</textarea>
+	<p class="studyHabit" ng-repeat="habit in studyHabit">{{habit}}</p>
 	<div ng-show="isSelf">
 		<button ng-click="modifyStudyHabit()">{{studyHabitBtn}}</button>	
 	</div>

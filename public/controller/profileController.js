@@ -18,6 +18,8 @@ $http) {
             console.log("modifyClassList() called");
             console.log(document.getElementsByClassName("classList"));
         }
+
+        $scope.isEdit_classList = !$scope.isEdit_classList;
     }
 
     $scope.modifyUserBio = function() {
@@ -103,13 +105,14 @@ $http) {
 
         // TODO: see if viewing own profile
         $scope.isSelf = true;
+        $scope.isEdit_classList = false;
 
         // TODO: get stuff from the DB
         $scope.firstName = "First";
         $scope.lastName = "Last";
         $scope.classList = ["CSE 11", "CSE 12", "CSE 30"];
         $scope.userBio = DUMMY_TEXT;
-        $scope.studyHabit = DUMMY_TEXT;
+        $scope.studyHabit = ["Bed programming", "Loud music", "Random screaming"];
 
         if ( $scope.isSelf ) {
             $scope.userBioBtn = "Edit";
