@@ -422,13 +422,40 @@ module.exports.getStudentWithId = function (req, res) {
 //  Author: Ruohan Hu
 // ================================================================================
 module.exports.getStudentFriendWithId = function (req, res) {
+	
 	var toFind = {
     	UserID: req.params.id
     };
 
+    var list = [];
+
+    /*
 	Friendship.find(toFind, function (err, found) {
 		if(err) 
 			return res.status(400).send('Something broke');
 		return res.status(200).send(found);
 	});
+	*/
+	var jsonStudent = {};
+	FriendShip.find(toFind, function (err, found) {
+		if(err) 
+			return res.status(400).send('Something broke');
+		
+		for (var i = 0; i < found.length; i++) {
+			var userID = found[i];
+			Student.find(userID, function(err, user) {
+				jsonStudent = {
+					_id: user._id,
+					FirstName: user.FirstName,
+					LastName: user.LastName,
+					Age: user.Age,
+					Bio: user.Bio,
+					Email: user.Email,
+					Major: user.Major
+				}
+			}
+			list.push(jsonStudent);
+		}
+	return res.status(200).send(list);
+	}
 };
