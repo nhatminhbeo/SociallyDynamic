@@ -6,9 +6,14 @@
 // ===========================================================================
 
 // Initialize Mongodb + Mongoose
-var mongoose = require('mongoose')
-mongoose.createConnection('mongodb://localhost:27017/sociallydynamic');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/sociallydynamic');
+Promise = require('bluebird');
+mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
+
+module.exports.Schema = Schema;
+module.exports.Promise = Promise;
 
 // ===========================================================================
 // Friendship Schema
@@ -98,7 +103,7 @@ module.exports.StudentGroup = mongoose.model('StudentGroup', new Schema({
 // GroupRequest schema
 // ===========================================================================
 module.exports.GroupRequest = mongoose.model('GroupRequest', new Schema({
-	GroupID: Schema.Types.ObjectId,
+	GroupID: String,
 	Sender: String,
 	Receiver: String
 }, {collection: 'GroupRequest'}));
@@ -107,7 +112,7 @@ module.exports.GroupRequest = mongoose.model('GroupRequest', new Schema({
 // GroupMessage schema
 // ===========================================================================
 module.exports.GroupMessage = mongoose.model('GroupMessage', new Schema({
-	GroupID: Schema.Types.ObjectId,
+	GroupID: String,
 	Sender: String,
 	Content: String,
 	Chronology: Number
@@ -118,7 +123,7 @@ module.exports.GroupMessage = mongoose.model('GroupMessage', new Schema({
 // Conversation schema
 // ===========================================================================
 module.exports.Conversation = mongoose.model('Conversation', new Schema({
-	StudentID: String,
+	StudentID: [String],
 	Student1Seen: Number,
 	Student2Seen: Number,
 	CurrentChronology: Number,
@@ -129,7 +134,7 @@ module.exports.Conversation = mongoose.model('Conversation', new Schema({
 // Message schema
 // ===========================================================================
 module.exports.Message = mongoose.model('Message', new Schema({
-	ConversationID: Schema.Types.ObjectId,
+	ConversationID: String,
 	Sender: String,
 	Content: String,
 	Chronology: Number

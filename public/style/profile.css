@@ -1,0 +1,46 @@
+.profile_pic {
+	text-align: center;
+}
+
+.profile_info {
+	text-align: center;
+}
+
+#profile_delete_button button:hover {
+	background-color: red;
+	transition: background-color 0.5s ease;
+}
+
+.profile_info textarea {
+	resize: none;
+	outline: none;
+	width: 100%;
+	/* text-align: center; */
+	border: none;
+	border-radius: 2px;
+	padding: 12px 16px;
+	background-color: #EEEEEE;
+}
+
+.profile_info p {
+	border-radius: 2px;
+	padding: 12px 16px;
+	background-color: #EEEEEE;
+}
+
+.profile_list button {
+	padding: 0px 8px;
+	color: white;
+	transition: color 0.5s ease;
+	background-color: red;
+	transition: background-color 0.5s ease;
+	float: right;
+}
+
+.profile_list button:hover {
+	color: red;
+	transition: color 0.5s ease;
+	background-color: white;
+	transition: background-color 0.5s ease;
+	float: right;
+}
