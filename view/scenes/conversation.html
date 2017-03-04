@@ -1,1 +1,41 @@
-<h1>Hello from conversation.html and {{conversationController}}</h1>
+<!--<h1>Hello from conversation.html and {{conversationController}}</h1>-->
+
+<!-- top bar displays name of person user is talking to-->
+
+<div id = "header">
+   <h1 style= "text-align: left; font-size: 120%;" >Name</h1>
+</div>
+
+
+<!--body of page-->
+<div>
+	<!-- chat bubble views start -->
+	<div class="scroll">
+		<ul> <li> Eyvonne <br><br><br><br> </li>
+			<li>Justin</li>
+			<li>shiva</li>
+			<li>minh</li>
+		</ul>
+	</div>
+<!-- chat bubble views end -->
+
+<!-- message boxes start-->
+</div>
+<!--end of body -->
+
+
+<div id = "footer">
+
+  <form>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Type a message..." ng-model = "message">
+      <div class="input-group-btn">
+        <button ng-click="sendMessage()" class="btn btn-default" >Send</button>
+      </div>
+    </div>
+  </form>
+ </div> <!-- message box ends -->
+
+
+
+

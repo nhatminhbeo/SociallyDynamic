@@ -25,7 +25,11 @@
     <label for="exampleInputEmail1">Last Name</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name">
   </div>
-  <div class="form-group">
+	<div class="form-group">
+    <label for="exampleInputEmail1">Age</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Age">
+  </div>
+	<div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
   </div>
@@ -33,7 +37,10 @@
     <label for="exampleInputPassword1">Password</label>
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password">
   </div>
+
    <div class="form-group">
+		 <div class="row">
+		<div class="col-sm-6">
     <label for="major">Major</label>
     <input type="text" class="form-control" id="major" placeholder="Enter major" ng-model="majorFilter">
 	<ul class="list-group">
@@ -43,6 +50,16 @@
 			{{major}}
 		</a>
   </div>
+	<div class="col-sm-2">
+	</div>
+	<div class="col-sm-4">
+		<label>Selected Major</label>
+		<a class="list-group-item" ng-click="deleteMajor(selectedMajor)" ng-show="selectedMajor">
+			{{selectedMajor}}
+			</a>
+		</div>
+	</div>
+	</div>
 
      <div class="form-group">
 	<div class="row">
@@ -72,17 +89,29 @@
   </div>
 
 <div class="form-group">
+	<div class="row">
+		<div class="col-sm-6">
     <label for="studyHabits">Study Habits</label>
     <input type="text" class="form-control" id="studyHabits" placeholder="Search and Pick your Study Habits" 
 	ng-model="studyHabitFilter"/>
 	<ul class="list-group">
 		<a class="list-group-item" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity"
-		ng-click="studyHabitFunc(habit)"
-		ng-show="studyHabitFilter">
+		ng-click="studyHabitFunc(habit)">
 			{{habit}}
 		</a>
-	</ul>  
-  </div>
+		</ul>
+		</div> 
+		<div class="col-sm-2">
+			</div>
+		<div class="col-sm-4">
+				<ul class="list-group">
+			<label>Selected habits</label>
+				<a class="list-group-item" ng-repeat="(habitkey,habitvalue) in selectedHabits"
+				ng-click="deleteHabitFunc(habitkey)">
+				{{habitvalue}}
+				</a> 
+  	</div>
+	</div>
 
     <div class="form-group">
     <label for="Bio">Bio</label>
