@@ -219,15 +219,11 @@ module.exports.getStudentFriendWithId = function (req, res) {
 	Student.findById(studentFriendID, function(err, user) {
 		if (err) res.status(400).send(err);
 		// show the user
-		var jsonStudentFriend = Student({
-			_id: user._id,
-			FirstName: user.FirstName,
-			LastName: user.LastName,
-			Age: user.Age,
-			Bio: user.Bio,
-			Email: user.Email,
-			Major: user.Major
-		});
+
+		
+
+
+
 		res.status(200).json(jsonStudentFriend);
 	});
 };

@@ -22,7 +22,9 @@
 //  Author: 
 // ================================================================================
 module.exports.getInboxMessageWithId = function (req, res) {
+	var ObjectId = req.params.id;
 
+	inbox.findById()
 };
 
 // ================================================================================
