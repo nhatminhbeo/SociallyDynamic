@@ -332,7 +332,7 @@ module.exports.deleteStudentWithId = function (req, res) {
 		return ClassStudent.remove({StudentID: id}).exec();
 	})
 
-/* FUTURE FUNCTIONALITIES
+
 	// Removing student from all groups
 	.then(function() {
 		return StudentGroup.remove({StudentID: id}).exec();
@@ -347,15 +347,15 @@ module.exports.deleteStudentWithId = function (req, res) {
 	.then(function() {
 		return Group.find({Owner: id}, '_id').exec();
 	}).then(function(group) {
-		StudentGroup.remove({GroupID: group._id}), function (err){
+		return StudentGroup.remove({GroupID: group._id}), function (err){
 			if (!err) {
-				GroupMessage.remove({GroupID: group._id}, function (err) {
+				return GroupMessage.remove({GroupID: group._id}, function (err) {
 					if (!err) return Group.remove({_id: group._id}).exec();
 				});
 			}
 		});
 	})
-
+/* FUTURE FUNCTIONALITIES
 	// Remove all conversations of the user
 	.then(function() {
 		return Conversation.find({StudentID: id}, '_id').exec();
