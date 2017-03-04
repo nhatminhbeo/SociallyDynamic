@@ -337,7 +337,7 @@ module.exports.deleteStudentWithId = function (req, res) {
 	.then(function() {
 		return StudentGroup.remove({StudentID: id}).exec();
 	})
-
+/* FUTURE FUNCTIONALITIES
 	// Removing all group request of the user
 	.then(function() {
 		return GroupRequest.remove({'$or': [{Sender: id}, {Receiver: id}]}).exec();
@@ -355,7 +355,7 @@ module.exports.deleteStudentWithId = function (req, res) {
 			}
 		});
 	})
-/* FUTURE FUNCTIONALITIES
+
 	// Remove all conversations of the user
 	.then(function() {
 		return Conversation.find({StudentID: id}, '_id').exec();
