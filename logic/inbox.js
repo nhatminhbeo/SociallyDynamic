@@ -54,7 +54,7 @@ module.exports.getInboxMessageWithId = function (req, res) {
 				};
 			});
 		});
-	}
+	})
 
 	// succeed
 	.then(function() {
@@ -86,12 +86,12 @@ module.exports.getInboxFriendWithId = function (req, res) {
 			return models.Student.find({_id : sender.Sender})
 			.then(function(user) {
 				jsonStudent = {
-					RequestID: user.RequestID
+					RequestID: user.RequestID,
 					OtherID: user.StudentID,
 					FirstName: user.FirstName,
-					LastName: user.LastName,
+					LastName: user.LastName
 				}
-			}
+			});
 
 
 			/*
@@ -101,8 +101,8 @@ module.exports.getInboxFriendWithId = function (req, res) {
 			else {
 				var FriendStudent = thisClass.studentID[1];
 			}*/
-		}
-	}
+		});
+	})
 
 	// succeed
 	.then(function() {
@@ -140,7 +140,7 @@ module.exports.getInboxGroupWithId = function (req, res) {
 
 	// Find the student sending the request
 	}).then(function (groupRequest) {
-		return models.Group.findOne({"_id", groupRequest.GroupID})
+		return models.Group.findOne({"_id": groupRequest.GroupID})
 		.then(function (group) {
 			groupName = group.Name;
 			groupId = group._id;
@@ -153,7 +153,8 @@ module.exports.getInboxGroupWithId = function (req, res) {
 			_id: student._id,
 			FirstName: student.FirstName,
 			LastName: student.LastName,
-			GroupName: 
-		})
-	})
+			GroupName: groupName,
+			GroupID: groupID
+		});
+	});
 };
