@@ -27,6 +27,7 @@ var models = require('./general');
 module.exports.getMatchClassWithId = function (req, res) {
 
 	var map = {};
+	var list = [];
 
 	// Find list of class of student
 	models.ClassStudent.find({StudentID: req.params.id}).exec()
@@ -52,6 +53,7 @@ module.exports.getMatchClassWithId = function (req, res) {
 						}
 						else {
 							map[id] = {
+								_id: id,
 								Match: 1,
 								Classes: [thisClass.Class]
 							};
@@ -59,18 +61,23 @@ module.exports.getMatchClassWithId = function (req, res) {
 					}
 				});
 			});
-		})
+		});
 	})
 
-	// succeed
+	// Flattern the json to array
 	.then(function() {
-		return res.status(200).json(map);
+		for (entry in map) {
+			list.push(map[entry]);
+		}
+		list.sort(compare);
+		return res.status(200).json(list);
 	})
 
 	// Failed
 	.then(null, function() {
 		res.status(400).send();
 	});
+
 };
 
 
@@ -85,6 +92,7 @@ module.exports.getMatchClassWithId = function (req, res) {
 module.exports.getMatchHabitWithId = function (req, res) {
 
 	var map = {};
+	var list = [];
 
 	// Find list of class of student
 	models.StudentStudyHabit.find({StudentID: req.params.id}).exec()
@@ -110,6 +118,7 @@ module.exports.getMatchHabitWithId = function (req, res) {
 						}
 						else {
 							map[id] = {
+								_id: id,
 								Match: 1,
 								Habits: [habit.Habit]
 							};
@@ -117,12 +126,17 @@ module.exports.getMatchHabitWithId = function (req, res) {
 					}
 				});
 			});
-		})
+		});
 	})
 
-	// succeed
+	// Flattern the json to array
 	.then(function() {
-		return res.status(200).json(map);
+		for (entry in map) {
+			list.push(map[entry]);
+		}
+		console.log(list);
+		list.sort(compare);
+		return res.status(200).json(list);
 	})
 
 	// Failed
@@ -176,3 +190,15 @@ module.exports.getMatchMajorWithId = function (req, res) {
 		res.status(400).send();
 	});
 };
+
+var compare =function (a, b) {
+	if (a["Match"] > b["Match"]) {
+		return -1;
+	}
+	else if (a["Match"] < b["Match"]) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
