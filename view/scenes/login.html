@@ -1,0 +1,15 @@
+<h1>Hi there welcome to StuDyr!</h1>
+<h2>{{testvar}}</h2>
+<h3>{{yo}}</h3>
+<div ng-show="isLogin">
+	<input type="text" placeholder="Email" ng-model="email"></input>
+	<input type="password" placeholder="Password" ng-model="password"></input>
+	<button ng-click="signIn()">Sign In</button>
+	<button ng-click="changeForm()">Don't have an account? Sign Up!</button>
+</div>
+<div ng-hide="isLogin">
+	<input type="text" placeholder="Email" ng-model="email"></input>
+	<input type="password" placeholder="Password" ng-model="password"></input>
+	<button ng-click="createAccount()">Sign Up</button>
+	<button ng-click="changeForm()">Cancel</button>
+</div>

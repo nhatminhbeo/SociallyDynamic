@@ -16,9 +16,6 @@ var logger = require('morgan');
 var http = require('http');
 var app = express();
 
-mongoose.connect('mongodb://localhost/sociallydynamic');
-var db = mongoose.connection;
- 
 var port = process.env.PORT || 3000;
 
 
@@ -152,12 +149,13 @@ app.use(function(err, req, res, next) {
 
 var stu = require('./routes/student');  stu.route(app);
 var fri = require('./routes/friend');   fri.route(app);
-/*
-var mat = require('./routes/match');    mat.route(app);
 
+var mat = require('./routes/match');    mat.route(app);
+/*
 var mes = require('./routes/message');  mes.route(app);
-var gro = require('./routes/group');    gro.route(app);
-var inb = require('./routes/inbox');    inb.route(app);
 */
+var gro = require('./routes/group');    gro.route(app);
+//var inb = require('./routes/inbox');    inb.route(app);
+
 
 var pub = require('./routes/public');   pub.route(app, __dirname);

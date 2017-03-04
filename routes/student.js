@@ -16,7 +16,7 @@
 //    /api/student/friend/:id |   GET       |   Get a list of friends (name, profile pic, id) of user defined by id
 // ===============================================================================================================================================
 
-var api = require('../logic/student.js');
+var api = require('../logic/student');
 module.exports.route = function(app) {
 	app.post('/api/student', api.postStudent);
 	app.put('/api/student/:id', api.putStudentWithId);
