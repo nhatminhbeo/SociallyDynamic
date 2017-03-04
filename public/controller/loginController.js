@@ -9,9 +9,8 @@ loggedIn, $http, $rootScope){
 		url: '/api/data/class'
 	}).then(function(data){
 		console.log(data);
-		for(var item in data){
-			$scope.classes.push(item["Name"]);
-			console.log(item["Name"]);
+		for (var i = 0; i < data.data.length; i++){
+			$scope.classes.push(data.data[i].Name);
 		}
 		
 	});
