@@ -16,6 +16,10 @@
 
 <div class="profile_info">
 
+	<div ng-show="DEBUG">
+		<button ng-click="changeView()">{{viewMode}}</button>
+	</div>
+
 	<h1>{{firstName}} {{lastName}}</h1>
 	<h3>{{major}}</h3>
 	<h3>{{sex}}</h3>
@@ -24,7 +28,7 @@
 	<h2>Class List</h2>
 
 	<div class="profile_list" ng-repeat="class in classList">
-		<p class="classList">{{class}}<button ng-show="isEdit_classList">X</button></p>
+		<p class="classList">{{class}}<button ng-click="deleteClass(class)" ng-show="isEdit_classList">X</button></p>
 	</div>
 
 	<p ng-show="isEdit_classList">Search Box</p>
