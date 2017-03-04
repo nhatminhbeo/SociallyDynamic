@@ -13,3 +13,10 @@
 //    /api/data/major         |   GET       |   Get list of majors
 //    /api/data/habit         |   GET       |   Get list of habits
 // ===============================================================================================================================================
+
+var api = require('../logic/data.js');
+module.exports.route = function(app) {
+	app.get('/api/data/class', api.getDataClass);
+	app.get('/api/data/habit', api.getDataHabit);
+	app.get('/api/data/major', api.getDataMajor);
+};
