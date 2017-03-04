@@ -1,15 +1,97 @@
-<h1>Hi there welcome to StuDyr!</h1>
-<h2>{{testvar}}</h2>
-<h3>{{yo}}</h3>
+
+
+<img href="/" src="images/studyr.png" style="width:30%;height:30%;"/>
 <div ng-show="isLogin">
-	<input type="text" placeholder="Email" ng-model="email"></input>
-	<input type="password" placeholder="Password" ng-model="password"></input>
-	<button ng-click="signIn()">Sign In</button>
-	<button ng-click="changeForm()">Don't have an account? Sign Up!</button>
+	<form>
+	<div class="form-group">
+		<label for="emailLogin">Email address </label>
+		<input type="text" autocomplete="off" class="form-control" placeholder="Email" id="emailLogin" ng-model="email"></input>
+		<label for="passwordLogin">Password </label>
+		<input type="password" autocomplete="off" class="form-control" placeholder="Password" id="passwordLogin" ng-model="password"></input>
+		<br>
+		<button class="btn btn-primary" ng-click="signIn()">Sign In</button>
+		<button class="btn btn-primary" ng-click="changeForm()">Don't have an account? Sign Up!</button>
+	</div>
+</form>
 </div>
 <div ng-hide="isLogin">
-	<input type="text" placeholder="Email" ng-model="email"></input>
-	<input type="password" placeholder="Password" ng-model="password"></input>
-	<button ng-click="createAccount()">Sign Up</button>
-	<button ng-click="changeForm()">Cancel</button>
+<form>
+  <button ng-click="changeForm()" class="btn btn-primary">Return to the home page</button>
+  <div class="form-group">
+    <label for="exampleInputEmail1">First Name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Last Name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password">
+  </div>
+   <div class="form-group">
+    <label for="major">Major</label>
+    <input type="text" class="form-control" id="major" placeholder="Enter major" ng-model="majorFilter">
+	<ul class="list-group">
+		<a class="list-group-item" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity"
+		ng-click="majorFunc(major)"
+		ng-show="majorFilter">
+			{{major}}
+		</a>
+  </div>
+
+     <div class="form-group">
+	<div class="row">
+	<div class="col-sm-6">
+    <label for="classList">Classes you are in</label>
+    <input type="text" class="form-control" id="classList" placeholder="Search classes" ng-model="classFilter"/>
+	<ul class="list-group">
+		<a class="list-group-item" ng-repeat="class in classes | filter:classFilter | limitTo:quantity" 
+		ng-click="classFunc(class)"
+		ng-show="classFilter">
+			{{class}}
+		</a>
+	</ul>
+	</div>
+	<div class="col-sm-2">
+	</div>
+	<div class="col-sm-4">
+		<ul class="list-group">
+			<label>Selected Classes</label>
+				<a class="list-group-item" ng-repeat="(classkey,classvalue) in selectedClasses"
+				ng-click="deleteClassFunc(classkey)">
+					{{classvalue}}
+				</a>
+			</ul>
+	</div>
+	</div>
+  </div>
+
+<div class="form-group">
+    <label for="studyHabits">Study Habits</label>
+    <input type="text" class="form-control" id="studyHabits" placeholder="Search and Pick your Study Habits" 
+	ng-model="studyHabitFilter"/>
+	<ul class="list-group">
+		<a class="list-group-item" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity"
+		ng-click="studyHabitFunc(habit)"
+		ng-show="studyHabitFilter">
+			{{habit}}
+		</a>
+	</ul>  
+  </div>
+
+    <div class="form-group">
+    <label for="Bio">Bio</label>
+    <textarea style="resize:none;" class="form-control" id="Bio" rows="5"></textarea>
+  </div>
+
+ 
+  <button ng-click="createAccount()" class="btn btn-primary" >Sign Up</button>
+   <button ng-click="changeForm()" class="btn btn-primary">Cancel</button>
+</form>
 </div>
+
