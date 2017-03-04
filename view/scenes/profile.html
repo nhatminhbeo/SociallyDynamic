@@ -1,28 +1,33 @@
+<!--
 <h1>Hello from profile</h1>
 
 <button ng-click="logout()">Logout</button>
+-->
 
 <!-- Align Center -->
 
-<div id="pic">
-	<img src="" />
+<div class="profile_pic">
+	<img src="images/profile.png" />
 </div>
 
-<div id="info">
+<div class="profile_info">
 
-	<h1>{{name}}</h1>
+	<h1>{{firstName}} {{lastName}}</h1>
 
-	<h2>{{classList}}</h2>
+	<h2>Class List</h2>
+	<h3 class ="profile_classList" ng-repeat="class in classList">{{class}}</h3>
 	<div ng-show="isSelf">
 		<button ng-click="modifyClassList()">Edit</button>	
 	</div>
 
-	<h2>{{userBio}}</h2>
+	<h2>User Bio</h2>
+	<p>{{userBio}}</p>
 	<div ng-show="isSelf">
 		<button ng-click="modifyUserBio()">Edit</button>	
 	</div>
 	
-	<h2>{{studyHabit}}</h2>
+	<h2>Study Habit</h2>
+	<p>{{studyHabit}}</p>
 	<div ng-show="isSelf">
 		<button ng-click="modifyStudyHabit()">Edit</button>	
 	</div>

@@ -1,0 +1,28 @@
+body{
+	margin: 40px auto;
+	max-width: 650px;
+	line-height: 1.6;
+	font-size: 18px;
+	color: #444;
+	padding: 0 10px
+}
+
+h1, h2, h3{
+	line-height:1.2
+}
+
+.profile_pic {
+	text-align: center;
+}
+
+.profile_info {
+	text-align: center;
+}
+
+.profile_info button {
+	border: none;
+	border-radius: 20px;
+	padding: 12px 16px;
+	background-color: #616EEF;
+	color: white;
+	cursor: pointer;
