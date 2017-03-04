@@ -74,22 +74,20 @@ module.exports.getInboxMessageWithId = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.getInboxFriendWithId = function (req, res) {
-	var jsonStudent = {};
 	var list = [];
-   	models.friendRequest.find({"Receiver" : req.params.id}).exec()
-	.then(function (senders) {
+   	models.FriendRequest.find({"Receiver" : req.params.id}).exec()
+	.then(function (friendRequests) {
 	    // For each such class:
-		return models.Promise.each(senders, function(sender) {
+		return models.Promise.each(friendRequests, function(friendRequest) {
 
-			return models.Student.find({"_id" : sender.Sender})
+			return models.Student.find({"_id" : friendRequest.Sender})
 			.then(function(user) {
-				jsonStudent = {
-					RequestID: friendRequest._id,
-					OtherID: user.StudentID,
+				list.push({
 					FirstName: user.FirstName,
-					LastName: user.LastName
-				}
-				list.push(jsonStudent);
+					LastName: user.LastName,
+					OtherID: user._id,
+					RequestID: friendRequest._id
+				});
 			});
 		});
 	})
@@ -98,7 +96,6 @@ module.exports.getInboxFriendWithId = function (req, res) {
 	.then(function() {
 		return res.status(200).json(list);
 	})
-
 	// Failed
 	.then(null, function() {
 		res.status(400).send();

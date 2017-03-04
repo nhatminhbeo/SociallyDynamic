@@ -429,7 +429,7 @@ module.exports.getStudentFriendWithId = function (req, res) {
 		// For each such class:
 		return models.Promise.each(classes, function(thisClass) {
 			var FriendID = "";
-			if (UserID[0] != req.params.id) {
+			if (thisClass.UserID[0] != req.params.id) {
 				FriendID = thisClass.UserID[0];
 			} else {
 				FriendID = thisClass.UserID[1];
