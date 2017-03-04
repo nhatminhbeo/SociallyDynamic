@@ -50,7 +50,6 @@ module.exports.postGroup = function (req, res) {
     })
     .then(function() {	
         return models.Promise.each(req.body.member, function(entry) {
-        	console.log(id);
             var sGroup = StudentGroup({
             	StudentID: entry,
             	GroupID: id,
@@ -60,10 +59,10 @@ module.exports.postGroup = function (req, res) {
     })
     .then(function() {
     	return res.status(200).send(id);
-    })/*
+    })
     .then(null, function() { 
         return res.status(400).send('Something broke');
-    })*/
+    })
 };
 
 // ================================================================================
@@ -75,9 +74,41 @@ module.exports.postGroup = function (req, res) {
 //  Author: Khiem Tran
 // ================================================================================
 module.exports.getGroupWithId = function (req, res) {
-	Group.findById(function(err, entry) {
+	toFind = Group({
+		._id = req.id,
+	});
 
+	var list;
+	var studentList;
+
+	Group.findById(toFind)
+	.then(function() {
+        sGroup = StudentGroup( {
+        	GroupID: req.id,
+        });
+        return list = sGroup.find(sGroup);
 	})
+    .then(function() {
+    	return models.Promise.each(list, function(entry) {
+            var student = models.Student.findById(entry.StudentID);
+            stuJson = {
+            	_id: student._id,
+            	FirstName: student.FirstName.
+            	LastName: student.LastName,
+            }
+            return studentList.push(stuJson);
+    	});
+    })
+    .then(function() {
+    	sendback = {
+    		Owner: toFind.Owner,
+    		Member: studentList,
+    	}
+    	res.status(200).send(toFind.Owner)
+    })
+    .then(function() {
+    	res.status(400).send('Something Broke');
+    })
 
 };
 
