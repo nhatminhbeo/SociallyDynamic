@@ -337,7 +337,7 @@ module.exports.deleteStudentWithId = function (req, res) {
 	.then(function() {
 		return StudentGroup.remove({StudentID: id}).exec();
 	})
-
+/* FUTURE FUNCTIONALITIES
 	// Removing all group request of the user
 	.then(function() {
 		return GroupRequest.remove({'$or': [{Sender: id}, {Receiver: id}]}).exec();
@@ -355,7 +355,7 @@ module.exports.deleteStudentWithId = function (req, res) {
 			}
 		});
 	})
-/* FUTURE FUNCTIONALITIES
+
 	// Remove all conversations of the user
 	.then(function() {
 		return Conversation.find({StudentID: id}, '_id').exec();
@@ -422,21 +422,13 @@ module.exports.getStudentWithId = function (req, res) {
 //  Author: Ruohan Hu
 // ================================================================================
 module.exports.getStudentFriendWithId = function (req, res) {
-	var stduentFriendID = req.params.id;
+	var toFind = {
+    	UserID: req.params.id
+    };
 
-	// get a user with the ID
-	Student.findById(studentFriendID, function(err, user) {
-		if (err) res.status(400).send(err);
-		// show the user
-		var jsonStudentFriend = Student({
-			_id: user._id,
-			FirstName: user.FirstName,
-			LastName: user.LastName,
-			Age: user.Age,
-			Bio: user.Bio,
-			Email: user.Email,
-			Major: user.Major
-		});
-		res.status(200).json(jsonStudentFriend);
+	Friendship.find(toFind, function (err, found) {
+		if(err) 
+			return res.status(400).send('Something broke');
+		return res.status(200).send(found);
 	});
 };
