@@ -22,41 +22,37 @@ var models = require("./general");
 //  Author: 
 // ================================================================================
 module.exports.getInboxMessageWithId = function (req, res) {
-	var jsonObject = {};
-
+	var list = [];
 
 	models.Conversation.find({"_id": req.params.id}).exec()
-	.then(function (classes) {
+	.then(function (conversations) {
 
 		// For each such class:
-		return models.Promise.each(classes, function(thisClass) {
-			var ConverstionID = thisClass._id;
+		return models.Promise.each(conversations, function(thisConversation) {
             var FriendStudentID = "";
-			if (thisClass.studentID[0] != req.params.id) {
-				FriendStudentID = thisClass.studentID[0];
+			if (thisConversation.studentID[0] != req.params.id) {
+				FriendStudentID = thisConversation.studentID[0];
 			}
 			else {
-				FriendStudentID = thisClass.studentID[1];
+				FriendStudentID = thisConversation.studentID[1];
 			}
 
-			return models.Student.find({"_id": FriendStudentID})
-			.then(function (stu) {
-				jsonObject = {
-					FirstName: stu.FirstName,
-					LastName: stu.LastName,
-					_id: stu._id
-				}
-			});
-			return models.GroupMessage.find({"_id": ConverstionID})
-			.then(function (message) {
-				jsonObject["LatestMessage"] = message.Content;
+			var a = models.Student.find({"_id": FriendStudentID});
+			var b = models.GroupMessage.find({"_id": thisConversation._id});
+			return models.Promise.join(a, b, function(student, message) {
+				list.push({
+					FirstName: student.FirstName,
+					LastName: student.LastName,
+					OtherID: student._id,
+					Message: message.Content
+				});
 			});
 		});
 	})
 
 	// succeed
 	.then(function() {
-		return res.status(200).json(jsonStudent);
+		return res.status(200).json(list);
 	})
 
 	// Failed
