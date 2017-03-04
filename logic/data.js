@@ -5,6 +5,7 @@
 // Last updated: Feb 12 2017
 // ===========================================================================
 
+var models = require('./general');
 
 // ===============================================================================================================================================
 //    Path                    |   Method    |   Purpose / Brief Description
@@ -25,7 +26,14 @@
 //  Author: 
 // ================================================================================
 module.exports.getDataClass = function (req, res) {
-
+	models.Class.find({}, function (err, found) {
+		if (err) {
+			return res.status(400).send();
+		}
+		else {
+			return res.status(200).send(found);
+		}
+	});
 };
 
 

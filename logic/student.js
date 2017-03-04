@@ -422,13 +422,44 @@ module.exports.getStudentWithId = function (req, res) {
 //  Author: Ruohan Hu
 // ================================================================================
 module.exports.getStudentFriendWithId = function (req, res) {
-	var toFind = {
-    	UserID: req.params.id
-    };
+	var list = [];
 
-	Friendship.find(toFind, function (err, found) {
-		if(err) 
-			return res.status(400).send('Something broke');
-		return res.status(200).send(found);
+	models.Friendship.find({"UserID": req.params.id}).exec()
+	.then(function(classes) {
+		// For each such class:
+		return models.Promise.each(classes, function(thisClass) {
+			var FriendID = "";
+			if (thisClass.UserID[0] != req.params.id) {
+				FriendID = thisClass.UserID[0];
+			} else {
+				FriendID = thisClass.UserID[1];
+			}
+
+			return models.Student.find({"_id": FriendID}) 
+			.then(function(user) {
+				var jsonStudent = {
+					_id: user._id,
+					FirstName: user.FirstName,
+					LastName: user.LastName,
+					Age: user.Age,
+					Bio: user.Bio,
+					Email: user.Email,
+					Major: user.Major
+				}
+				list.push(jsonStudent);
+			});
+		});
+	})
+
+	// succeed
+	.then(function() {
+		return res.status(200).json(list);
+	})
+
+	// Failed
+	.then(null, function() {
+		res.status(400).send();
 	});
+
+	
 };

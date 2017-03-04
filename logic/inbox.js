@@ -22,46 +22,37 @@ var models = require("./general");
 //  Author: 
 // ================================================================================
 module.exports.getInboxMessageWithId = function (req, res) {
-	var jsonStudent = {};
+	var list = [];
 
-	var toFind = {
-    	UserID[0]: req.params.id
-    };
-    var toFindAlt = {
-    	UserID[1]: req.params.id
-    };
-
-	models.Conversation.find({ '$and': [toFind, toFindAlt]}).exec()
-
-	.then(function (classes) {
+	models.Conversation.find({"_id": req.params.id}).exec()
+	.then(function (conversations) {
 
 		// For each such class:
-		return models.Promise.each(classes, function(thisClass) {
-
-
-			if (thisClass.studentID[0] != req.params.id) {
-				var FriendStudent = thisClass.studentID[0];
+		return models.Promise.each(conversations, function(thisConversation) {
+            var FriendStudentID = "";
+			if (thisConversation.studentID[0] != req.params.id) {
+				FriendStudentID = thisConversation.studentID[0];
 			}
 			else {
-				var FriendStudent = thisClass.studentID[1];
+				FriendStudentID = thisConversation.studentID[1];
 			}
 
-
-			return models.Student.findOne({"Class": thisClass.Class})
-			.then(function (user) {
-				
-				jsonStudent = {
-			    otherID: FriendStudent,
-				FirstName: user.FirstName,
-				LastName: user.LastName,
-				};
+			var a = models.Student.find({"_id": FriendStudentID});
+			var b = models.GroupMessage.find({"_id": thisConversation._id});
+			return models.Promise.join(a, b, function(student, message) {
+				list.push({
+					FirstName: student.FirstName,
+					LastName: student.LastName,
+					OtherID: student._id,
+					Message: message.Content
+				});
 			});
-		}
-	}
+		});
+	})
 
 	// succeed
 	.then(function() {
-		return res.status(200).json(jsonStudent);
+		return res.status(200).json(list);
 	})
 
 	// Failed
@@ -79,44 +70,32 @@ module.exports.getInboxMessageWithId = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.getInboxFriendWithId = function (req, res) {
-	var jsonStudent = {};
-
-   	models.friendRequest.find({Receiver : req.params.id}).exec()
-	.then(function (senders) {
+	var list = [];
+   	models.FriendRequest.find({"Receiver" : req.params.id}).exec()
+	.then(function (friendRequests) {
 	    // For each such class:
-		return models.Promise.each(senders, function(sender) {
+		return models.Promise.each(friendRequests, function(friendRequest) {
 
-			return models.Student.find({_id : sender.Sender})
+			return models.Student.find({"_id" : friendRequest.Sender})
 			.then(function(user) {
-				jsonStudent = {
-					RequestID: user.RequestID
-					OtherID: user.StudentID,
+				list.push({
 					FirstName: user.FirstName,
 					LastName: user.LastName,
-				}
-			}
-
-
-			/*
-			if (thisClass.studentID[0] != req.params.id) {
-				var FriendStudent = thisClass.studentID[0];
-			}
-			else {
-				var FriendStudent = thisClass.studentID[1];
-			}*/
-		}
-	}
+					OtherID: user._id,
+					RequestID: friendRequest._id
+				});
+			});
+		});
+	})
 
 	// succeed
 	.then(function() {
-		return res.status(200).json(jsonStudent);
+		return res.status(200).json(list);
 	})
-
 	// Failed
 	.then(null, function() {
 		res.status(400).send();
 	});
-
 };
 
 
@@ -130,4 +109,39 @@ module.exports.getInboxFriendWithId = function (req, res) {
 // ================================================================================
 module.exports.getInboxGroupWithId = function (req, res) {
 
+	var list = [];
+	var groupName = "";
+	var groupID = "";
+	var gr;
+
+	// Get all GroupRequest of user id
+	models.GroupRequest.find({"Receiver": req.params.id}).exec()
+
+	// For each such GroupRequest:
+	.then(function (groupRequests) {
+
+		return models.Promise.each(groupRequests, function (groupRequest) {
+
+			var a = models.Group.findOne({"_id": groupRequest.GroupID});
+			var b = models.Student.findOne({"_id": groupRequest.Sender});
+	
+
+			return models.Promise.join(a,b, function (group, student) {
+				list.push({
+					StudentID: student._id,
+					FirstName: student.FirstName,
+					LastName: student.LastName,
+					GroupName: group.GroupName,
+					GroupID: group._id
+				});
+			});
+		});
+	
+	}).then(function() {
+		return res.status(200).send(list);
+	
+	// Failed
+	}).then(null, function() {
+		res.status(400).send();
+	});
 };
