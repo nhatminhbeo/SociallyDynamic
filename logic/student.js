@@ -17,14 +17,14 @@
 //    /api/student/friend/:id |   GET       |   Get a list of friends (name, profile pic, id) of user defined by id
 // ===============================================================================================================================================
 
-var general = require('./general');
-var Student = general.Student;
-var ClassStudent = general.ClassStudent;
-var StudentStudyHabit = general.StudentStudyHabit;
-var Class = general.Class;
-var StudyHabit = general.StudyHabit;
-var FriendRequest = general.FriendRequest;
-var Friendship = general.Friendship;
+var models = require('./general');
+var Student = models.Student;
+var ClassStudent = models.ClassStudent;
+var StudentStudyHabit = models.StudentStudyHabit;
+var Class = models.Class;
+var StudyHabit = models.StudyHabit;
+var FriendRequest = models.FriendRequest;
+var Friendship = models.Friendship;
 
 
 // ================================================================================
@@ -49,15 +49,10 @@ var Friendship = general.Friendship;
 // ================================================================================
 module.exports.postStudent = function (req, res) {
 
-	var done1 = false;
-	var done2 = false;
-	var count1 = 0;
-	var count2 = 0;
-
 	var ref = req.body;
 
 	// Put necessary fields into a student model.
-	var newStudent = Student({
+	var newStudent = models.Student({
 		_id: ref._id,
 		Email: ref.Email,
 		FirstName: ref.FirstName,
@@ -67,99 +62,44 @@ module.exports.postStudent = function (req, res) {
 		Major: ref.Major
 	});
 
+
 	// Create it in database
 	newStudent.save(function(err) {
 
+		// For each class
+		return models.Promise.each(ref.Class, function (Class) {
 
-		// Couldn't create student
-		if (err) {
-			console.log('Can not create new student in mongodb');
-			return res.status(400).send(err);
-		}
-		else {
-			// Make sure to respond when Class is empty
-			console.log(ref.Class.length + " " + ref.Habit.length);
-			if (ref.Class.length === 0 && ref.Habit.length ===0 ) {
-				return res.status(200).send();
-			}
-			// Student created, making studentclass relationships
-			ref.Class.forEach(function (each) {
-				// Find to see if the class is a valid class in database
-				Class.findOne({"Name": each}, function(err, thisClass) {
-					console.log(thisClass);
-
-					// Not a valid class
-					if (err) {
-						console.log('Can not find class ' + each);
-						return res.status(400).send(err);
-					}
-					else {
-						// Valid student, create ClassStudent relationship
-						var classStudent = ClassStudent({
-							StudentID: ref._id,
-							Class: thisClass.Name
-						});
-
-						classStudent.save(function(err) {
-							if (err) {
-								console.log('Can not create new ClassStudent in mongodb');
-								console.log(err);
-								return res.status(400).send();
-							}
-
-							if (count1 === ref.Class.length - 1) {
-								done1 = true;
-								if (done2) {
-									return res.status(200).send();
-								}
-							}
-
-							count1++;
-							console.log('count1: ' + count1 + done1);
-						});
-					}
-				});
+			// Save the classStudent relationship
+			var classStudent = models.ClassStudent({
+				StudentID: ref._id,
+				Class: Class
 			});
+			return classStudent.save();
+		});
 
-			// Create student habit relationships for each habit
-			ref.Habit.forEach(function (each) {
-				// Find if the class is valid
-				StudyHabit.findOne({"Habit": each}, function(err, habit) {
 
-					// Class not valid
-					if (err) {
-						console.log('Can not find study habit ' + each);
-						return res.status(400).send(err);
-					}
+	}).then(function () {
 
-					// Found study habit, making StudentStudyHabit relationship
-					var studentStudyHabit = StudentStudyHabit({
-						StudentID: ref._id,
-						Habit: each
-					});
-
-					// Put it in database
-					studentStudyHabit.save(function(err) {
-						// Couldn't create ?
-						if (err) {
-							console.log('Can not create new studentStudyHabit in mongodb');
-							return res.status(400).send(err);
-						}
-						else {
-							if (count2 === ref.Habit.length - 1) {
-								done2 = true;
-								if (done1) {
-									return res.status(200).send();
-								}
-							}
-						}
-						count2++;
-						console.log('count2: ' + count2 + done2);
-					});
-				});
+		// For each habit
+		return models.Promise.each(ref.Habit, function(Habit) {
+		
+			// Save the student class relationship
+			var studentStudyHabit = models.StudentStudyHabit({
+				StudentID: ref._id,
+				Habit: Habit
 			});
-		}
+			return studentStudyHabit.save();
+		});
+
+	// Return 200 if success
+	}).then(function() {
+		res.status(200).send();
+
+	// Return 400 if fail anywhere
+	}).then(null, function() {
+		res.status(400).send();
 	});
+
 };
 
 
@@ -201,6 +141,26 @@ module.exports.putStudentWithId = function (req, res) {
 		Bio: ref.Bio,
 		Major: ref.Major
 	}
+
+	// Update the student
+	models.Student.findByIdAndUpdate(req.params.id, entries).exec()
+
+	// Remove all ClassStudent
+	.then(function () {
+		return ClassStudent.remove({StudentID: req.params.id});
+	})
+
+	// Update new ClassStudent
+	.then(function () {
+		return models.Promise.each(ref.Class, function (Class) {
+			// Save the classStudent relationship
+			var classStudent = models.ClassStudent({
+				StudentID: ref._id,
+				Class: Class
+			});
+			return classStudent.save();
+		}
+	})
 
 	// Update Student schema
 	Student.findByIdAndUpdate(req.params.id, entries, function (err, result) {
@@ -332,12 +292,12 @@ module.exports.deleteStudentWithId = function (req, res) {
 		return ClassStudent.remove({StudentID: id}).exec();
 	})
 
-
+/* FUTURE FUNCTIONALITIES
 	// Removing student from all groups
 	.then(function() {
 		return StudentGroup.remove({StudentID: id}).exec();
 	})
-/* FUTURE FUNCTIONALITIES
+
 	// Removing all group request of the user
 	.then(function() {
 		return GroupRequest.remove({'$or': [{Sender: id}, {Receiver: id}]}).exec();
@@ -375,12 +335,12 @@ module.exports.deleteStudentWithId = function (req, res) {
 	.then(function () {
 		return res.status(200).send();
 	})
-
+/*
 	// Failed to remove student
 	.then(null, function() {
 		res.status(400).send();
 	});
-
+*/
 };
 
 
