@@ -65,6 +65,8 @@ $http) {
             console.log("Before: " + isDisabled);
         }
 
+        $scope.isEdit_studyHabit = !$scope.isEdit_studyHabit;
+
         // Save changes to DB
         if (!isDisabled) {
 
@@ -106,6 +108,7 @@ $http) {
         // TODO: see if viewing own profile
         $scope.isSelf = true;
         $scope.isEdit_classList = false;
+        $scope.isEdit_studyHabit = false;
 
         // TODO: get stuff from the DB
         $scope.firstName = "First";
