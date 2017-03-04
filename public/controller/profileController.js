@@ -15,24 +15,75 @@ $http) {
 
         // Modify User Class List
         if (DEBUG) {
-            console.log("modifyClassList() called")
+            console.log("modifyClassList() called");
+            console.log(document.getElementsByClassName("classList"));
         }
+
+        $scope.isEdit_classList = !$scope.isEdit_classList;
     }
 
     $scope.modifyUserBio = function() {
 
+        var isDisabled = document.getElementById("userBio").disabled;
+
         // Modify User Bio
         if (DEBUG) {
             console.log("modifyUserBio() called");
+            console.log("Before: " + isDisabled);
+        }
+
+        // Save changes to DB
+        if (!isDisabled) {
+
+            if (DEBUG) {
+                console.log("Saving changes to DB");
+            }
+
+            // TODO
+
+        }
+
+        // Toggle editability
+        isDisabled = document.getElementById("userBio").disabled = !isDisabled;
+
+        // Toggle button text
+        $scope.userBioBtn = isDisabled ? "Edit" : "Save";
+
+        if (DEBUG) {
+            console.log("After: " + isDisabled);
         }
 
     };
 
     $scope.modifyStudyHabit = function() {
 
-        // Modify User Bio
+        var isDisabled = document.getElementById("studyHabit").disabled;
+
+        // Modify Study Habits
         if (DEBUG) {
             console.log("modifyStudyHabit() called");
+            console.log("Before: " + isDisabled);
+        }
+
+        // Save changes to DB
+        if (!isDisabled) {
+
+            if (DEBUG) {
+                console.log("Saving changes to DB");
+            }
+
+            // TODO
+
+        }
+
+        // Toggle editability
+        isDisabled = document.getElementById("studyHabit").disabled = !isDisabled;
+
+        // Toggle button text
+        $scope.studyHabitBtn = isDisabled ? "Edit" : "Save";
+
+        if (DEBUG) {
+            console.log("After: " + isDisabled);
         }
 
     };
@@ -52,13 +103,23 @@ $http) {
             console.log("getProfile() called");
         }
 
+        // TODO: see if viewing own profile
+        $scope.isSelf = true;
+        $scope.isEdit_classList = false;
+
+        // TODO: get stuff from the DB
         $scope.firstName = "First";
         $scope.lastName = "Last";
         $scope.classList = ["CSE 11", "CSE 12", "CSE 30"];
         $scope.userBio = DUMMY_TEXT;
-        $scope.studyHabit = DUMMY_TEXT;
+        $scope.studyHabit = ["Bed programming", "Loud music", "Random screaming"];
+
+        if ( $scope.isSelf ) {
+            $scope.userBioBtn = "Edit";
+            $scope.classListBtn = "Edit";
+            $scope.studyHabitBtn = "Edit";
+        }
     }
 
     getProfile();
-    $scope.isSelf = true;
 }]);
