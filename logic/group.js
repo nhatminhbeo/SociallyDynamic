@@ -160,19 +160,19 @@ module.exports.deleteGroupWithId = function (req, res) {
 		GroupID: req.params.id,
 	}
 
-    Group.findByIdAndRemove(req.params.id).then(function {
+    Group.findByIdAndRemove(req.params.id).then(function () {
     	return Group.remove(sGroup);
     })
-    .then(function {
+    .then(function () {
     	return Group.remove(gConvo);
     })
-    .then(function {
+    .then(function () {
     	return Group.remove(gReq);
     })
-    .then(function {
+    .then(function () {
     	res.status(200).send();
     })
-    .then(null, function {
+    .then(null, function () {
     	res.status(400).send();
     })
 
