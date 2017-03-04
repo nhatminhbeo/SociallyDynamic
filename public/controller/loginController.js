@@ -1,10 +1,31 @@
 //angular.module('SD')
-app.controller('loginController', ['$scope', 'authService', '$location', 'loggedIn','$http', function($scope, authService, $location, 
-loggedIn, $http){
+app.controller('loginController', ['$scope', 'authService', '$location', 'loggedIn', '$http', '$rootScope',
+function($scope, authService, $location, 
+loggedIn, $http, $rootScope){
+
+	// picking classes that a person is in 
+	$scope.classFilter = '';
+	$scope.selectedClasses = {};
+	$scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
+	$scope.quantity = 5;
+
+	// picking a major that a person is in 
+	$scope.majorFilter = '';
+	$scope.selectedMajor;
+	$scope.majors = ["Computer Science", "Math-Computer Science", "Social Studies", "Swag", "Swole", "Swoon"];
+
+	// picking study habits that a person has 
+	$scope.studyHabitFilter = '';
+	$scope.selectedHabits = {};
+	$scope.studyHabits = ["Bed Programming", "Light Music", "quiet", "I'm cool", "I like everything", "It's awesome"];
+
 
 	console.log(loggedIn);
 	if(loggedIn){
-		$location.path('/profile');
+		console.log(authService.Auth.$getAuth());
+		// the current user's profile page 
+		$rootScope.isNavbar = true;
+		$location.path('/profile/' + authService.Auth.$getAuth().providerData["0"].uid);
 	}
 
 	$scope.isLogin = true; // display login form first to user 
@@ -23,9 +44,11 @@ loggedIn, $http){
 	$scope.signIn = function(){
 		authService.Auth.$signInWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 			console.log(data);
-			$location.path('/profile');
+			$rootScope.isNavbar = true;
+			$location.path('/profile/' + data.providerData["0"].uid);
 		}).catch(function(error){
 			console.log(error);
+			alert(error);
 		});
 	}
 
@@ -41,9 +64,34 @@ loggedIn, $http){
 		// create the user with email and password 
 		authService.Auth.$createUserWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 				console.log(data);
-				$location.path('/profile');
+				$rootScope.isNavbar = true;
+				$location.path('/profile/' + data.providerData["0"].uid);
 			}).catch(function(error){
 				console.log(error);
+				alert(error);
 		});
 	};
+	
+	// class list function
+	$scope.classFunc = function(c) {
+		console.log(c);
+		if(!$scope.selectedClasses[c]){
+			$scope.selectedClasses[c] = c;
+		}
+	};
+
+	// major-related function
+	$scope.majorFunc = function(m){
+		console.log(m);
+		$scope.selectedMajor = m;
+	};
+
+	// studyt habits function
+	$scope.studyHabitFunc = function(s){
+		console.log(s);
+	};
+	$scope.deleteClassFunc = function(c){
+		delete $scope.selectedClasses[c];
+	}
+
 }]);

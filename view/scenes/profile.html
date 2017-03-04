@@ -1,2 +1,58 @@
+<!--
 <h1>Hello from profile</h1>
+
 <button ng-click="logout()">Logout</button>
+-->
+
+<!-- Align Center -->
+
+<br/>
+
+<div class="profile_pic">
+	<img src="images/profile.png" />
+</div>
+
+<div class="profile_info">
+
+	<h1>{{firstName}} {{lastName}}</h1>
+	<h3>{{major}}</h3>
+	<h3>{{sex}}</h3>
+	<h3>{{location}}</h3>
+
+	<h2>Class List</h2>
+
+	<div class="profile_list" ng-repeat="class in classList">
+		<p class="classList">{{class}}<button ng-show="isEdit_classList">X</button></p>
+	</div>
+
+	<p ng-show="isEdit_classList">Search Box</p>
+	<div ng-show="isSelf">
+		<button ng-click="modifyClassList()">{{classListBtn}}</button>	
+	</div>
+
+	<h2>User Bio</h2>
+
+	<textarea id="userBio" disabled="true" rows="8">{{userBio}}</textarea>
+	<div ng-show="isSelf">
+		<button ng-click="modifyUserBio()">{{userBioBtn}}</button>	
+	</div>
+	
+	<h2>Study Habits</h2>
+
+	<div class="profile_list" ng-repeat="habit in studyHabit">
+		<p class="studyHabit">{{habit}}<button ng-show="isEdit_studyHabit">X</button></p>
+	</div>
+
+	<p ng-show="isEdit_studyHabit">Search Box</p>
+	<div ng-show="isSelf">
+		<button ng-click="modifyStudyHabit()">{{studyHabitBtn}}</button>	
+	</div>
+
+	<br/>
+	
+	<div id="profile_delete_button" ng-show="isSelf">
+		<br/>
+		<button ng-click="deleteUserProfile()">Delete Profile</button>	
+	</div>
+	
+</div>
