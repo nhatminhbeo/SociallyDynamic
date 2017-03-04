@@ -45,4 +45,8 @@ module.exports.route = function (app, dirname) {
 		console.log(dirname + "/view/index.html");
 		res.sendFile(dirname + "/view/index.html");
 	});
+	
+	app.get('*', function(req,res){
+		res.sendFile(dirname + "/view/index.html");
+	});
 };

@@ -28,11 +28,33 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 				controller: 'groupConversationController'
 			}).
 			otherwise({
-				templateUrl: 'scenes/404'
+				templateUrl: 'scenes/404',
+				resolve: {
+					dontShow: ['$rootScope', function($rootScope){
+					$rootScope.isNavbar = false;
+					
+					}]
+				}
 			});
 			$locationProvider.html5Mode(true);
 
 }]);
+/*.run(function($rootScope,$location){
+	$rootScope.$on("navState", function(event, next, current) {
+		if(next.templateUrl == "scenes/login"){
+			$rootScope.isNavbar = false;
+			console.log("I am here!");
+		}
+		else if(next.templateUrl == "scenes/404"){
+			$rootScope.isNavbar = false;
+		}
+		else {
+			$rootScope.isNavbar = true;
+		}
+
+	});
+});*/
+
 
 
 // Main controller here for generic navbar + login check
