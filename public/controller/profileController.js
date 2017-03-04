@@ -16,10 +16,30 @@ $http) {
         // Modify User Class List
         if (DEBUG) {
             console.log("modifyClassList() called");
+            console.log("Before: " + $scope.isEdit_classList);
             console.log(document.getElementsByClassName("classList"));
         }
 
+        // Save changes to DB
+        if ($scope.isEdit_classList) {
+
+            if (DEBUG) {
+                console.log("Saving changes to DB");
+            }
+
+            // TODO
+
+        }
+
+        // Toggle editability
         $scope.isEdit_classList = !$scope.isEdit_classList;
+
+        // Toggle button text
+        $scope.classListBtn = $scope.isEdit_classList ? "Save" : "Edit"
+
+        if (DEBUG) {
+            console.log("After: " + $scope.isEdit_classList);
+        }
     }
 
     $scope.modifyUserBio = function() {
@@ -57,18 +77,15 @@ $http) {
 
     $scope.modifyStudyHabit = function() {
 
-        var isDisabled = document.getElementById("studyHabit").disabled;
-
         // Modify Study Habits
         if (DEBUG) {
             console.log("modifyStudyHabit() called");
-            console.log("Before: " + isDisabled);
+            console.log("Before: " + $scope.isEdit_studyHabit);
+            console.log(document.getElementsByClassName("studyHabit"));
         }
 
-        $scope.isEdit_studyHabit = !$scope.isEdit_studyHabit;
-
         // Save changes to DB
-        if (!isDisabled) {
+        if ($scope.isEdit_studyHabit) {
 
             if (DEBUG) {
                 console.log("Saving changes to DB");
@@ -79,13 +96,13 @@ $http) {
         }
 
         // Toggle editability
-        isDisabled = document.getElementById("studyHabit").disabled = !isDisabled;
+        $scope.isEdit_studyHabit = !$scope.isEdit_studyHabit;
 
         // Toggle button text
-        $scope.studyHabitBtn = isDisabled ? "Edit" : "Save";
+        $scope.studyHabitBtn = $scope.isEdit_studyHabit ? "Save" : "Edit";
 
         if (DEBUG) {
-            console.log("After: " + isDisabled);
+            console.log("After: " + $scope.isEdit_studyHabit);
         }
 
     };
