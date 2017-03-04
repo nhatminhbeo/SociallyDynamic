@@ -34,15 +34,36 @@ var Promise = models.Promise;
 // ================================================================================
 module.exports.postGroup = function (req, res) {
     var toPost = Group({
-    	GroupName: req.body.groupname,
-    	Owner: req.body.owner
+    	GroupName: req.body.name,
+    	Owner: req.body.owner,
     });
+    var id = '';
 
-    toPost.save(function(err, entry) {
-    	if(err)
-    		res.status(400).send('Something Broke');
-    	res.status(200).send(entry);
-    });
+    toPost.save()
+    .then(function() {
+    	id = toPost._id;
+        var sGroup = StudentGroup({
+        	StudentID: req.body.owner,
+        	GroupID: id,
+        })
+        return sGroup.save();
+    })
+    .then(function() {	
+        return models.Promise.each(req.body.member, function(entry) {
+        	console.log(id);
+            var sGroup = StudentGroup({
+            	StudentID: entry,
+            	GroupID: id,
+            });
+            return sGroup.save();
+        }) 	 
+    })
+    .then(function() {
+    	return res.status(200).send(id);
+    })/*
+    .then(null, function() { 
+        return res.status(400).send('Something broke');
+    })*/
 };
 
 // ================================================================================
@@ -54,6 +75,9 @@ module.exports.postGroup = function (req, res) {
 //  Author: Khiem Tran
 // ================================================================================
 module.exports.getGroupWithId = function (req, res) {
+	Group.findById(function(err, entry) {
+
+	})
 
 };
 
