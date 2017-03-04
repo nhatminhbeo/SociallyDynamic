@@ -22,36 +22,34 @@ var models = require("./general");
 //  Author: 
 // ================================================================================
 module.exports.getInboxMessageWithId = function (req, res) {
-	var jsonStudent = {};
+	var jsonObject = {};
 
-	var toFind = {
-    	UserID: req.params.id
-    };
 
-	models.Conversation.find(toFind).exec()
-
+	models.Conversation.find({"_id": req.params.id}).exec()
 	.then(function (classes) {
 
 		// For each such class:
 		return models.Promise.each(classes, function(thisClass) {
-
-
+			var ConverstionID = thisClass._id;
+            var FriendStudentID = "";
 			if (thisClass.studentID[0] != req.params.id) {
-				var FriendStudent = thisClass.studentID[0];
+				FriendStudentID = thisClass.studentID[0];
 			}
 			else {
-				var FriendStudent = thisClass.studentID[1];
+				FriendStudentID = thisClass.studentID[1];
 			}
 
-
-			return models.Student.findOne({"Class": thisClass.Class})
-			.then(function (user) {
-				
-				jsonStudent = {
-			    otherID: FriendStudent,
-				FirstName: user.FirstName,
-				LastName: user.LastName,
-				};
+			return models.Student.find({"_id": FriendStudentID})
+			.then(function (stu) {
+				jsonObject = {
+					FirstName: stu.FirstName,
+					LastName: stu.LastName,
+					_id: stu._id
+				}
+			});
+			return models.GroupMessage.find({"_id": ConverstionID})
+			.then(function (message) {
+				jsonObject["LatestMessage"] = message.Content;
 			});
 		});
 	})
@@ -77,43 +75,34 @@ module.exports.getInboxMessageWithId = function (req, res) {
 // ================================================================================
 module.exports.getInboxFriendWithId = function (req, res) {
 	var jsonStudent = {};
-
-   	models.friendRequest.find({Receiver : req.params.id}).exec()
+	var list = [];
+   	models.friendRequest.find({"Receiver" : req.params.id}).exec()
 	.then(function (senders) {
 	    // For each such class:
 		return models.Promise.each(senders, function(sender) {
 
-			return models.Student.find({_id : sender.Sender})
+			return models.Student.find({"_id" : sender.Sender})
 			.then(function(user) {
 				jsonStudent = {
-					RequestID: user.RequestID,
+					RequestID: friendRequest._id,
 					OtherID: user.StudentID,
 					FirstName: user.FirstName,
 					LastName: user.LastName
 				}
+				list.push(jsonStudent);
 			});
-
-
-			/*
-			if (thisClass.studentID[0] != req.params.id) {
-				var FriendStudent = thisClass.studentID[0];
-			}
-			else {
-				var FriendStudent = thisClass.studentID[1];
-			}*/
 		});
 	})
 
 	// succeed
 	.then(function() {
-		return res.status(200).json(jsonStudent);
+		return res.status(200).json(list);
 	})
 
 	// Failed
 	.then(null, function() {
 		res.status(400).send();
 	});
-
 };
 
 
