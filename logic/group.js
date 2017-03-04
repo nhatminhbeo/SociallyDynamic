@@ -119,7 +119,7 @@ module.exports.deleteGroupWithId = function (req, res) {
 module.exports.postGroupWithIdUser = function (req, res) {
 	var studentGroup = new StudentGroup({
 		GroupID: req.params.id,
-		StudentID: req.body.id //TODO need to verify name of this field. studentID?
+		StudentID: req.body.StudentID //TODO need to verify name of this field. studentID?
 	});
 
 	studentGroup.save(function(err){
@@ -140,17 +140,22 @@ module.exports.postGroupWithIdUser = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.deleteGroupWithIdUser = function (req, res) {
-	StudentGroup.findByIdAndRemove(req.params.id, function(err){
-		if(err) 
-			return res.status(400).send(err);
+	StudentGroup.findOneAndRemove(
+		{
+			GroupID: req.params.id,
+			StudentID: req.body.StudentID
+		}, 
+		function(err){
+			if(err) 
+				return res.status(400).send(err);
 
-		return res.status(200).send('Deleted student in group(deleteGroupWithIdUser)');
+			return res.status(200).send('Deleted student in group(deleteGroupWithIdUser)');
 	});
 };
 
 // ================================================================================
 //  Function: postGroupWithIdUser
-//  REST: POST:/api/group/user/:id
+//  REST: POST:/api/group/:id/request
 //  Description: Create a new invitation to group desribed by id from sender to receiver in body
 //  Expected input (req.body):
 //  Expected output (res):
@@ -160,7 +165,7 @@ module.exports.postGroupWithIdRequest = function (req, res) {
 	var groupRequest = new GroupRequest({
 		//TODO verify if we need to do any manipulation to convert string to the type
 		//in our schema "GroupID: Schema.Types.ObjectId,"
-		GroupID: req.params.id, 
+		GroupID: models.Schema.Types.ObjectId(req.params.id),
 		Sender: req.body.Sender, 
 		Receiver: req.body.Receiver
 	});
@@ -176,18 +181,24 @@ module.exports.postGroupWithIdRequest = function (req, res) {
 
 // ================================================================================
 //  Function: deleteGroupWithIdRequest
-//  REST: DELETE:/api/group/user/:id
+//  REST: DELETE:/api/group/:id/request
 //  Description: Delete an invitation to group desribed by id from sender to receiver in body
 //  Expected input (req.body):
 //  Expected output (res):
 //  Author: 
 // ================================================================================
 module.exports.deleteGroupWithIdRequest = function (req, res) {
-	GroupRequest.findByIdAndRemove(req.params.id, function(err){
-		if(err)
-			return res.status(400).send(err);
+	GroupRequest.findOneAndRemove(
+		{
+			GroupID: models.Schema.Types.ObjectId(req.params.id),
+			Sender: req.body.Sender,
+			Receiver: req.body.Receiver
+		}, 
+		function(err){
+			if(err)
+				return res.status(400).send(err);
 
-		return res.status(200).send('Deleted group request(deleteGroupWithIdRequest)');
+			return res.status(200).send('Deleted group request(deleteGroupWithIdRequest)');
 	});
 };
 
