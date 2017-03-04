@@ -50,9 +50,10 @@ module.exports.postGroup = function (req, res) {
     })
     .then(function() {	
         return models.Promise.each(req.body.member, function(entry) {
+        	console.log(id);
             var sGroup = StudentGroup({
             	StudentID: entry,
-            	Group: id,
+            	GroupID: id,
             });
             return sGroup.save();
         }) 	 
