@@ -424,18 +424,42 @@ module.exports.getStudentWithId = function (req, res) {
 module.exports.getStudentFriendWithId = function (req, res) {
 	var list = [];
 
-	models.FriendShip.find({UserID: req.params.id}).exec()
-	.then(function (classes) {
-
+	models.Friendship.find({UserID: req.params.id}).exec()
+	.then(function(classes) {
 		// For each such class:
 		return models.Promise.each(classes, function(thisClass) {
+			var FriendID = "";
+			if (UserID[0] != req.params.id) {
+				FriendID = thisClass.UserID[1];
+			} else {
+				FriendID = thisClass.UserID[0];
+			}
 
-			return models.Student.find({"Class": thisClass.UserID})
-			.then(function (otherStu) {
+			return models.Student.find(_id: FriendID) 
+			.then(function(user) {
 				var jsonStudent = {
-					FirstName: otherStu.FirstName,
-					LastName: otherStu.LastName,
+					_id: user._id,
+					FirstName: user.FirstName,
+					LastName: user.LastName,
+					Age: user.Age,
+					Bio: user.Bio,
+					Email: user.Email,
+					Major: user.Major
 				}
+				list.push(jsonStudent);
+			});
+		});
+	})
 
+	// succeed
+	.then(function() {
+		return res.status(200).json(list);
+	})
 
+	// Failed
+	.then(null, function() {
+		res.status(400).send();
+	});
+
+	
 };

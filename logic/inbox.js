@@ -25,13 +25,10 @@ module.exports.getInboxMessageWithId = function (req, res) {
 	var jsonStudent = {};
 
 	var toFind = {
-    	UserID[0]: req.params.id
-    };
-    var toFindAlt = {
-    	UserID[1]: req.params.id
+    	UserID: req.params.id
     };
 
-	models.Conversation.find({ '$and': [toFind, toFindAlt]}).exec()
+	models.Conversation.find(toFind).exec()
 
 	.then(function (classes) {
 
@@ -56,8 +53,8 @@ module.exports.getInboxMessageWithId = function (req, res) {
 				LastName: user.LastName,
 				};
 			});
-		}
-	}
+		});
+	})
 
 	// succeed
 	.then(function() {
@@ -89,12 +86,12 @@ module.exports.getInboxFriendWithId = function (req, res) {
 			return models.Student.find({_id : sender.Sender})
 			.then(function(user) {
 				jsonStudent = {
-					RequestID: user.RequestID
+					RequestID: user.RequestID,
 					OtherID: user.StudentID,
 					FirstName: user.FirstName,
-					LastName: user.LastName,
+					LastName: user.LastName
 				}
-			}
+			});
 
 
 			/*
@@ -104,8 +101,8 @@ module.exports.getInboxFriendWithId = function (req, res) {
 			else {
 				var FriendStudent = thisClass.studentID[1];
 			}*/
-		}
-	}
+		});
+	})
 
 	// succeed
 	.then(function() {
@@ -130,4 +127,34 @@ module.exports.getInboxFriendWithId = function (req, res) {
 // ================================================================================
 module.exports.getInboxGroupWithId = function (req, res) {
 
+	var list = [];
+	var groupName = "";
+	var groupID = "";
+
+	// Get all GroupRequest of user id
+	models.GroupRequest.find({"Receiver": id}).exec()
+
+	// For each such GroupRequest:
+	.then(function (groupRequests) {
+		return models.Promise.each(groupRequest);
+
+	// Find the student sending the request
+	}).then(function (groupRequest) {
+		return models.Group.findOne({"_id": groupRequest.GroupID})
+		.then(function (group) {
+			groupName = group.Name;
+			groupId = group._id;
+			return models.Student.findOne({"_id": groupRequest.Sender});
+		});
+	// Put him/her in to the list
+	}).then (function (student) {
+		console.log(student);
+		list.push({
+			_id: student._id,
+			FirstName: student.FirstName,
+			LastName: student.LastName,
+			GroupName: groupName,
+			GroupID: groupID
+		});
+	});
 };

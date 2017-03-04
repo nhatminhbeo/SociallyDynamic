@@ -155,7 +155,7 @@ var mat = require('./routes/match');    mat.route(app);
 var mes = require('./routes/message');  mes.route(app);
 */
 var gro = require('./routes/group');    gro.route(app);
-//var inb = require('./routes/inbox');    inb.route(app);
+var inb = require('./routes/inbox');    inb.route(app);
 
 
 var pub = require('./routes/public');   pub.route(app, __dirname);
