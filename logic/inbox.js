@@ -130,31 +130,41 @@ module.exports.getInboxGroupWithId = function (req, res) {
 	var list = [];
 	var groupName = "";
 	var groupID = "";
+	var gr;
 
 	// Get all GroupRequest of user id
-	models.GroupRequest.find({"Receiver": id}).exec()
+	models.GroupRequest.find({"Receiver": req.params.id}).exec()
 
 	// For each such GroupRequest:
 	.then(function (groupRequests) {
-		return models.Promise.each(groupRequest);
 
-	// Find the student sending the request
-	}).then(function (groupRequest) {
-		return models.Group.findOne({"_id": groupRequest.GroupID})
-		.then(function (group) {
-			groupName = group.Name;
-			groupId = group._id;
-			return models.Student.findOne({"_id": groupRequest.Sender});
+		return models.Promise.each(groupRequests, function (groupRequest) {
+
+			return models.Group.findOne({"_id": groupRequest.GroupID})
+			.then(function (group) {
+
+				groupName = group.GroupName;
+				groupId = group._id;
+				return models.Student.findOne({"_id": groupRequest.Sender});
+
+			// Put him/her in to the list
+			}).then (function (student) {
+				console.log(student);
+				list.push({
+					_id: student._id,
+					FirstName: student.FirstName,
+					LastName: student.LastName,
+					GroupName: groupName,
+					GroupID: groupID
+				});
+			});
 		});
-	// Put him/her in to the list
-	}).then (function (student) {
-		console.log(student);
-		list.push({
-			_id: student._id,
-			FirstName: student.FirstName,
-			LastName: student.LastName,
-			GroupName: groupName,
-			GroupID: groupID
-		});
+	
+	}).then(function() {
+		return res.status(200).send(list);
+	
+	// Failed
+	}).then(null, function() {
+		res.status(400).send();
 	});
 };
