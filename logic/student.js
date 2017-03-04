@@ -332,12 +332,12 @@ module.exports.deleteStudentWithId = function (req, res) {
 		return ClassStudent.remove({StudentID: id}).exec();
 	})
 
-/* FUTURE FUNCTIONALITIES
+
 	// Removing student from all groups
 	.then(function() {
 		return StudentGroup.remove({StudentID: id}).exec();
 	})
-
+/* FUTURE FUNCTIONALITIES
 	// Removing all group request of the user
 	.then(function() {
 		return GroupRequest.remove({'$or': [{Sender: id}, {Receiver: id}]}).exec();
@@ -347,9 +347,9 @@ module.exports.deleteStudentWithId = function (req, res) {
 	.then(function() {
 		return Group.find({Owner: id}, '_id').exec();
 	}).then(function(group) {
-		StudentGroup.remove({GroupID: group._id}), function (err){
+		return StudentGroup.remove({GroupID: group._id}), function (err){
 			if (!err) {
-				GroupMessage.remove({GroupID: group._id}, function (err) {
+				return GroupMessage.remove({GroupID: group._id}, function (err) {
 					if (!err) return Group.remove({_id: group._id}).exec();
 				});
 			}
@@ -422,21 +422,44 @@ module.exports.getStudentWithId = function (req, res) {
 //  Author: Ruohan Hu
 // ================================================================================
 module.exports.getStudentFriendWithId = function (req, res) {
-	var stduentFriendID = req.params.id;
+	var list = [];
 
-	// get a user with the ID
-	Student.findById(studentFriendID, function(err, user) {
-		if (err) res.status(400).send(err);
-		// show the user
-		var jsonStudentFriend = Student({
-			_id: user._id,
-			FirstName: user.FirstName,
-			LastName: user.LastName,
-			Age: user.Age,
-			Bio: user.Bio,
-			Email: user.Email,
-			Major: user.Major
+	models.Friendship.find({UserID: req.params.id}).exec()
+	.then(function(classes) {
+		// For each such class:
+		return models.Promise.each(classes, function(thisClass) {
+			var FriendID = "";
+			if (UserID[0] != req.params.id) {
+				FriendID = thisClass.UserID[1];
+			} else {
+				FriendID = thisClass.UserID[0];
+			}
+
+			return models.Student.find(_id: FriendID) 
+			.then(function(user) {
+				var jsonStudent = {
+					_id: user._id,
+					FirstName: user.FirstName,
+					LastName: user.LastName,
+					Age: user.Age,
+					Bio: user.Bio,
+					Email: user.Email,
+					Major: user.Major
+				}
+				list.push(jsonStudent);
+			});
 		});
-		res.status(200).json(jsonStudentFriend);
+	})
+
+	// succeed
+	.then(function() {
+		return res.status(200).json(list);
+	})
+
+	// Failed
+	.then(null, function() {
+		res.status(400).send();
 	});
+
+	
 };
