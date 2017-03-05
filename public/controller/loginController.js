@@ -106,7 +106,17 @@ loggedIn, $http, $rootScope){
 	console.log(authService);
 	$scope.createAccount = function(){
 		// TODO check frontend validation service
-		// TODO validation on email address 
+		// check for whitespace on sides of the string 
+		var age = $scope.age.trim();
+		var firstName = $scope.firstName.trim();
+		var lastName = $scope.lastName.trim();
+		var bio = $scope.bio.trim();
+
+		if(age == '' || firstName == '' || lastName == ''
+		|| bio == ''){
+			alert("Please make sure age, firstName, lastName, and bio have something filled in!");
+			return;	
+		}
 
 		// create the user with email and password 
 		authService.Auth.$createUserWithEmailAndPassword($scope.email, $scope.password).then(function(data){
@@ -128,10 +138,10 @@ loggedIn, $http, $rootScope){
 					data: {
 						_id : data.uid,
 						Email : $scope.email,
-						FirstName : $scope.firstName,
-						LastName : $scope.lastName,
-						Bio : $scope.bio,
-						Age : $scope.age,
+						FirstName : firstName,
+						LastName : lastName,
+						Bio : bio,
+						Age : age,
 						Major : $scope.selectedMajor,
 						Class : classList,
 						Habit : habitList

@@ -49,7 +49,8 @@
     <label for="major">Major</label>
     <input type="text" class="form-control" id="major" placeholder="Enter major" ng-model="majorFilter">
 	<ul class="list-group">
-		<a class="list-group-item" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity"
+		<a class="list-group-item" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity
+		track by $index"
 		ng-click="majorFunc(major)"
 		ng-show="majorFilter">
 			{{major}}
@@ -72,7 +73,7 @@
     <label for="classList">Classes you are in</label>
     <input type="text" class="form-control" id="classList" placeholder="Search classes" ng-model="classFilter"/>
 	<ul class="list-group">
-		<a class="list-group-item" ng-repeat="class in classes | filter:classFilter | limitTo:quantity" 
+		<a class="list-group-item" ng-repeat="class in classes | filter:classFilter | limitTo:quantity track by $index" 
 		ng-click="classFunc(class)"
 		ng-show="classFilter">
 			{{class}}
@@ -100,7 +101,8 @@
     <input type="text" class="form-control" id="studyHabits" placeholder="Search and Pick your Study Habits" 
 	ng-model="studyHabitFilter"/>
 	<ul class="list-group">
-		<a class="list-group-item" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity"
+		<a class="list-group-item" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity
+		track by $index"
 		ng-click="studyHabitFunc(habit)">
 			{{habit}}
 		</a>
