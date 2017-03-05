@@ -6,13 +6,11 @@
 
 <!-- Align Center -->
 
-
 <br/>
 
 <div class="profile_pic">
 	<img src="images/profile.png" />
 </div>
-
 
 <div class="profile_info">
 
@@ -21,9 +19,20 @@
 	</div>
 
 	<h1>{{firstName}} {{lastName}}</h1>
+
 	<h3>{{major}}</h3>
-	<h3>{{sex}}</h3>
-	<h3>{{location}}</h3>
+	<input type="text" class="form-control" placeholder="Search Majors" ng-model="majorFilter" ng-show="isEdit_major"/>
+	<ul class="list-group">
+		<a class="list-group-item profile_anchor" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity"
+		ng-click="changeMajor(major)"
+		ng-show="majorFilter">
+			{{major}}
+		</a>
+	</ul>
+
+	<div ng-show="isSelf">
+		<button ng-click="modifyMajor()">{{majorBtn}}</button>
+	</div>
 
 	<h2>Class List</h2>
 
@@ -34,7 +43,7 @@
 	<input type="text" class="form-control" placeholder="Search Classes" ng-model="classFilter" ng-show="isEdit_classList"/>
 	<ul class="list-group">
 		<a class="list-group-item profile_anchor" ng-repeat="class in classes | filter:classFilter | limitTo:quantity" 
-		ng-click="classFunc(class)"
+		ng-click="addClass(class)"
 		ng-show="classFilter">
 			{{class}}
 		</a>
@@ -46,24 +55,22 @@
 
 	<h2>User Bio</h2>
 
-	<textarea id="userBio" disabled="true" rows="8">{{userBio}}</textarea>
+	<textarea id="userBio" disabled="true" rows="8" ng-model="userBio">{{userBio}}</textarea>
 	<div ng-show="isSelf">
 		<button ng-click="modifyUserBio()">{{userBioBtn}}</button>	
 	</div>
 	
 	<h2>Study Habits</h2>
 
-	<div class="profile_list" ng-repeat="habit in studyHabit">
-		<p class="studyHabit">{{habit}}<button ng-click="deleteHabit" ng-show="isEdit_studyHabit">X</button></p>
+	<div class="profile_list" ng-repeat="(habitkey, habitvalue) in studyHabit">
+		<p class="studyHabit">{{habitkey}}<button ng-click="deleteStudyHabit(habitkey)" ng-show="isEdit_studyHabit">X</button></p>
 	</div>
-
-	<p ng-show="isEdit_studyHabit">Search Box</p>
 
 	<input type="text" class="form-control" placeholder="Search Study Habits" ng-model="studyHabitFilter" ng-show="isEdit_studyHabit" />
 	<ul class="list-group">
-		<a class="list-group-item profile_anchor" ng-repeat="habit in studyHabits | filter:studHabitFilter | limitTo:quantity"
-		ng-click="studyHabitFunc(habit)"
-		ng-show="habitFilter">
+		<a class="list-group-item profile_anchor" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity"
+		ng-click="addStudyHabit(habit)"
+		ng-show="studyHabitFilter">
 			{{habit}}
 		</a>
 	</ul>

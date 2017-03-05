@@ -8,23 +8,67 @@ $http) {
     $scope.quantity = 5;
 
     // Picking classes that a person is in 
+    // TODO: replace with real data
     $scope.classFilter = '';
     $scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
 
     // Picking a major that a person is in 
+    // TODO: replace with real data
     $scope.majorFilter = '';
-    $scope.selectedMajor;
-    $scope.majors = ["Computer Science", "Math-Computer Science", "Social Studies", "Swag", "Swole", "Swoon"];
+    $scope.majors = ["Computer Science", "Computer Engineering", "Math-Computer Science", "Social Studies", "Swag", "Swole", "Swoon"];
 
     // Picking study habits that a person has 
+    // TODO: replace with real data
     $scope.studyHabitFilter = '';
-    $scope.studyHabits = ["Bed Programming", "Light Music", "Quiet", "I'm cool", "I like everything", "It's awesome"];
+    $scope.studyHabits = ["Light Music", "Quiet", "I'm cool", "I like everything", "It's awesome", "Bed Programming", "Loud Music", "Random Screaming"];
 
     $scope.logout = function() {
         // Log user out
         authService.Auth.$signOut().then(function(){
             $location.path('/');
         });
+    }
+
+    $scope.modifyMajor = function() {
+
+        // Modify Major
+        if (DEBUG) {
+            console.log("modifyMajor() called");
+            console.log("Before: " + $scope.isEdit_major);
+        }
+
+        // Save changes to DB
+        if ($scope.isEdit_major) {
+
+            if (DEBUG) {
+                console.log("Saving changes to DB");
+                console.log($scope.major);
+            }
+
+            // TODO
+
+            // Clear the search box
+            $scope.majorFilter = '';
+        }
+
+        // Toggile editability
+        $scope.isEdit_major = !$scope.isEdit_major;
+
+        // Toggle button text
+        $scope.majorBtn = $scope.isEdit_major ? "Save" : "Edit";
+
+        if (DEBUG) {
+            console.log("After: " + $scope.isEdit_major);
+        }
+    }
+
+    $scope.changeMajor = function(aMajor) {
+
+        if (DEBUG) {
+            console.log(aMajor);
+        }
+
+        $scope.major = aMajor;
     }
 
     $scope.modifyClassList = function() {
@@ -41,9 +85,12 @@ $http) {
 
             if (DEBUG) {
                 console.log("Saving changes to DB");
+                console.log($scope.classList);
             }
 
             // TODO
+
+            // Clear the search box
             $scope.classFilter = '';
         }
 
@@ -51,7 +98,7 @@ $http) {
         $scope.isEdit_classList = !$scope.isEdit_classList;
 
         // Toggle button text
-        $scope.classListBtn = $scope.isEdit_classList ? "Save" : "Edit"
+        $scope.classListBtn = $scope.isEdit_classList ? "Save" : "Edit";
 
         if (DEBUG) {
             console.log("After: " + $scope.isEdit_classList);
@@ -61,15 +108,19 @@ $http) {
     // Delete a class
     $scope.deleteClass = function(aClass) {
 
-        console.log(aClass);
+        if (DEBUG) {
+            console.log(aClass);
+        }
 
         delete $scope.classList[aClass];
     }
 
-    // Class list function
-    $scope.classFunc = function(aClass) {
+    // Add a class
+    $scope.addClass= function(aClass) {
 
-        console.log(aClass);
+        if (DEBUG) {
+            console.log(aClass);
+        }
 
         if(!$scope.classList[aClass]){
             $scope.classList[aClass] = "";
@@ -91,10 +142,11 @@ $http) {
 
             if (DEBUG) {
                 console.log("Saving changes to DB");
+                console.log($scope.userBio);
             }
 
             // TODO
-            $scope.studyHabitFilter = '';
+
         }
 
         // Toggle editability
@@ -123,10 +175,13 @@ $http) {
 
             if (DEBUG) {
                 console.log("Saving changes to DB");
+                console.log($scope.studyHabit);
             }
 
             // TODO
 
+            // Clear the search box
+            $scope.studyHabitFilter = '';
         }
 
         // Toggle editability
@@ -141,21 +196,25 @@ $http) {
 
     };
 
-    // Delete a habit
-    $scope.deleteStudyHabit = function(aHabit) {
+    // Delete a study habit
+    $scope.deleteStudyHabit = function(aStudyHabit) {
 
-        console.log(aHabit);
+        if (DEBUG) {
+            console.log(aStudyHabit);
+        }
 
-        delete $scope.studyHabit[aHabit];
+        delete $scope.studyHabit[aStudyHabit];
     }
 
-    // Study Habit Function
-    $scope.studyHabitFunc = function(aHabit) {
+    // Add a study habit
+    $scope.addStudyHabit = function(aStudyHabit) {
 
-        console.log(aHabit);
+        if (DEBUG) {
+            console.log(aStudyHabit);
+        }
 
-        if(!$scope.studyHabit[aHabit]){
-            $scope.studyHabit[aHabit] = "";
+        if(!$scope.studyHabit[aStudyHabit]){
+            $scope.studyHabit[aStudyHabit] = "";
         }
     }
 
@@ -178,20 +237,22 @@ $http) {
 
         // TODO: see if viewing own profile
         $scope.isSelf = true;
+        $scope.isEdit_major = false;
         $scope.isEdit_classList = false;
         $scope.isEdit_studyHabit = false;
 
         // TODO: get stuff from the DB
         $scope.firstName = "First";
         $scope.lastName = "Last";
-        // $scope.classList = ["CSE 11", "CSE 12", "CSE 30"];
+        $scope.major = "Computer Engineering";
         $scope.classList = {"CSE 11":"", "CSE 12":"", "CSE 30":""};
         $scope.userBio = DUMMY_TEXT;
-        $scope.studyHabit = ["Bed programming", "Loud music", "Random screaming"];
+        $scope.studyHabit = {"Bed programming":"", "Loud music":"", "Random screaming":""};
 
         if ( $scope.isSelf ) {
-            $scope.userBioBtn = "Edit";
+            $scope.majorBtn = "Edit";
             $scope.classListBtn = "Edit";
+            $scope.userBioBtn = "Edit";
             $scope.studyHabitBtn = "Edit";
             $scope.viewMode = "View as Public";
         }
