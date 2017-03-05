@@ -4,11 +4,12 @@ $http) {
     var DEBUG = true;
     var DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
+    // Limit for search
+    $scope.quantity = 5;
+
     // Picking classes that a person is in 
     $scope.classFilter = '';
-    $scope.selectedClasses = {};
     $scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
-    $scope.quantity = 5;
 
     // Picking a major that a person is in 
     $scope.majorFilter = '';
@@ -17,7 +18,6 @@ $http) {
 
     // Picking study habits that a person has 
     $scope.studyHabitFilter = '';
-    $scope.selectedHabits = {};
     $scope.studyHabits = ["Bed Programming", "Light Music", "Quiet", "I'm cool", "I like everything", "It's awesome"];
 
     $scope.logout = function() {
@@ -60,8 +60,18 @@ $http) {
 
     $scope.deleteClass = function(aClass) {
         console.log(aClass);
-        // delete $scope.selectedClasses[aClass]
+        delete $scope.classList[aClass];
     }
+
+    // Class list function
+    $scope.classFunc = function(aClass) {
+
+        console.log(aClass);
+
+        if(!$scope.classList[aClass]){
+            $scope.classList[aClass] = "";
+        }
+    };
 
     $scope.modifyUserBio = function() {
 
@@ -153,7 +163,8 @@ $http) {
         // TODO: get stuff from the DB
         $scope.firstName = "First";
         $scope.lastName = "Last";
-        $scope.classList = ["CSE 11", "CSE 12", "CSE 30"];
+        // $scope.classList = ["CSE 11", "CSE 12", "CSE 30"];
+        $scope.classList = {"CSE 11":"", "CSE 12":"", "CSE 30":""};
         $scope.userBio = DUMMY_TEXT;
         $scope.studyHabit = ["Bed programming", "Loud music", "Random screaming"];
 
