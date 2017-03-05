@@ -4,3 +4,5 @@ db
 *.log
 .*
 !.gitignore
+dev/null
+dev/null*
