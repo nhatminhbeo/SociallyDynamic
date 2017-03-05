@@ -2,11 +2,23 @@
 app.controller('loginController', ['$scope', 'authService', '$location', 'loggedIn', '$http', '$rootScope',
 function($scope, authService, $location, 
 loggedIn, $http, $rootScope){
+	$scope.classes = [];
+
+	$http({
+		method: 'GET',
+		url: '/api/data/class'
+	}).then(function(data){
+		console.log(data);
+		for (var i = 0; i < data.data.length; i++){
+			$scope.classes.push(data.data[i].Name);
+		}
+		
+	});
 
 	// picking classes that a person is in 
 	$scope.classFilter = '';
 	$scope.selectedClasses = {};
-	$scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
+	//$scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
 	$scope.quantity = 5;
 
 	// picking a major that a person is in 
@@ -89,9 +101,24 @@ loggedIn, $http, $rootScope){
 	// studyt habits function
 	$scope.studyHabitFunc = function(s){
 		console.log(s);
+		if(!$scope.selectedHabits[s]){
+			$scope.selectedHabits[s] = s;
+		}
 	};
+	// delete a selected class 
 	$scope.deleteClassFunc = function(c){
 		delete $scope.selectedClasses[c];
 	}
+
+	// delete selected habits
+	$scope.deleteHabitFunc = function(h){
+		console.log(h);
+		delete $scope.selectedHabits[h];
+	};
+
+	// change major 
+	$scope.deleteMajor = function(m){
+		$scope.selectedMajor = '';
+	};
 
 }]);

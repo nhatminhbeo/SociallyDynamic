@@ -6,13 +6,19 @@
 
 <!-- Align Center -->
 
+
 <br/>
 
 <div class="profile_pic">
 	<img src="images/profile.png" />
 </div>
 
+
 <div class="profile_info">
+
+	<div ng-show="DEBUG">
+		<button ng-click="changeView()">{{viewMode}}</button>
+	</div>
 
 	<h1>{{firstName}} {{lastName}}</h1>
 	<h3>{{major}}</h3>
@@ -21,11 +27,21 @@
 
 	<h2>Class List</h2>
 
-	<div class="profile_list" ng-repeat="class in classList">
-		<p class="classList">{{class}}<button ng-show="isEdit_classList">X</button></p>
+	<div class="profile_list" ng-repeat="(classkey, classvalue) in classList">
+		<p class="classList">{{classkey}}<button ng-click="deleteClass(classkey)" ng-show="isEdit_classList">X</button></p>
 	</div>
 
 	<p ng-show="isEdit_classList">Search Box</p>
+	
+	<input type="text" class="form-control" id="classList" placeholder="Search classes" ng-model="classFilter"/>
+	<ul class="list-group">
+		<a class="list-group-item" ng-repeat="class in classes | filter:classFilter | limitTo:quantity" 
+		ng-click="classFunc(class)"
+		ng-show="classFilter">
+			{{class}}
+		</a>
+	</ul>
+
 	<div ng-show="isSelf">
 		<button ng-click="modifyClassList()">{{classListBtn}}</button>	
 	</div>
