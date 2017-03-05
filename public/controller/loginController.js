@@ -2,47 +2,82 @@
 app.controller('loginController', ['$scope', 'authService', '$location', 'loggedIn', '$http', '$rootScope',
 function($scope, authService, $location, 
 loggedIn, $http, $rootScope){
-	$scope.classes = [];
-
-	$http({
-		method: 'GET',
-		url: '/api/data/class'
-	}).then(function(data){
-		console.log(data);
-		for (var i = 0; i < data.data.length; i++){
-			$scope.classes.push(data.data[i].Name);
-		}
-		
-	});
-
-	// picking classes that a person is in 
-	$scope.classFilter = '';
-	$scope.selectedClasses = {};
-	//$scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
-	$scope.quantity = 5;
-
-	// picking a major that a person is in 
-	$scope.majorFilter = '';
-	$scope.selectedMajor;
-	$scope.majors = ["Computer Science", "Math-Computer Science", "Social Studies", "Swag", "Swole", "Swoon"];
-
-	// picking study habits that a person has 
-	$scope.studyHabitFilter = '';
-	$scope.selectedHabits = {};
-	$scope.studyHabits = ["Bed Programming", "Light Music", "quiet", "I'm cool", "I like everything", "It's awesome"];
-
-
+	// checking authentication
 	console.log(loggedIn);
 	if(loggedIn){
 		console.log(authService.Auth.$getAuth());
 		// the current user's profile page 
 		$rootScope.isNavbar = true;
-		$location.path('/profile/' + authService.Auth.$getAuth().providerData["0"].uid);
+		$location.path('/profile/' + authService.Auth.$getAuth().uid);
 	}
+	// getting data
+	
+	$scope.classes = [];
+	$scope.majors = [];
+	$scope.studyHabits = [];
+
+	var getClasses = function(){
+		$http({
+			method: 'GET',
+			url: '/api/data/class'
+		}).then(function(data){
+			for (var i = 0; i < data.data.length; i++){
+				$scope.classes.push(data.data[i].Name);
+			}
+			
+		});
+	}
+
+	var getMajors = function(){
+		$http({
+			method: 'GET',
+			url: '/api/data/major'
+		}).then(function(data){
+			for(var i = 0; i < data.data.length; i++){
+				$scope.majors.push(data.data[i].MajorName);
+			}
+		});
+	}
+
+	var getStudyHabits = function(){
+		$http({
+			method: 'GET',
+			url: '/api/data/habit'
+		}).then(function(data){
+			for(var i = 0; i < data.data.length; i++){
+				$scope.studyHabits.push(data.data[i].Habit);
+			}
+		});
+	}
+	
+	getClasses();
+	getMajors();
+	getStudyHabits();
+
+
+	// picking classes that a person is in 
+	$scope.classFilter = '';
+	$scope.selectedClasses = {};
+	$scope.quantity = 5;
+
+	// picking a major that a person is in 
+	$scope.majorFilter = '';
+	$scope.selectedMajor;
+	
+
+	// picking study habits that a person has 
+	$scope.studyHabitFilter = '';
+	$scope.selectedHabits = {};
+	
+
 
 	$scope.isLogin = true; // display login form first to user 
 	$scope.email = '';
 	$scope.password = '';
+	$scope.age = '';
+	$scope.firstName = '';
+	$scope.lastName = '';
+	$scope.bio = '';
 
 	// this function will change the display from login form to sign up form 
 	$scope.changeForm = function(){
@@ -57,7 +92,7 @@ loggedIn, $http, $rootScope){
 		authService.Auth.$signInWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 			console.log(data);
 			$rootScope.isNavbar = true;
-			$location.path('/profile/' + data.providerData["0"].uid);
+			$location.path('/profile/' + data.uid);
 		}).catch(function(error){
 			console.log(error);
 			alert(error);
@@ -76,8 +111,35 @@ loggedIn, $http, $rootScope){
 		// create the user with email and password 
 		authService.Auth.$createUserWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 				console.log(data);
-				$rootScope.isNavbar = true;
-				$location.path('/profile/' + data.providerData["0"].uid);
+				console.log(data.uid);
+				var classList = [];
+				var habitList = [];
+				for(var i in $scope.selectedClasses){
+					classList.push(i);
+				}
+				console.log(classList);
+				for(var i in $scope.selectedHabits){
+					habitList.push(i);
+				}
+				console.log(habitList);
+				$http({
+					method: "POST",
+					url: '/api/student',
+					data: {
+						_id : data.uid,
+						Email : $scope.email,
+						firstName : $scope.firstName,
+						LastName : $scope.lastName,
+						Bio : $scope.bio,
+						Age : $scope.age,
+						Major : $scope.selectedMajor,
+						Class : classList,
+						Habit : habitList
+					}
+				}).then(function(){
+					$rootScope.isNavbar = true;
+					$location.path('/profile/' + data.uid);
+				});
 			}).catch(function(error){
 				console.log(error);
 				alert(error);
