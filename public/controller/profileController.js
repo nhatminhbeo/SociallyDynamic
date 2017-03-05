@@ -44,7 +44,7 @@ $http) {
             }
 
             // TODO
-
+            $scope.classFilter = '';
         }
 
         // Toggle editability
@@ -58,8 +58,11 @@ $http) {
         }
     }
 
+    // Delete a class
     $scope.deleteClass = function(aClass) {
+
         console.log(aClass);
+
         delete $scope.classList[aClass];
     }
 
@@ -91,7 +94,7 @@ $http) {
             }
 
             // TODO
-
+            $scope.studyHabitFilter = '';
         }
 
         // Toggle editability
@@ -137,6 +140,24 @@ $http) {
         }
 
     };
+
+    // Delete a habit
+    $scope.deleteStudyHabit = function(aHabit) {
+
+        console.log(aHabit);
+
+        delete $scope.studyHabit[aHabit];
+    }
+
+    // Study Habit Function
+    $scope.studyHabitFunc = function(aHabit) {
+
+        console.log(aHabit);
+
+        if(!$scope.studyHabit[aHabit]){
+            $scope.studyHabit[aHabit] = "";
+        }
+    }
 
     $scope.deleteUserProfile = function() {
 

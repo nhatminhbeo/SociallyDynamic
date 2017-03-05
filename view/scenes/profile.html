@@ -30,12 +30,10 @@
 	<div class="profile_list" ng-repeat="(classkey, classvalue) in classList">
 		<p class="classList">{{classkey}}<button ng-click="deleteClass(classkey)" ng-show="isEdit_classList">X</button></p>
 	</div>
-
-	<p ng-show="isEdit_classList">Search Box</p>
 	
-	<input type="text" class="form-control" id="classList" placeholder="Search classes" ng-model="classFilter"/>
+	<input type="text" class="form-control" placeholder="Search Classes" ng-model="classFilter" ng-show="isEdit_classList"/>
 	<ul class="list-group">
-		<a class="list-group-item" ng-repeat="class in classes | filter:classFilter | limitTo:quantity" 
+		<a class="list-group-item profile_anchor" ng-repeat="class in classes | filter:classFilter | limitTo:quantity" 
 		ng-click="classFunc(class)"
 		ng-show="classFilter">
 			{{class}}
@@ -56,10 +54,20 @@
 	<h2>Study Habits</h2>
 
 	<div class="profile_list" ng-repeat="habit in studyHabit">
-		<p class="studyHabit">{{habit}}<button ng-show="isEdit_studyHabit">X</button></p>
+		<p class="studyHabit">{{habit}}<button ng-click="deleteHabit" ng-show="isEdit_studyHabit">X</button></p>
 	</div>
 
 	<p ng-show="isEdit_studyHabit">Search Box</p>
+
+	<input type="text" class="form-control" placeholder="Search Study Habits" ng-model="studyHabitFilter" ng-show="isEdit_studyHabit" />
+	<ul class="list-group">
+		<a class="list-group-item profile_anchor" ng-repeat="habit in studyHabits | filter:studHabitFilter | limitTo:quantity"
+		ng-click="studyHabitFunc(habit)"
+		ng-show="habitFilter">
+			{{habit}}
+		</a>
+	</ul>
+
 	<div ng-show="isSelf">
 		<button ng-click="modifyStudyHabit()">{{studyHabitBtn}}</button>	
 	</div>
