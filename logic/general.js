@@ -147,3 +147,11 @@ module.exports.Message = mongoose.model('Message', new Schema({
 module.exports.Major = mongoose.model('Major', new Schema({
 	MajorName: String
 }, {collection: 'Major'}));
+
+
+// ===========================================================================
+// Habit schema
+// ===========================================================================
+module.exports.Habit = mongoose.model('Habit', new Schema({
+	Habit: String
+}, {collection: 'Habit'}));

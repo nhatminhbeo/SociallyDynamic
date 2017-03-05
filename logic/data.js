@@ -46,7 +46,14 @@ module.exports.getDataClass = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.getDataMajor = function (req, res) {
-
+	models.Major.find({}, function (err, found) {
+		if (err) {
+			return res.status(400).send();
+		}
+		else {
+			return res.status(200).send(found);
+		}
+	});
 };
 
 
@@ -59,5 +66,12 @@ module.exports.getDataMajor = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.getDataHabit = function (req, res) {
-
+	models.Habit.find({}, function (err, found) {
+		if (err) {
+			return res.status(400).send();
+		}
+		else {
+			return res.status(200).send(found);
+		}
+	});
 };
