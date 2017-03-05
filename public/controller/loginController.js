@@ -128,7 +128,7 @@ loggedIn, $http, $rootScope){
 					data: {
 						_id : data.uid,
 						Email : $scope.email,
-						firstName : $scope.firstName,
+						FirstName : $scope.firstName,
 						LastName : $scope.lastName,
 						Bio : $scope.bio,
 						Age : $scope.age,
