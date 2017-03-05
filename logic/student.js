@@ -147,21 +147,42 @@ module.exports.putStudentWithId = function (req, res) {
 
 	// Remove all ClassStudent
 	.then(function () {
-		return ClassStudent.remove({StudentID: req.params.id});
+		return models.ClassStudent.remove({StudentID: req.params.id});
 	})
 
 	// Update new ClassStudent
 	.then(function () {
 		return models.Promise.each(ref.Class, function (Class) {
 			// Save the classStudent relationship
-			var classStudent = models.ClassStudent({
+			return models.ClassStudent({
 				StudentID: ref._id,
 				Class: Class
-			});
-			return classStudent.save();
-		}
-	})
+			}).save();
+		});
 
+	// Remove all StudentStudyHabit
+	}).then(function () {
+		return models.StudentStudyHabit.remove({StudentID: req.params.id});
+
+	// Update new StudentStudyHabit	
+	}).then(function () {
+		return models.Promise.each(ref.Habit, function (Habit) {
+			// Save the StudentStudyHabit relationship
+			return StudentStudyHabit({
+				StudentID: req.params.id,
+				Habit: thisHabit.Habit
+			}).save();
+		});
+	
+	// Return 200 if success
+	}).then(function () {
+		res.status(200).send();
+	
+	// Return 400 if failed
+	}).then(null, function() {
+		res.status(400).send();
+	});
+/*
 	// Update Student schema
 	Student.findByIdAndUpdate(req.params.id, entries, function (err, result) {
 		if (err) {
@@ -257,6 +278,7 @@ module.exports.putStudentWithId = function (req, res) {
 			return res.status(200).send();
 		}
 	});
+*/
 };
 
 

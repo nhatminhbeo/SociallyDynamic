@@ -139,3 +139,11 @@ module.exports.Message = mongoose.model('Message', new Schema({
 	Content: String,
 	Chronology: Number
 }, {collection: 'Message'}));
+
+
+// ===========================================================================
+// Major schema
+// ===========================================================================
+module.exports.Major = mongoose.model('Major', new Schema({
+	MajorName: String
+}, {collection: 'Major'}));
