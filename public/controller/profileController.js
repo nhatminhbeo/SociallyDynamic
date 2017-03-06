@@ -7,24 +7,16 @@ $http) {
     // Limit for search
     $scope.quantity = 5;
 
-
-
     // Picking classes that a person is in 
-    // TODO: replace with real data
     $scope.classFilter = '';
-    //$scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
     $scope.classes = [];
 
     // Picking a major that a person is in 
-    // TODO: replace with real data
     $scope.majorFilter = '';
-    //$scope.majors = ["Computer Science", "Computer Engineering", "Math-Computer Science", "Social Studies", "Swag", "Swole", "Swoon"];
     $scope.majors = [];
 
     // Picking study habits that a person has 
-    // TODO: replace with real data
     $scope.studyHabitFilter = '';
-    //$scope.studyHabits = ["Light Music", "Quiet", "I'm cool", "I like everything", "It's awesome", "Bed Programming", "Loud Music", "Random Screaming"];
     $scope.studyHabits = [];
 
     $scope.logout = function() {
@@ -286,23 +278,28 @@ $http) {
         // TODO: get stuff from the DB
         $scope.firstName = "";
         $scope.lastName = "";
+        $scope.age = 0;
         $scope.major = "";
         $scope.classList = {};
         $scope.userBio = "";
         $scope.studyHabit = {};
 
         $scope.user = authService.Auth.$getAuth();
+        if ($scope.user) {
             $http({
                 method: "GET",
                 url: "/api/student/" + $scope.user.uid
-            }). then (function (data) {
+            }).then (function (data) {
                 $scope.firstName = data.data.FirstName;
                 $scope.lastName = data.data.LastName;
                 $scope.age = data.data.Age;
                 $scope.major = data.data.Major;
+                // $scope.classList = STUFF;
                 $scope.userBio = data.data.Bio;
+                // $scope.studyHabit = STUFF;
                 console.log(data);
             });
+        }
 
         if ( $scope.isSelf ) {
             $scope.majorBtn = "Edit";
