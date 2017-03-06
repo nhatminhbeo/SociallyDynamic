@@ -3,6 +3,7 @@ app.controller('loginController', ['$scope', 'authService', '$location', 'logged
 function($scope, authService, $location, 
 loggedIn, $http, $rootScope){
 	// checking authentication
+	$scope.isLoggedIn = loggedIn;
 	console.log(loggedIn);
 	if(loggedIn){
 		console.log(authService.Auth.$getAuth());

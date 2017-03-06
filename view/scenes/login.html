@@ -1,6 +1,7 @@
 
 
 <img href="/" src="images/studyr.png" style="width:30%;height:30%;"/>
+<div ng-hide="isLoggedIn">
 <div ng-show="isLogin">
 	<form>
 	<div class="form-group">
@@ -13,6 +14,7 @@
 		<button class="btn btn-primary" ng-click="changeForm()">Don't have an account? Sign Up!</button>
 	</div>
 </form>
+</div>
 </div>
 <div ng-hide="isLogin">
 <form>
