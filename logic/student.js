@@ -381,16 +381,51 @@ module.exports.getStudentWithId = function (req, res) {
 	Student.findById(studentID, function(err, user) {
 		if (err) res.status(400).send(err);
 		// show the user
-		var jsonStudent = Student({
-			_id: user._id,
-			FirstName: user.FirstName,
-			LastName: user.LastName,
-			Age: user.Age,
-			Bio: user.Bio,
-			Email: user.Email,
-			Major: user.Major
+
+		var Class = [];
+		var Habit = [];
+
+		// Find all class and append to jsonStudent.Class
+		models.ClassStudent.find({"StudentID": studentID}).exec()
+		.then(function (found) {
+			return models.Promise.each(found, function (entry) {
+					Class.push(String(entry.Class));
+					console.log(Class);
+			});
+		})
+
+		// Find all habits and append to jsonStudent.Habit
+		.then(function() {
+			return models.StudentStudyHabit.find({"StudentID": studentID});
+		
+		})
+
+		.then(function (found) {
+			return models.Promise.each(found, function (entry) {
+				Habit.push(String(entry.Habit));
+			});
+
+
+		// Success
+		}).then(function () {
+
+			var jsonStudent = Student({
+				_id: user._id,
+				FirstName: user.FirstName,
+				LastName: user.LastName,
+				Age: user.Age,
+				Bio: user.Bio,
+				Email: user.Email,
+				Major: user.Major,
+				Class: Class,
+				Habit: Habit
+			});
+
+			res.status(200).json(jsonStudent);
+
+		// Fail
 		});
-		res.status(200).json(jsonStudent);
+
 	});
 };
 
