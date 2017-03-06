@@ -1,5 +1,6 @@
 var app = angular.module('SD' , ['ngRoute', 'firebase'])
 .config(['$routeProvider','$locationProvider', function($routeProvider , $locationProvider){
+
 		$routeProvider.
 			when('/', {
 				templateUrl: 'scenes/login',
@@ -8,24 +9,45 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 					loggedIn: ['authService', function(authService){
 						return authService.Auth.$waitForSignIn();
 					}]
+
 				}
 			}).
 			when('/createGroup/:id', {
 				templateUrl: 'scenes/createGroup',
-				controller: 'createGroupController'
+				controller: 'createGroupController',
+				resolve: {
+					currentUser: ['authService', function(authService){
+						return authService.Auth.$waitForSignIn();;
+					}]
+				}
 			}).
 			when('/profile/:id', {
 				templateUrl: 'scenes/profile',
-				controller: 'profileController'
+				controller: 'profileController',
+				resolve: {
+					currentUser: ['authService', function(authService){
+						return authService.Auth.$waitForSignIn();
+					}]
+				}
 			}).
 			when('/conversation/:id', {
 				templateUrl: 'scenes/conversation',
-				controller: 'conversationController'
+				controller: 'conversationController',
+				resolve: {
+					currentUser: ['authService', function(authService){
+						return authService.Auth.$waitForSignIn();;
+					}]
+				}
 
 			}).
 			when('/group/conversation/:id', {
 				templateUrl: 'scenes/groupConversation',
-				controller: 'groupConversationController'
+				controller: 'groupConversationController',
+				resolve: {
+					currentUser: ['authService', function(authService){
+						return authService.Auth.$waitForSignIn();;
+					}]
+				}
 			}).
 			otherwise({
 				templateUrl: 'scenes/404',

@@ -1,5 +1,5 @@
-app.controller('profileController', ['$scope', 'authService', '$location','$http', function($scope, authService, $location,
-$http) {
+app.controller('profileController', ['$scope', 'authService', '$location','$http', 'currentUser', function($scope, authService, $location,
+$http, currentUser) {
 
     var DEBUG = true;
     var DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -284,11 +284,10 @@ $http) {
         $scope.userBio = "";
         $scope.studyHabit = {};
 
-        $scope.user = authService.Auth.$getAuth();
-        if ($scope.user) {
+        if (currentUser) {
             $http({
                 method: "GET",
-                url: "/api/student/" + $scope.user.uid
+                url: "/api/student/" + currentUser.uid
             }).then (function (data) {
                 $scope.firstName = data.data.FirstName;
                 $scope.lastName = data.data.LastName;

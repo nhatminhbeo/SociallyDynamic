@@ -1,6 +1,5 @@
 app.controller('navController', ['$scope', 'authService', '$location', '$http', '$rootScope', 
-function($scope, authService, $location
-,$http, $rootScope) {
+function($scope, authService, $location ,$http, $rootScope) {
     $rootScope.isNavbar = false;
     if($location.path() != '/'){
         $rootScope.isNavbar = true;
