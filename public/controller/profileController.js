@@ -7,25 +7,67 @@ $http) {
     // Limit for search
     $scope.quantity = 5;
 
+
+
     // Picking classes that a person is in 
     // TODO: replace with real data
     $scope.classFilter = '';
-    $scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
+    //$scope.classes = ["CSE 30", "CSE 12", "CSE 11", "CSE 145", "CSE 150", "CSE 153", "CSE 154", "AAS 15"];
+    $scope.classes = [];
 
     // Picking a major that a person is in 
     // TODO: replace with real data
     $scope.majorFilter = '';
-    $scope.majors = ["Computer Science", "Computer Engineering", "Math-Computer Science", "Social Studies", "Swag", "Swole", "Swoon"];
+    //$scope.majors = ["Computer Science", "Computer Engineering", "Math-Computer Science", "Social Studies", "Swag", "Swole", "Swoon"];
+    $scope.majors = [];
 
     // Picking study habits that a person has 
     // TODO: replace with real data
     $scope.studyHabitFilter = '';
-    $scope.studyHabits = ["Light Music", "Quiet", "I'm cool", "I like everything", "It's awesome", "Bed Programming", "Loud Music", "Random Screaming"];
+    //$scope.studyHabits = ["Light Music", "Quiet", "I'm cool", "I like everything", "It's awesome", "Bed Programming", "Loud Music", "Random Screaming"];
+    $scope.studyHabits = [];
 
     $scope.logout = function() {
         // Log user out
         authService.Auth.$signOut().then(function(){
             $location.path('/');
+        });
+    }
+
+    // Retrives the entire class data from the database
+    var getClasses = function(){
+        $http({
+            method: 'GET',
+            url: '/api/data/class'
+        }).then(function(data){
+            for (var i = 0; i < data.data.length; i++){
+                $scope.classes.push(data.data[i].Name);
+            }
+            
+        });
+    }
+
+    // Retrieves the entire major data from the database
+    var getMajors = function(){
+        $http({
+            method: 'GET',
+            url: '/api/data/major'
+        }).then(function(data){
+            for(var i = 0; i < data.data.length; i++){
+                $scope.majors.push(data.data[i].MajorName);
+            }
+        });
+    }
+
+    // Retrives the entire study habits data from the database
+    var getStudyHabits = function(){
+        $http({
+            method: 'GET',
+            url: '/api/data/habit'
+        }).then(function(data){
+            for(var i = 0; i < data.data.length; i++){
+                $scope.studyHabits.push(data.data[i].Habit);
+            }
         });
     }
 
@@ -242,12 +284,25 @@ $http) {
         $scope.isEdit_studyHabit = false;
 
         // TODO: get stuff from the DB
-        $scope.firstName = "First";
-        $scope.lastName = "Last";
-        $scope.major = "Computer Engineering";
-        $scope.classList = {"CSE 11":"", "CSE 12":"", "CSE 30":""};
-        $scope.userBio = DUMMY_TEXT;
-        $scope.studyHabit = {"Bed programming":"", "Loud music":"", "Random screaming":""};
+        $scope.firstName = "";
+        $scope.lastName = "";
+        $scope.major = "";
+        $scope.classList = {};
+        $scope.userBio = "";
+        $scope.studyHabit = {};
+
+        $scope.user = authService.Auth.$getAuth();
+            $http({
+                method: "GET",
+                url: "/api/student/" + $scope.user.uid
+            }). then (function (data) {
+                $scope.firstName = data.data.FirstName;
+                $scope.lastName = data.data.LastName;
+                $scope.age = data.data.Age;
+                $scope.major = data.data.Major;
+                $scope.userBio = data.data.Bio;
+                console.log(data);
+            });
 
         if ( $scope.isSelf ) {
             $scope.majorBtn = "Edit";
@@ -277,4 +332,9 @@ $http) {
     }
 
     getProfile();
+
+    // Get data
+    getClasses();
+    getMajors();
+    getStudyHabits();
 }]);
