@@ -19,6 +19,7 @@ $http, currentUser) {
     $scope.studyHabitFilter = '';
     $scope.studyHabits = [];
 
+
     $scope.logout = function() {
         // Log user out
         authService.Auth.$signOut().then(function(){
@@ -80,7 +81,7 @@ $http, currentUser) {
             }
 
             // TODO
-
+            putStudent();
             // Clear the search box
             $scope.majorFilter = '';
         }
@@ -123,7 +124,7 @@ $http, currentUser) {
             }
 
             // TODO
-
+            putStudent();
             // Clear the search box
             $scope.classFilter = '';
         }
@@ -180,6 +181,7 @@ $http, currentUser) {
             }
 
             // TODO
+            putStudent();
 
         }
 
@@ -213,7 +215,7 @@ $http, currentUser) {
             }
 
             // TODO
-
+            putStudent();
             // Clear the search box
             $scope.studyHabitFilter = '';
         }
@@ -293,9 +295,17 @@ $http, currentUser) {
                 $scope.lastName = data.data.LastName;
                 $scope.age = data.data.Age;
                 $scope.major = data.data.Major;
-                // $scope.classList = STUFF;
+                var classListArr = data.data.Class;
                 $scope.userBio = data.data.Bio;
-                // $scope.studyHabit = STUFF;
+                var studyHabitArr = data.data.Habit;
+
+                for (var i = 0; i < classListArr.length; i++) {
+                    $scope.classList[classListArr[i]] = "";
+                }
+
+                for (var i = 0; i < studyHabitArr.length; i++) {
+                    $scope.studyHabit[studyHabitArr[i]] = "";
+                }
                 console.log(data);
             });
         }
@@ -309,6 +319,18 @@ $http, currentUser) {
         }
         else {
             $scope.viewMode = "View as Self";
+        }
+    }
+
+    var putStudent = function () {
+
+        
+        var json = {
+            FirstName: $scope.firstName,
+            LastName: $scope.lastName,
+            Major: $scope.major,
+            Age: $scope.age,
+
         }
     }
 
