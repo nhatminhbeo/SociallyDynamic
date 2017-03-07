@@ -134,13 +134,11 @@ module.exports.putStudentWithId = function (req, res) {
 
 	var ref = req.body;
 	var entries = {
-		FirstName: ref.FirstName,
-		LastName: ref.LastName,
 		Age: ref.Age,
 		Bio: ref.Bio,
 		Major: ref.Major
 	}
-
+console.log(ref.Class);
 	// Update the student
 	models.Student.findByIdAndUpdate(req.params.id, entries).exec()
 
@@ -154,7 +152,7 @@ module.exports.putStudentWithId = function (req, res) {
 		return models.Promise.each(ref.Class, function (Class) {
 			// Save the classStudent relationship
 			return models.ClassStudent({
-				StudentID: ref._id,
+				StudentID: req.params.id,
 				Class: Class
 			}).save();
 		});

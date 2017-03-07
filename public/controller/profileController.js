@@ -323,15 +323,31 @@ $http, currentUser) {
     }
 
     var putStudent = function () {
-
         
-        var json = {
+        var put = {
             FirstName: $scope.firstName,
             LastName: $scope.lastName,
+            Bio: $scope.userBio,
             Major: $scope.major,
             Age: $scope.age,
+            Class: [],
+            Habit: []
+        };
 
+        for (item in $scope.classList) {
+            put["Class"].push(item);
         }
+
+        for (item in $scope.studyHabit) {
+            put["Habit"].push(item);
+        }
+        console.log(put["Class"]);
+        $http({
+            method: "PUT",
+            url: "/api/student/" + currentUser.uid,
+            data: put
+        });
+
     }
 
     $scope.changeView = function() {
