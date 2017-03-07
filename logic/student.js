@@ -134,7 +134,6 @@ module.exports.putStudentWithId = function (req, res) {
 
 	var ref = req.body;
 	var entries = {
-		Email: ref.Email,
 		FirstName: ref.FirstName,
 		LastName: ref.LastName,
 		Age: ref.Age,
