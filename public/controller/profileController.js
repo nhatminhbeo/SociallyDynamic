@@ -280,6 +280,7 @@ $http, currentUser) {
         // TODO: get stuff from the DB
         $scope.firstName = "";
         $scope.lastName = "";
+        $scope.email = "";
         $scope.age = 0;
         $scope.major = "";
         $scope.classList = {};
@@ -293,6 +294,7 @@ $http, currentUser) {
             }).then (function (data) {
                 $scope.firstName = data.data.FirstName;
                 $scope.lastName = data.data.LastName;
+                $scope.email = data.data.Email;
                 $scope.age = data.data.Age;
                 $scope.major = data.data.Major;
                 var classListArr = data.data.Class;
@@ -327,6 +329,7 @@ $http, currentUser) {
         var put = {
             FirstName: $scope.firstName,
             LastName: $scope.lastName,
+            Email: $scope.email,
             Bio: $scope.userBio,
             Major: $scope.major,
             Age: $scope.age,

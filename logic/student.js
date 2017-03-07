@@ -134,13 +134,16 @@ module.exports.putStudentWithId = function (req, res) {
 
 	var ref = req.body;
 	var entries = {
+		Email: ref.Email,
+		FirstName: ref.FirstName,
+		LastName: ref.LastName,
 		Age: ref.Age,
 		Bio: ref.Bio,
 		Major: ref.Major
 	}
 console.log(ref.Class);
 	// Update the student
-	models.Student.findByIdAndUpdate(req.params.id, entries).exec()
+	models.Student.update({"_id": req.params.id}, entries).exec()
 
 	// Remove all ClassStudent
 	.then(function () {
@@ -167,7 +170,7 @@ console.log(ref.Class);
 			// Save the StudentStudyHabit relationship
 			return StudentStudyHabit({
 				StudentID: req.params.id,
-				Habit: thisHabit.Habit
+				Habit: Habit
 			}).save();
 		});
 	
