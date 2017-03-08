@@ -23,7 +23,8 @@
 	<h3>{{major}}</h3>
 	<input type="text" class="form-control" placeholder="Search Majors" ng-model="majorFilter" ng-show="isEdit_major"/>
 	<ul class="list-group">
-		<a class="list-group-item profile_anchor" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity"
+		<a class="list-group-item profile_anchor" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity
+		track by $index"
 		ng-click="changeMajor(major)"
 		ng-show="majorFilter">
 			{{major}}
@@ -42,7 +43,8 @@
 	
 	<input type="text" class="form-control" placeholder="Search Classes" ng-model="classFilter" ng-show="isEdit_classList"/>
 	<ul class="list-group">
-		<a class="list-group-item profile_anchor" ng-repeat="class in classes | filter:classFilter | limitTo:quantity" 
+		<a class="list-group-item profile_anchor" ng-repeat="class in classes | filter:classFilter | limitTo:quantity
+		track by $index" 
 		ng-click="addClass(class)"
 		ng-show="classFilter">
 			{{class}}
@@ -68,7 +70,7 @@
 
 	<input type="text" class="form-control" placeholder="Search Study Habits" ng-model="studyHabitFilter" ng-show="isEdit_studyHabit" />
 	<ul class="list-group">
-		<a class="list-group-item profile_anchor" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity"
+		<a class="list-group-item profile_anchor" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity track by $index"
 		ng-click="addStudyHabit(habit)"
 		ng-show="studyHabitFilter">
 			{{habit}}

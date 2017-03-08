@@ -1,5 +1,5 @@
-app.controller('profileController', ['$scope', 'authService', '$location','$http', 'currentUser', function($scope, authService, $location,
-$http, currentUser) {
+app.controller('profileController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
+$http, currentUser, $routeParams) {
 
     var DEBUG = true;
     var DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -18,6 +18,16 @@ $http, currentUser) {
     // Picking study habits that a person has 
     $scope.studyHabitFilter = '';
     $scope.studyHabits = [];
+
+    // Use to store retrieved user data
+    var firstNameOld = "";
+    var lastNameOld = "";
+    var emailOld = "";
+    var ageOld = 0;
+    var majorOld = "";
+    var classListOld = {};
+    var userBioOld = "";
+    var studyHabitOld = {};
 
 
     $scope.logout = function() {
@@ -81,6 +91,7 @@ $http, currentUser) {
             }
 
             // TODO
+            majorOld = $scope.major;
             putStudent();
             // Clear the search box
             $scope.majorFilter = '';
@@ -124,6 +135,7 @@ $http, currentUser) {
             }
 
             // TODO
+            classListOld = $scope.classList;
             putStudent();
             // Clear the search box
             $scope.classFilter = '';
@@ -181,6 +193,7 @@ $http, currentUser) {
             }
 
             // TODO
+            userBioOld = $scope.userBio;
             putStudent();
 
         }
@@ -215,6 +228,7 @@ $http, currentUser) {
             }
 
             // TODO
+            studyHabitOld = $scope.studyHabit;
             putStudent();
             // Clear the search box
             $scope.studyHabitFilter = '';
@@ -272,7 +286,7 @@ $http, currentUser) {
         $scope.DEBUG = DEBUG;
 
         // TODO: see if viewing own profile
-        $scope.isSelf = true;
+        $scope.isSelf = currentUser.uid === $routeParams.id;
         $scope.isEdit_major = false;
         $scope.isEdit_classList = false;
         $scope.isEdit_studyHabit = false;
@@ -287,67 +301,65 @@ $http, currentUser) {
         $scope.userBio = "";
         $scope.studyHabit = {};
 
-        if (currentUser) {
+        if ($routeParams.id) {
             $http({
                 method: "GET",
-                url: "/api/student/" + currentUser.uid
+                url: "/api/student/" + $routeParams.id
             }).then (function (data) {
-                $scope.firstName = data.data.FirstName;
-                $scope.lastName = data.data.LastName;
-                $scope.email = data.data.Email;
-                $scope.age = data.data.Age;
-                $scope.major = data.data.Major;
+                firstNameOld = $scope.firstName = data.data.FirstName;
+                lastNameOld = $scope.lastName = data.data.LastName;
+                emailOld = $scope.email = data.data.Email;
+                ageOld = $scope.age = data.data.Age;
+                majorOld = $scope.major = data.data.Major;
                 var classListArr = data.data.Class;
-                $scope.userBio = data.data.Bio;
+                userBioOld = $scope.userBio = data.data.Bio;
                 var studyHabitArr = data.data.Habit;
 
                 for (var i = 0; i < classListArr.length; i++) {
-                    $scope.classList[classListArr[i]] = "";
+                    classListOld[classListArr[i]] = $scope.classList[classListArr[i]] = "";
                 }
 
                 for (var i = 0; i < studyHabitArr.length; i++) {
-                    $scope.studyHabit[studyHabitArr[i]] = "";
+                    studyHabitOld[studyHabitArr[i]] = $scope.studyHabit[studyHabitArr[i]] = "";
                 }
                 console.log(data);
             });
         }
 
-        if ( $scope.isSelf ) {
-            $scope.majorBtn = "Edit";
-            $scope.classListBtn = "Edit";
-            $scope.userBioBtn = "Edit";
-            $scope.studyHabitBtn = "Edit";
-            $scope.viewMode = "View as Public";
-        }
-        else {
-            $scope.viewMode = "View as Self";
-        }
+        // Initialize the text for all buttons
+        $scope.majorBtn = "Edit";
+        $scope.classListBtn = "Edit";
+        $scope.userBioBtn = "Edit";
+        $scope.studyHabitBtn = "Edit";
+
+        // For DEBUG purposes only
+        $scope.viewMode = $scope.isSelf ? "View as Public" : "View as Self";
     }
 
     var putStudent = function () {
         
         var put = {
-            FirstName: $scope.firstName,
-            LastName: $scope.lastName,
-            Email: $scope.email,
-            Bio: $scope.userBio,
-            Major: $scope.major,
-            Age: $scope.age,
+            FirstName: firstNameOld,
+            LastName: lastNameOld,
+            Email: emailOld,
+            Bio: userBioOld,
+            Major: majorOld,
+            Age: ageOld,
             Class: [],
             Habit: []
         };
 
-        for (item in $scope.classList) {
+        for (item in classListOld) {
             put["Class"].push(item);
         }
 
-        for (item in $scope.studyHabit) {
+        for (item in studyHabitOld) {
             put["Habit"].push(item);
         }
         console.log(put["Class"]);
         $http({
             method: "PUT",
-            url: "/api/student/" + currentUser.uid,
+            url: "/api/student/" + $routeParams.id,
             data: put
         });
 
