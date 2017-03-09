@@ -62,11 +62,20 @@
     <div class="col-sm-6">
     <label for="memberList">Add Members</label>
     <input type="text" class="form-control" id="memberList" placeholder="Add Members" ng-model="friendsFilter">
-    <!-- need to autocomplete contacts -->
+
+    <!-- autocomplete contacts -->
     <ul class="list-group" >
-    <a class="list-group-item" ng-repeat="friend in friendList | filter:friendsFilter | limitTo:quantity track by $index" ng-click="addMembers">
+    
+    <!--
+    <a class="list-group-item" ng-repeat="friend in friendList | filter:friendsFilter | limitTo:quantity track by $index" ng-show="friendsFilter" ng-click="addMembers(data[$index][&quot;_id&quot;])">
     	{{friend}}
     </a>
+    -->
+
+    <a class="list-group-item" ng-repeat="friend in friendList | filter:friendsFilter | limitTo:quantity track by $index" ng-show="friendsFilter" ng-click="addMembers($index)">
+    	{{friend}}
+    </a>
+
     </ul>
     </div>
 
@@ -77,12 +86,16 @@
 	<div class="col-sm-4">
 		<ul class="list-group">
 			<label>Selected Members</label>
-				<!-- need to get list of inputted members -->
+				<!-- get list of inputted members; also able to delete a member-->
+				<a class="list-group-item" ng-repeat="(memberkey,membervalue) in selectedMembers"
+				ng-click="deleteMembers(memberkey)">
+					{{membervalue}}
+				</a>
 		</ul>
 	</div>
 	</div>
         <div class="create-btn">
-        	<button ng-click="createGroup()" ng-model="stuff" class="btn btn-default" type="button" style="float:right"> Create </button>
+        	<button ng-model="stuff" class="btn btn-default" type="button" style="float:right" ng-click="createGroup()" > Create </button>
      	</div>
 	
 	</div>
