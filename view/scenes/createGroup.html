@@ -1,58 +1,88 @@
-<h1> Study Groups </h1>
+
 <!-- <h1>Hello from createGroup.html and {{createGroupController}}</h1> -->
 
 
 <!-- div to display group profile -->
-<div class="groupDisplay" ng-show="viewGroups">
-
+<div class="groupDisplay" ng-show="viewGroups" >
+	
+	<h1> Study Groups </h1>
 	<!-- if no groups yet -->
-	<div ng-hide="groups" id="default_view">
+	<div ng-hide="groupsExist" id="default_view">
 	    <h2> You have no groups yet! </h2>
 	</div>
 	    
 
 	<!--groups already exist and chose one group to view-->
-	<div ng-show="groups">
+	<div ng-show="groupsExist">
 
 	    <!-- delete group button if admin -->
 		<div ng-show="isAdmin">
-				<button ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete Group</button>	
+				<button ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
 		</div>
 
         <!-- group data -->
 	    <div id="groupPic" style="display:block;text-align:center; margin:0 auto;">
 			<img src="http://geekxgirls.com/images/_comics/totoro-gifs-04.gif" style="width:200px;height:200px;display:block;margin-right:auto;margin-left:auto;" />
-		    <h1 style="text-align:center;">Group Name</h1>
+		    <h1 style="text-align:center;">{{groupName}}</h1>
 		</div>
 
 		<div id="Bio">
-			<h2 style="text-align: center;">About Group</h2>
-	       	<h3>{{groupBio}}</h3>
+			<h2 style="text-align: center">About Group</h2>
+	       	<h4 style="text-align: center">Group Bio</h4>
 	    </div>
 
 	    <div id="Members" style="margin-left:10%">
 			<h2 style="float:left">Members</h2>
-	       	<h3>{{members}}</h3>
+	       	<h4>{{members}}</h4>
 	    </div>
 
 	    <div id="Classes" style="margin-right:10%">
 			<h2 style="float:right">Class</h2>
-	       	<h3>{{class}}</h3>
+	       	<h4>{{class}}</h4>
 	    </div>
-	
+
 	</div>
 </div>
 
 
 <!-- div to display new group form-->
-<div class="groupForm" ng-show="newGroup">
-	    
-    <!-- text to create new group -->
-    <div class="create">
-        <input type="text" class="form-control" placeholder="Group Name">
-        <input type="text" class="form-control" placeholder="Add Members">      <!-- will be an autocomplete -->
+<div class="groupForm" ng-hide="viewGroups">
+
+<h1> Create Study Group </h1>
+
+	<div class="create">
+
+		<!-- add group name -->
+        <label>Group Name</label>
+        <input type="text" class="form-control" placeholder="Group Name"/>  
+    </div>
+
+    <!-- add members -->
+    <div class="row">
+    <div class="col-sm-6">
+    <label for="memberList">Add Members</label>
+    <input type="text" class="form-control" id="memberList" placeholder="Add Members" ng-model="friendsFilter">
+    <!-- need to autocomplete contacts -->
+    <ul class="list-group" >
+    <a class="list-group-item" ng-repeat="friend in friendList | filter:friendsFilter | limitTo:quantity track by $index" ng-click="addMembers">
+    	{{friend}}
+    </a>
+    </ul>
+    </div>
+
+
+    <!-- display inputs -->
+    <div class="col-sm-2">
+	</div>
+	<div class="col-sm-4">
+		<ul class="list-group">
+			<label>Selected Members</label>
+				<!-- need to get list of inputted members -->
+		</ul>
+	</div>
+	</div>
         <div class="create-btn">
-        	<button ng-click="sendMessage()" ng-model="stuff" class="btn btn-default" type="button" style="float:right"> Create </button>
+        	<button ng-click="createGroup()" ng-model="stuff" class="btn btn-default" type="button" style="float:right"> Create </button>
      	</div>
 	
 	</div>
