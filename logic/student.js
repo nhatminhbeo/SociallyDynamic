@@ -441,6 +441,7 @@ module.exports.getStudentFriendWithId = function (req, res) {
 
 	models.Friendship.find({"UserID": req.params.id}).exec()
 	.then(function(classes) {
+
 		// For each such class:
 		return models.Promise.each(classes, function(thisClass) {
 			var FriendID = "";
@@ -450,8 +451,9 @@ module.exports.getStudentFriendWithId = function (req, res) {
 				FriendID = thisClass.UserID[1];
 			}
 
-			return models.Student.find({"_id": FriendID}) 
+			return models.Student.findOne({"_id": FriendID}) 
 			.then(function(user) {
+
 				var jsonStudent = {
 					_id: user._id,
 					FirstName: user.FirstName,
