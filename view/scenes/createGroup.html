@@ -1,6 +1,4 @@
-
 <!-- <h1>Hello from createGroup.html and {{createGroupController}}</h1> -->
-
 
 <!-- div to display group profile -->
 <div class="groupDisplay" ng-show="viewGroups" >
@@ -17,7 +15,7 @@
 
 	    <!-- delete group button if admin -->
 		<div ng-show="isAdmin">
-				<button ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
+				<button class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
 		</div>
 
         <!-- group data -->
@@ -36,13 +34,16 @@
 	       	<h4>{{members}}</h4>
 	    </div>
 
+<!--
 	    <div id="Classes" style="margin-right:10%">
 			<h2 style="float:right">Class</h2>
 	       	<h4>{{class}}</h4>
 	    </div>
-
+-->
 	</div>
 </div>
+
+
 
 
 <!-- div to display new group form-->
@@ -54,7 +55,7 @@
 
 		<!-- add group name -->
         <label>Group Name</label>
-        <input type="text" class="form-control" placeholder="Group Name"/>  
+        <input type="text" class="form-control" placeholder="Group Name" ng-model="groupName"/>  
     </div>
 
     <!-- add members -->
@@ -81,8 +82,7 @@
 
 
     <!-- display inputs -->
-    <div class="col-sm-2">
-	</div>
+    <div class="col-sm-2"> </div>
 	<div class="col-sm-4">
 		<ul class="list-group">
 			<label>Selected Members</label>
@@ -94,9 +94,10 @@
 		</ul>
 	</div>
 	</div>
-        <div class="create-btn">
-        	<button ng-model="stuff" class="btn btn-default" type="button" style="float:right" ng-click="createGroup()" > Create </button>
-     	</div>
-	
-	</div>
+    
+    <!-- create group button -->
+    <div class="create-btn">
+        <button ng-model="stuff" class="btn btn-primary" type="button" style="float:right" ng-click="createGroup()"> Create </button>
+        <button class="btn btn-primary" ng-click="cancel()"> Cancel </button>
+    </div>
 </div>
