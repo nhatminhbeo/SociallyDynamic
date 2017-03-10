@@ -27,6 +27,7 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
 //      [ {
 //          Sender: String -- id of the sender,
 //          SenderFirstName: String -- First name of the sender,
+//          Content: message 
 //      },
 //          .......
 //      ]
