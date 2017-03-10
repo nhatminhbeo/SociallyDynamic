@@ -67,11 +67,13 @@
     <!-- autocomplete contacts -->
     <ul class="list-group" >
     
-    <!--
+  <!--  
     <a class="list-group-item" ng-repeat="friend in friendList | filter:friendsFilter | limitTo:quantity track by $index" ng-show="friendsFilter" ng-click="addMembers(data[$index][&quot;_id&quot;])">
     	{{friend}}
     </a>
-    -->
+   -->
+
+  
 
     <a class="list-group-item" ng-repeat="friend in friendList | filter:friendsFilter | limitTo:quantity track by $index" ng-show="friendsFilter" ng-click="addMembers($index)">
     	{{friend}}
