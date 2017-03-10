@@ -13,11 +13,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var logger = require('morgan');
-//var socket = require('socket.io');
+var socket = require('socket.io');
 
 var app = express();
-//var server = require('http').createServer(app);
-//var io = socket(server);
+var server = require('http').createServer(app);
+var io = socket(server);
 
 var port = process.env.PORT || 3000;
 
