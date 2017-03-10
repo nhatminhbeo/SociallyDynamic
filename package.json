@@ -27,6 +27,7 @@
     "morgan": "1.8.0",
     "mongodb": "2.2.22",
     "mongoose": "4.8.1",
-    "bluebird": "3.4.7"
+    "bluebird": "3.4.7",
+    "socket.io": "1.7.3"
   }
 }

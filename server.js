@@ -13,8 +13,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var logger = require('morgan');
-var http = require('http');
+//var socket = require('socket.io');
+
 var app = express();
+//var server = require('http').createServer(app);
+//var io = socket(server);
 
 var port = process.env.PORT || 3000;
 
@@ -150,9 +153,7 @@ app.use(function(err, req, res, next) {
 var stu = require('./routes/student');  stu.route(app);
 var fri = require('./routes/friend');   fri.route(app);
 var mat = require('./routes/match');    mat.route(app);
-/*
-var mes = require('./routes/message');  mes.route(app);
-*/
+/*var mes = require('./routes/message');  mes.route(app, io);*/
 var gro = require('./routes/group');    gro.route(app);
 var inb = require('./routes/inbox');    inb.route(app);
 var dat = require('./routes/data');     dat.route(app);

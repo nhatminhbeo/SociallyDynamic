@@ -5,6 +5,7 @@
 // Last updated: Feb 12 2017
 // ===========================================================================
 
+
 // ===============================================================================================================================================
 //                                   Message systems (PM)
 // ===============================================================================================================================================
@@ -15,37 +16,33 @@
 
 // ================================================================================
 //  Function: getMessage
+//  REST: GET:/api/conversation/:id
+//  Description: Return a list 50 most recent message by default, otherwise
+//				 specified in req.header
+//  Expected input (req.header): JSON:
+//		start: int -- starting most of 50 most recent message.
+//			i.e start: 50 will return 51st to 100th most recent messages 
+//  Expected output (res): JSON list:
+//		[ {
+//			Sender: String -- id of the sender,
+//			SenderFirstName: String -- First name of the sender,
+//			
+//		}
+//		]
+//  Author: 
+// ================================================================================
+module.exports.getConversationWithId = function (req, res) {
+};
+
+
+// ================================================================================
+//  Function: messageReceived
 //  REST: GET:/api/message/
 //  Description:
 //  Expected input (req.body):
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-module.exports.getMessage = function (req, res) {
-};
-
-
-// ================================================================================
-//  Function: putMessage
-//  REST: PUT:/api/message/
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
-// ================================================================================
-module.exports.putMessage = function (req, res) {
-
-};
-
-
-// ================================================================================
-//  Function: postMessage
-//  REST: POST:/api/message/
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
-// ================================================================================
-module.exports.postMessage = function (req, res) {
+module.exports.messageReceived = function (req, res) {
 
 };

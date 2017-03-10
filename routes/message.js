@@ -15,7 +15,7 @@
 // ===============================================================================================================================================
 
 var api = require('../logic/message.js');
-module.exports.route = function(app) {
+module.exports.route = function(app, io) {
 	app.get('/api/message', api.getMessage);
 	app.put('/api/message', api.putMessage);
 	app.post('/api/message', api.postMessage);
