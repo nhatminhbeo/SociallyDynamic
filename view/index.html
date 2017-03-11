@@ -108,7 +108,7 @@
 							<a href="/"><span style=""><img src="images/profile.png" class="img-responsive" alt="profile" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span style=""onclick="openNav()""><img src="images/contacts.png" class="img-responsive" alt="contacts" width="60" height="60"></span></a>
+							<a href=""><span  ng-click="getFriendList()" onclick="openNav()""><img src="images/contacts.png" class="img-responsive" alt="contacts" width="60" height="60"></span></a>
 						</li>
 						<li>
 							<a href=""><span style=""onclick="openNav()""><img src="images/inbox.png" class="img-responsive" alt="inbox" width="60" height="60"></span></a>
@@ -132,6 +132,11 @@
 							<div id="mySlidenav" class="slidenav" ng-show="isNavbar">
 							  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 							  <p>CONTENT GOES HERE</p>
+							  <div ng-show="navBarContents.contacts">
+								  <a ng-repeat="friend in friendList" ng-href="/profile/{{friend._id}}">
+									  {{friend.FirstName}} {{friend.LastName}}
+									  </a>
+								  </div>
 							</div>
 							<div ng-view>
 							</div>

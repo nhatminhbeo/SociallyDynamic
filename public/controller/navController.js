@@ -6,6 +6,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         inbox : false,
         partnerMatch : false,
     }
+
     $rootScope.currentuser = '';
     $rootScope.myProfile = '';
     $rootScope.isNavbar = false;
@@ -28,11 +29,13 @@ function($scope, authService, $location ,$http, $rootScope) {
     }
 
     // get friendlist, save in $scope.friendList
-    function getFriendList() {
+    $scope.getFriendList = function() {
+        $scope.navBarContents.contacts = true;
         $http({
             method: "GET",
             url: "/api/student/friend/" + $rootScope.currentUser.uid
         }).then(function (data) {
+            console.log(data);
             $scope.friendList = data.data;
         });
     }
