@@ -111,7 +111,7 @@
 							<a href=""><span  ng-click="getFriendList()" onclick="openNav()" style=""><img src="images/contacts.png" class="img-responsive" alt="contacts" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span style=""onclick="openNav()" style=""><img src="images/inbox.png" class="img-responsive" alt="inbox" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="openNav()" style=""><img src="images/inbox.png" class="img-responsive" alt="inbox" width="60" height="60"></span></a>
 						</li>
 						<li>
 							<a href=""><span ng-click="getMatch(matching.Wait)" style="" onclick="openNav()" style=""><img src="images/partner match.png" class="img-responsive" alt="partner match" width="60" height="60"></span></a>
@@ -139,6 +139,11 @@
 								</div>
 							</div>
 						  	<div ng-show="navBarContents.inbox">
+						  			<div class="row"> 
+								  		<div class="col-sm-4"> <button selected="true" ng-click="getMatch(matching.Class)">Class</button>&emsp;</div>  
+								  		<div class="col-sm-4"> <button ng-click="getMatch(matching.Major)">Major</button>&emsp;</div> 
+								  		<div class="col-sm-3"> <button ng-click="getMatch(matching.Habit)">Habit</button></div>
+						  			</div>
 								<a ng-repeat="friend in friendList" >
 								  {{friend.FirstName}} {{friend.LastName}}
 								</a>
