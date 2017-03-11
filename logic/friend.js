@@ -89,7 +89,7 @@ module.exports.deleteFriend = function (req, res) {
 };
 
 // ================================================================================
-//  Function: postFriendRequest
+//  Function: getFriendRequest
 //  REST: GET:/api/friend/request
 //  Description: The purpose of this method is to let the front end get all the friend
 //		requests that are made from a certain receiver and sender. However I think 
@@ -126,6 +126,7 @@ module.exports.getFriendRequest = function (req, res) {
 		}
 	);
 };
+
 
 // ================================================================================
 //  Function: postFriendRequest
