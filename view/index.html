@@ -83,7 +83,7 @@
 
 		<!-- Custom Global Partial CSS -->
 		<link href="style/profile.css" rel="stylesheet">
-
+		<link href="style/login.css" rel="stylesheet">		
 	</head>
 
 	<body ng-app="SD">
@@ -98,14 +98,14 @@
 			<nav class="navbar navbar-inverse navbar-fixed-top" ng-show="isNavbar" role="navigation">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<a class="navbar-brand" href="index.html"><img src="images/studyr.png" class="img-responsive" alt="studyr logo" width="85" height="50"></a>
+					<a class="navbar-brand" href="/"><img src="images/studyr.png" class="img-responsive" alt="studyr logo" width="85" height="50"></a>
 				</div>
 
 				<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 				<div class="navbar-header">
 					<ul class="nav navbar-nav side-nav">
 						<li class="active">
-							<a href=""><span style=""onclick="openNav()""><img src="images/profile.png" class="img-responsive" alt="profile" width="60" height="60"></span></a>
+							<a href="/"><span style=""><img src="images/profile.png" class="img-responsive" alt="profile" width="60" height="60"></span></a>
 						</li>
 						<li>
 							<a href=""><span style=""onclick="openNav()""><img src="images/contacts.png" class="img-responsive" alt="contacts" width="60" height="60"></span></a>
@@ -186,6 +186,7 @@
 	<script src="controller/navController.js"></script>
 	<script src="controller/createGroupController.js"></script>
 	<script src="controller/groupConversationController.js"></script>
+	<script src="controller/groupController.js"></script>
 
 	<link rel = "stylesheet" href = "style/conversation.css">
 </html>

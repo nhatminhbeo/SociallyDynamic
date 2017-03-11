@@ -93,6 +93,8 @@ loggedIn, $http, $rootScope){
 		authService.Auth.$signInWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 			console.log(data);
 			$rootScope.isNavbar = true;
+			$rootScope.myProfile = '/profile/' + data.uid;
+			$rootScope.currentuser = loggedIn;
 			$location.path('/profile/' + data.uid);
 		}).catch(function(error){
 			console.log(error);
@@ -149,6 +151,8 @@ loggedIn, $http, $rootScope){
 					}
 				}).then(function(){
 					$rootScope.isNavbar = true;
+					$rootScope.myProfile = '/profile/' + data.uid;
+					$rootScope.currentuser = loggedIn;
 					$location.path('/profile/' + data.uid);
 				});
 			}).catch(function(error){

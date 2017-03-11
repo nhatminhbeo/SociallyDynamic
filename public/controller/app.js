@@ -17,7 +17,16 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 				controller: 'createGroupController',
 				resolve: {
 					currentUser: ['authService', function(authService){
-						return authService.Auth.$waitForSignIn();;
+						return authService.Auth.$waitForSignIn();
+					}]
+				}
+			}).
+			when('/group/', {
+				templateUrl: 'scenes/group',
+				controller: 'groupController',
+				resolve: {
+					currentUser:['authService', function(authService){
+						return authService.Auth.$waitForSignIn();
 					}]
 				}
 			}).
