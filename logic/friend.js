@@ -54,7 +54,7 @@ module.exports.getFriend = function (req, res) {
 // ================================================================================
 module.exports.postFriend = function (req, res) {
 	var toPost = Friendship({
-		UserID: [req.body.sender, req.body.receiver],
+		UserID: [req.body.Sender, req.body.Receiver],
 		StartDate: Date.now().toString()
 	});
 
@@ -75,11 +75,11 @@ module.exports.postFriend = function (req, res) {
 // ================================================================================
 module.exports.deleteFriend = function (req, res) {
     var toDel = {
-    	UserID: req.body.sender
+    	UserID: req.body.Sender
     };
     var toDelAlt = {
-    	UserID: req.body.receiver
-    }
+    	UserID: req.body.Receiver
+    };
     
     Friendship.findOneAndRemove({ '$and': [toDel, toDelAlt]}, function (err, found) {
 	    if(err) 
@@ -89,7 +89,7 @@ module.exports.deleteFriend = function (req, res) {
 };
 
 // ================================================================================
-//  Function: postFriendRequest
+//  Function: getFriendRequest
 //  REST: GET:/api/friend/request
 //  Description: The purpose of this method is to let the front end get all the friend
 //		requests that are made from a certain receiver and sender. However I think 
@@ -106,26 +106,40 @@ module.exports.deleteFriend = function (req, res) {
 //  Author: Justin Huynh
 // ================================================================================
 module.exports.getFriendRequest = function (req, res) {
+	
 	var FriendRequest = models.FriendRequest;
-	var friendRequestSender = req.headers.sender; //auto converted to lowercase in
-	var friendRequestReceiver = req.headers.receiver; //http headers by http 
+	/*var toFind = {
+
+  		"Sender": req.headers.Sender,
+        "Receiver": req.headers.Receiver
+    };
+    var toFindAlt = {
+
+  		"Sender": req.headers.Receiver,
+        "Receiver": req.headers.Sender
+    };*/
+	//var friendRequestSender = req.headers.sender; //auto converted to lowercase in
+	//var friendRequestReceiver = req.headers.receiver; //http headers by http 
 	//console.log(req); for debugging: note above 2 comments ie 'Sender'->'sender'
 	//https://github.com/mitre/HTTP-Proxy-Servlet/issues/65
 	//here^^ is a link referring to this issue. pretty interesting~~
 	FriendRequest.findOne(
-		{ 
-			Sender: friendRequestSender, 
-			Receiver: friendRequestReceiver
-		}, 
+	{
+
+  		"Sender": req.headers.sender,
+        "Receiver": req.headers.receiver
+    },
 		function(err, data) {
 			if (err) 
 				return res.status(400).send(err);
 
+			console.log(data);
 			// we have found the request
-			return res.status(200).json(data);
+			return res.status(200).send(data);
 		}
 	);
 };
+
 
 // ================================================================================
 //  Function: postFriendRequest
@@ -144,11 +158,11 @@ module.exports.postFriendRequest = function (req, res) {
 		Receiver: req.body.Receiver
 	});
 
-	friendRequest.save(function(err){
+	friendRequest.save(function(err, data){
 		if (err) 
 			return res.status(400).send(err);
 
-		return res.status(200).send('Saved friendRequest');
+		return res.status(200).send(data);
 	});
 };
 
@@ -178,7 +192,7 @@ module.exports.deleteFriendRequest = function(req, res) {
 				return res.status(400).send(err);
 			
 			// we have deleted the user
-			return res.status(200).json(data);
+			return res.status(200).send(data);
 		}
 	);
 };
