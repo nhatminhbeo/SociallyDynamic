@@ -54,7 +54,7 @@ module.exports.getFriend = function (req, res) {
 // ================================================================================
 module.exports.postFriend = function (req, res) {
 	var toPost = Friendship({
-		UserID: [req.body.sender, req.body.receiver],
+		UserID: [req.body.Sender, req.body.Receiver],
 		StartDate: Date.now().toString()
 	});
 
@@ -75,10 +75,10 @@ module.exports.postFriend = function (req, res) {
 // ================================================================================
 module.exports.deleteFriend = function (req, res) {
     var toDel = {
-    	UserID: req.body.sender
+    	UserID: req.body.Sender
     };
     var toDelAlt = {
-    	UserID: req.body.receiver
+    	UserID: req.body.Receiver
     }
     
     Friendship.findOneAndRemove({ '$and': [toDel, toDelAlt]}, function (err, found) {
