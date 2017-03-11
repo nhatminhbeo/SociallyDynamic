@@ -21,13 +21,9 @@ $http, currentUser) {
     $scope.quantity = 5;
     $scope.selectedMembers = {};
 
-
     //create group fields
     $scope.groupName = "";
 
-    //auto-complete member selection
-    $scope.friendList = [];
-    $scope.data=[];
     $http({
         method: "GET",
         url: "/api/student/friend/" + currentUser.uid
@@ -35,29 +31,23 @@ $http, currentUser) {
         console.log(data);
         $scope.data = data.data;
         for (var i = 0; i < data.data.length; i++) {
-            $scope.friendList.push(data.data[i]["FirstName"] + " " + data.data[i]["LastName"]);
+            $scope.data[i]["Name"] = $scope.data[i]["FirstName"] + " " + $scope.data[i]["LastName"]
         }
+        console.log(data);
     });
 
-
     // add member into temp selected member list
-    $scope.addMembers = function(index) {
-        //console.log($scope.data[index]["_id"]);
-        //console.log($scope.friendList[index]);
-        if (!$scope.selectedMembers[$scope.data[index]["_id"]]){
-            $scope.selectedMembers[$scope.data[index]["_id"]] = $scope.friendList[index];
-            console.log($scope.selectedMembers);
+    $scope.addMembers = function(id, name) {
+        console.log("id: " + id);
+        console.log("name: " + name);
+
+        if (!$scope.selectedMembers[id]) {
+            console.log("No stuff");
+            $scope.selectedMembers[id] = name;
         }
-    };
-
-    
-    // ORIGINAL
-    /*$scope.addMembers = function(id) {
-        console.log(id);
+        
+        console.log($scope.selectedMembers);
     }
-    */
-    //console.log($scope.friendList);
-
 
     // delete selected members
     $scope.deleteMembers = function(id) {
@@ -77,5 +67,4 @@ $http, currentUser) {
 
     // cancel create group
     //$scope.cancel = function() {}
-
 }]);
