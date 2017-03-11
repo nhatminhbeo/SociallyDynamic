@@ -1,6 +1,10 @@
 app.controller('profileController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
 $http, currentUser, $routeParams) {
 
+    if (!currentUser) {
+        $location.path('/');
+    }
+
     var DEBUG = true;
     var DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
@@ -277,6 +281,57 @@ $http, currentUser, $routeParams) {
 
     };
 
+    $scope.addFriend = function() {
+
+        // Add Friend 
+        if (DEBUG) {
+            console.log("addFriend() called");
+        }
+
+        $http({
+            method: "GET",
+            url: "/api/friend/",
+            headers: {
+                'Sender': currentUser.uid,
+                'Receiver': $routeParams.id
+            }
+        }).then( function(data) {
+
+            if (data.data !== "") {
+
+                if (DEBUG) {
+                    console.log("Already Friends!");
+                }
+
+            }
+
+            else if (currentUser.uid !== $routeParams.id) {
+
+                if (DEBUG) {
+                    console.log("Adding as a Friend");
+                }
+
+                $http({
+                    method: "POST",
+                    url: "/api/friend/request",
+                    data: {
+                        'Sender': currentUser.uid,
+                        'Receiver': $routeParams.id
+                    },
+                });
+
+            }
+
+            else {
+
+                if (DEBUG) {
+                    console.log("Why are you trying to be friends with yourself?");
+                }
+
+            }
+        });
+    }
+
     var getProfile = function() {
 
         if (DEBUG) {
@@ -331,6 +386,7 @@ $http, currentUser, $routeParams) {
         $scope.classListBtn = "Edit";
         $scope.userBioBtn = "Edit";
         $scope.studyHabitBtn = "Edit";
+        $scope.friendBtn = "Add as Friend"
 
         // For DEBUG purposes only
         $scope.viewMode = $scope.isSelf ? "View as Public" : "View as Self";

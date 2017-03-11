@@ -83,7 +83,7 @@
 
 		<!-- Custom Global Partial CSS -->
 		<link href="style/profile.css" rel="stylesheet">
-
+		<link href="style/login.css" rel="stylesheet">		
 	</head>
 
 	<body ng-app="SD">
@@ -98,23 +98,23 @@
 			<nav class="navbar navbar-inverse navbar-fixed-top" ng-show="isNavbar" role="navigation">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<a class="navbar-brand" href="index.html"><img src="images/studyr.png" class="img-responsive" alt="studyr logo" width="85" height="50"></a>
+					<a class="navbar-brand" href="/"><img src="images/studyr.png" class="img-responsive" alt="studyr logo" width="85" height="50"></a>
 				</div>
 
 				<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 				<div class="navbar-header">
 					<ul class="nav navbar-nav side-nav">
 						<li class="active">
-							<a href=""><span style=""onclick="openNav()""><img src="images/profile.png" class="img-responsive" alt="profile" width="60" height="60"></span></a>
+							<a href="/"><span style=""><img src="images/profile.png" class="img-responsive" alt="profile" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span style=""onclick="openNav()""><img src="images/contacts.png" class="img-responsive" alt="contacts" width="60" height="60"></span></a>
+							<a href=""><span  ng-click="getFriendList()" onclick="openNav()" style=""><img src="images/contacts.png" class="img-responsive" alt="contacts" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span style=""onclick="openNav()""><img src="images/inbox.png" class="img-responsive" alt="inbox" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="openNav()" style=""><img src="images/inbox.png" class="img-responsive" alt="inbox" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span style=""onclick="openNav()""><img src="images/partner match.png" class="img-responsive" alt="partner match" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getMatch(matching.Wait)" style="" onclick="openNav()" style=""><img src="images/partner match.png" class="img-responsive" alt="partner match" width="60" height="60"></span></a>
 						</li>
 						<li ng-click="logout()">
 							<a href=""><img src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
@@ -124,24 +124,61 @@
 				<!-- /.navbar-collapse -->
 			</nav>
 
-			<div id="page-wrapper">
-
-				<div class="container-fluid">
-					<div class="row">	
-						<div class="col-lg-12">
-							<div id="mySlidenav" class="slidenav">
-							  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-							  <p>CONTENT GOES HERE</p>
+			<div class="container-fluid">
+				<div class="row">	
+					<div class="col-lg-12">
+						<div id="mySlidenav" class="slidenav" ng-show="isNavbar">
+						  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+						  	<div ng-show="navBarContents.contacts">
+								<div ng-repeat="friend in friendList" >
+								  <a ng-href="/profile/{{friend._id}}">
+								  	{{friend.FirstName}} {{friend.LastName}}
+								  </a>
+								  <!-- ng-href="/conversation/{{friend.ConversationID}}" -->
+								  <div class="row"> <div class="col-sm-4"><a> M </a></div><div class="col-sm-4"> <a> J </a></div> </div>
+								</div>
 							</div>
-							<div ng-view>
+						  	<div ng-show="navBarContents.inbox">
+						  			<div class="row"> 
+								  		<div class="col-sm-4"> <button selected="true" ng-click="getMatch(matching.Class)">Class</button>&emsp;</div>  
+								  		<div class="col-sm-4"> <button ng-click="getMatch(matching.Major)">Major</button>&emsp;</div> 
+								  		<div class="col-sm-3"> <button ng-click="getMatch(matching.Habit)">Habit</button></div>
+						  			</div>
+								<a ng-repeat="friend in friendList" >
+								  {{friend.FirstName}} {{friend.LastName}}
+								</a>
 							</div>
+						  	<div ng-show="navBarContents.partnerMatch">
+						  		<div class="row"> 
+							  		<div class="col-sm-4"> <button selected="true" ng-click="getMatch(matching.Class)">Class</button>&emsp;</div>  
+							  		<div class="col-sm-4"> <button ng-click="getMatch(matching.Major)">Major</button>&emsp;</div> 
+							  		<div class="col-sm-3"> <button ng-click="getMatch(matching.Habit)">Habit</button></div>
+						  		</div>
+						  		<div class="row"> 
+							  		<div class="col-sm-5"></div>  
+							  		<div class="col-sm-5"> <div class="loader" ng-show="loading"></div> </div> 
+							  		
+						  		</div>
+						  		
+								<div ng-repeat="match in matchList">
+								  <a ng-href="/profile/{{match._id}}">
+								  	{{match.FirstName}} {{match.LastName}}
+								  </a>
+								  <div ng-show="match.Major">
+								  	<p>&emsp;Matches: {{match.Match}}</p>
+								  </div>
+								</div>
+							</div>						
 						</div>
 					</div>
-					
 				</div>
-
+				
 			</div>
 
+		</div>
+		<div id="page-wrapper">
+			<div ng-view>
+			</div>
 		</div>
 				
 	</div>
@@ -152,12 +189,12 @@
 	<script>
 	function openNav() {
 		document.getElementById("mySlidenav").style.width = "350px";
-		document.getElementById("main").style.marginLeft = "350px";
+		//document.getElementById("main").style.marginLeft = "350px";
 	}
 
 	function closeNav() {
 		document.getElementById("mySlidenav").style.width = "0";
-		document.getElementById("main").style.marginLeft= "0";
+		//document.getElementById("main").style.marginLeft= "0";
 	}
 	</script>
 
@@ -186,6 +223,7 @@
 	<script src="controller/navController.js"></script>
 	<script src="controller/createGroupController.js"></script>
 	<script src="controller/groupConversationController.js"></script>
+	<script src="controller/groupController.js"></script>
 
 	<link rel = "stylesheet" href = "style/conversation.css">
 </html>

@@ -3,7 +3,7 @@
 <!-- top bar displays name of person user is talking to-->
 
 <div id = "header">
-   <h1 style= "text-align: left; font-size: 120%;" >Name</h1>
+   <h1 style= "text-align: center; font-size: 120%;" >Name</h1>
 </div>
 
 
@@ -11,10 +11,19 @@
 <div>
 	<!-- chat bubble views start -->
 	<div class="scroll">
-		<ul> <li> Eyvonne <br><br><br><br> </li>
-			<li>Justin</li>
-			<li>shiva</li>
-			<li>minh</li>
+		<ul style = "list-style-type: none"> 
+			<div class = "row" >
+				<div class = "col-sm-4">
+					<div class = "friend_speech"> pls work pls workpls workpls workpls 1workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls work 
+					</div>
+					<div class = "user_speech" ng-repeat = "message in messages track by $index">{{message}}</div>
+					
+					<li>:)</li>
+				</div>
+				<div class = "col-sm-4"></div>
+				<div class = "col-sm-4"></div>
+
+			</div>
 		</ul>
 	</div>
 <!-- chat bubble views end -->
@@ -30,7 +39,7 @@
     <div class="input-group">
       <input type="text" class="form-control" placeholder="Type a message..." ng-model = "message">
       <div class="input-group-btn">
-        <button ng-click="sendMessage()" class="btn btn-default" >Send</button>
+        <button ng-click="userSendMessage()" class="btn btn-default" >Send</button>
       </div>
     </div>
   </form>

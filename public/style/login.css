@@ -1,0 +1,9 @@
+.login_anchor {
+    cursor: pointer;
+}
+.login_list {
+	color: white;
+	transition: color 0.5s ease;
+	background-color: red;
+	transition: background-color 0.5s ease;
+}
