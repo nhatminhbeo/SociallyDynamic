@@ -5,10 +5,17 @@ body{
 	font-size: 18px;
 	color: #444;
 	padding: 0 10px;
+	background-image: url("/images/jacobs_login.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 h1, h2, h3 {
 	line-height:1.2;
+}
+
+#page-wrapper {
+	background: rgba(255,255,255,0.5);
 }
 
 button {
