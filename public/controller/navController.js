@@ -42,6 +42,11 @@ function($scope, authService, $location ,$http, $rootScope) {
 
     // get match by something
     function getMatch(type) {
-
+        $http({
+            method: "GET",
+            url: "/api/match/" + type
+        }).then(function (data) {
+            $scope.matchList = data.data;
+        });        
     }
 }]);
