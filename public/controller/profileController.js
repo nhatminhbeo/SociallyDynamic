@@ -94,9 +94,9 @@ $http, currentUser, $routeParams) {
                 console.log($scope.major);
             }
 
-            // TODO
             majorOld = $scope.major;
             putStudent();
+
             // Clear the search box
             $scope.majorFilter = '';
         }
@@ -138,9 +138,9 @@ $http, currentUser, $routeParams) {
                 console.log($scope.classList);
             }
 
-            // TODO
             classListOld = $scope.classList;
             putStudent();
+
             // Clear the search box
             $scope.classFilter = '';
         }
@@ -196,10 +196,8 @@ $http, currentUser, $routeParams) {
                 console.log($scope.userBio);
             }
 
-            // TODO
             userBioOld = $scope.userBio;
             putStudent();
-
         }
 
         // Toggle editability
@@ -231,9 +229,9 @@ $http, currentUser, $routeParams) {
                 console.log($scope.studyHabit);
             }
 
-            // TODO
             studyHabitOld = $scope.studyHabit;
             putStudent();
+
             // Clear the search box
             $scope.studyHabitFilter = '';
         }
@@ -306,9 +304,20 @@ $http, currentUser, $routeParams) {
             if (data.data !== "") {
 
                 if (DEBUG) {
-                    console.log("Already friends");
+                    console.log("DELETE-ing a friend");
                 }
 
+                // TODO: HTTP DELETE request to delete the friend
+                $http({
+                    method: "DELETE",
+                    url: "/api/friend/request",
+                    data: {
+                        'Sender': currentUser.uid,
+                        'Receiver': $routeParams.id
+                    }
+                });
+
+                $scope.friendBtn = "Add as Friend"
             }
 
             // Check if adding another person
@@ -360,7 +369,7 @@ $http, currentUser, $routeParams) {
                             }
                         });
 
-                        $scope.friendBtn = "Add as Friends";
+                        $scope.friendBtn = "Add as Friend";
                     }
 
                     // HTTP POST request to send a friend request
@@ -404,13 +413,12 @@ $http, currentUser, $routeParams) {
 
         $scope.DEBUG = DEBUG;
 
-        // TODO: see if viewing own profile
         $scope.isSelf = currentUser.uid === $routeParams.id;
         $scope.isEdit_major = false;
         $scope.isEdit_classList = false;
         $scope.isEdit_studyHabit = false;
+        $scope.recRec = false;
 
-        // TODO: get stuff from the DB
         $scope.firstName = "";
         $scope.lastName = "";
         $scope.email = "";
@@ -473,7 +481,7 @@ $http, currentUser, $routeParams) {
                     console.log("Already friends");
                 }
 
-                $scope.friendBtn = "Already Friends";
+                $scope.friendBtn = "Unfriend Friend";
             }
         });
 
@@ -499,6 +507,32 @@ $http, currentUser, $routeParams) {
                 }
 
                 $scope.friendBtn = "Cancel Friend Request";
+            }
+        });
+
+        // HTTP GET request to check if a friend request was received 
+        $http({
+            method: "GET",
+            url: "/api/friend/request",
+            headers: {
+                'receiver': currentUser.uid,
+                'sender': $routeParams.id 
+            }
+        }).then( function(data) {
+
+            if (DEBUG) {
+                console.log(data);
+            }
+
+            // Friend request exists
+            if (data.data !== "") {
+
+                if (DEBUG) {
+                    console.log("Friend request exists");
+                }
+
+                $scope.friendBtn = "I want to be friends! Check your Inbox!";
+                $scope.reqRec = true;
             }
         });
 
