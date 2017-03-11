@@ -93,6 +93,8 @@ loggedIn, $http, $rootScope){
 		authService.Auth.$signInWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 			console.log(data);
 			$rootScope.isNavbar = true;
+			$rootScope.myProfile = '/profile/' + data.uid;
+			$rootScope.currentuser = loggedIn;
 			$location.path('/profile/' + data.uid);
 		}).catch(function(error){
 			console.log(error);
@@ -149,6 +151,8 @@ loggedIn, $http, $rootScope){
 					}
 				}).then(function(){
 					$rootScope.isNavbar = true;
+					$rootScope.myProfile = '/profile/' + data.uid;
+					$rootScope.currentuser = loggedIn;
 					$location.path('/profile/' + data.uid);
 				});
 			}).catch(function(error){
@@ -162,6 +166,7 @@ loggedIn, $http, $rootScope){
 		console.log(c);
 		if(!$scope.selectedClasses[c]){
 			$scope.selectedClasses[c] = c;
+			$scope.classFilter = '';
 		}
 	};
 
@@ -169,6 +174,7 @@ loggedIn, $http, $rootScope){
 	$scope.majorFunc = function(m){
 		console.log(m);
 		$scope.selectedMajor = m;
+		$scope.majorFilter = '';
 	};
 
 	// studyt habits function
@@ -176,6 +182,7 @@ loggedIn, $http, $rootScope){
 		console.log(s);
 		if(!$scope.selectedHabits[s]){
 			$scope.selectedHabits[s] = s;
+			$scope.studyHabitFilter = '';
 		}
 	};
 	// delete a selected class 

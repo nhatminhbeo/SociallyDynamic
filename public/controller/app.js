@@ -12,12 +12,21 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 
 				}
 			}).
-			when('/createGroup/:id', {
+			when('/createGroup/', {
 				templateUrl: 'scenes/createGroup',
 				controller: 'createGroupController',
 				resolve: {
 					currentUser: ['authService', function(authService){
-						return authService.Auth.$waitForSignIn();;
+						return authService.Auth.$waitForSignIn();
+					}]
+				}
+			}).
+			when('/group/', {
+				templateUrl: 'scenes/group',
+				controller: 'groupController',
+				resolve: {
+					currentUser:['authService', function(authService){
+						return authService.Auth.$waitForSignIn();
 					}]
 				}
 			}).
