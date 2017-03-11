@@ -7,4 +7,75 @@ $http, currentUser) {
             $location.path('/');
         });
     }
+
+    // check if user has groups created already to view
+    $scope.groupsExist = false;
+    //check if user is an admin of group, to show delete button or not
+    $scope.isAdmin = false;
+    //check if user is viewing groups or creating a group
+    $scope.viewGroups = false;
+
+
+    // auto-complete
+    $scope.friendsFilter = "";
+    $scope.quantity = 5;
+    $scope.selectedMembers = {};
+
+
+    //create group fields
+    $scope.groupName = "";
+
+    //auto-complete member selection
+    $scope.friendList = [];
+    $scope.data=[];
+    $http({
+        method: "GET",
+        url: "/api/student/friend/" + currentUser.uid
+    }).then(function (data) {
+        console.log(data);
+        $scope.data = data.data;
+        for (var i = 0; i < data.data.length; i++) {
+            $scope.friendList.push(data.data[i]["FirstName"] + " " + data.data[i]["LastName"]);
+        }
+    });
+
+
+    // add member into temp selected member list
+    $scope.addMembers = function(index) {
+        //console.log($scope.data[index]["_id"]);
+        //console.log($scope.friendList[index]);
+        if (!$scope.selectedMembers[$scope.data[index]["_id"]]){
+            $scope.selectedMembers[$scope.data[index]["_id"]] = $scope.friendList[index];
+            console.log($scope.selectedMembers);
+        }
+    };
+
+    
+    // ORIGINAL
+    /*$scope.addMembers = function(id) {
+        console.log(id);
+    }
+    */
+    //console.log($scope.friendList);
+
+
+    // delete selected members
+    $scope.deleteMembers = function(id) {
+        delete $scope.selectedMembers[id];
+        console.log($scope.selectedMembers);
+    }
+
+
+    // create group
+    $scope.createGroup = function() {
+        var name = $scope.groupName.trim();
+        if (name == "") {
+            alert("Please add a group name.");
+            return;
+        }
+    }
+
+    // cancel create group
+    //$scope.cancel = function() {}
+
 }]);
