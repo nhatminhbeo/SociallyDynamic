@@ -18,14 +18,32 @@
 //  Description: Get conversation ID between two people, see whether or not it
 //					exists
 //  Expected input (req.header): JSON:
-//		First: String -- id of one person
-//		Second: String -- id of second person
+//		first: String -- id of one person
+//		second: String -- id of second person
 //		
 //  Expected output (res): ConversationID of the conversation between two people.
 //					This is null if conversation between two people doesn't exist
 //  Author: 
 // ================================================================================
 module.exports.getConversation = function (req, res) {
+
+	var toFind = {
+    	UserID: req.headers.first
+    };
+    var toFindAlt = {
+    	UserID: req.headers.second
+    };
+
+
+	models.Conversation.findOne({ '$and': [toFind, toFindAlt]}).exec()
+
+	.then(function (conversation) {
+		return res.status(200).send({"ConversationID": conversation._id});
+	})
+
+	.then(null, function() {
+		return res.status(400).send({"ConversatoinID": null});
+	})
 };
 
 // ================================================================================
@@ -36,10 +54,21 @@ module.exports.getConversation = function (req, res) {
 //		First: id of the one person
 //		Second: id of the second person
 //
-//  Expected output (res): ConversationID of the newly created conversation.
+//  Expected output (res): {ConversationID: of the newly created conversation}
 //  Author: 
 // ================================================================================
 module.exports.postConversation = function (req, res) {
+
+	var conversation = models.Conversation({
+		StudentID: [req.body.First, req.body.Second],
+		Student1Seen: 0,
+		Student2Seen: 0
+	});
+
+	conversation.save(function (err) {
+		if (err) return res.status(400).send('failed');
+		res.status(200).send({ConversationID: conversatoin._id});
+	});
 };
 
 // ================================================================================
@@ -82,6 +111,30 @@ module.exports.getConversationWithId = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.putConversationWithId = function (req, res) {
+
+	models.Conversation.findOne({"_id": req.params.id}).exec()
+
+	.then(function (conversation) {
+		if (req.body.SeenPerson == conversation.StudentID[0]) {
+			return models.Conversation.update({"_id": conversation._id}, {
+				Student1Seen = conversation.Student1Seen + 1;
+			});
+		}
+		else {
+			return models.Conversation.update({"_id": conversation._id}, {
+				Student2Seen = conversation.Student2Seen + 1;
+			});
+		}
+	})
+
+	.then(function() {
+		res.status(200).send("success");
+	})
+
+	.then(null, function() {
+		res.status(400).send("fail");
+	});
+
 };
 
 
@@ -90,9 +143,9 @@ module.exports.putConversationWithId = function (req, res) {
 //  REST: GET:/api/message/
 //  Description:
 //  Expected input (emit('personal message', data)): 
-//			data.Content: String -- the message that is sent
+//			message.Content: String -- the message that is sent
 //			data.ConversationID: String -- id of the CONVERSATION, not user
-//			data.Sender: String -- id of Sender, which is a user
+//			message.Sender: String -- id of Sender, which is a user
 //  Expected output (res):
 //  Author: 
 // ================================================================================
@@ -121,6 +174,23 @@ module.exports.onPersonalMessageReceived = function (socket) {
 					Content: message.Content,
 					Sender: message.Sender
 				}).save();
+			})
+
+			.then(function() {
+					return models.Conversation.findOneById(data.ConversationID);
+			})
+
+			.then(function (conversation) {
+				if (message.Sender == conversation.StudentID[0]) {
+					return models.Conversation.update({"_id": conversation._id}, {
+						Student1Seen = conversation.Student1Seen + 1;
+					});
+				}
+				else {
+					return models.Conversation.update({"_id": conversation._id}, {
+						Student2Seen = conversation.Student2Seen + 1;
+					});
+				}
 			})
 
 			// Successfully added message to database
