@@ -79,7 +79,7 @@ module.exports.deleteFriend = function (req, res) {
     };
     var toDelAlt = {
     	UserID: req.body.Receiver
-    }
+    };
     
     Friendship.findOneAndRemove({ '$and': [toDel, toDelAlt]}, function (err, found) {
 	    if(err) 
@@ -112,7 +112,7 @@ module.exports.getFriendRequest = function (req, res) {
     };
     var toFindAlt = {
     	UserID: req.headers.receiver
-    }
+    };
 	//var friendRequestSender = req.headers.sender; //auto converted to lowercase in
 	//var friendRequestReceiver = req.headers.receiver; //http headers by http 
 	//console.log(req); for debugging: note above 2 comments ie 'Sender'->'sender'
