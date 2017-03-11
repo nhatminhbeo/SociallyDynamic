@@ -281,6 +281,57 @@ $http, currentUser, $routeParams) {
 
     };
 
+    $scope.addFriend = function() {
+
+        // Add Friend 
+        if (DEBUG) {
+            console.log("addFriend() called");
+        }
+
+        $http({
+            method: "GET",
+            url: "/api/friend/",
+            headers: {
+                'Sender': currentUser.uid,
+                'Receiver': $routeParams.id
+            }
+        }).then( function(data) {
+
+            if (data.data !== "") {
+
+                if (DEBUG) {
+                    console.log("Already Friends!");
+                }
+
+            }
+
+            else if (currentUser.uid !== $routeParams.id) {
+
+                if (DEBUG) {
+                    console.log("Adding as a Friend");
+                }
+
+                $http({
+                    method: "POST",
+                    url: "/api/friend/request",
+                    data: {
+                        'Sender': currentUser.uid,
+                        'Receiver': $routeParams.id
+                    },
+                });
+
+            }
+
+            else {
+
+                if (DEBUG) {
+                    console.log("Why are you trying to be friends with yourself?");
+                }
+
+            }
+        });
+    }
+
     var getProfile = function() {
 
         if (DEBUG) {
@@ -335,6 +386,7 @@ $http, currentUser, $routeParams) {
         $scope.classListBtn = "Edit";
         $scope.userBioBtn = "Edit";
         $scope.studyHabitBtn = "Edit";
+        $scope.friendBtn = "Add as Friend"
 
         // For DEBUG purposes only
         $scope.viewMode = $scope.isSelf ? "View as Public" : "View as Self";
