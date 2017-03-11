@@ -1,1 +1,42 @@
-<h1>Hello from group.html and {{groupController}}</h1>
+<!-- <h1>Hello from group.html and {{groupController}}</h1> -->
+
+<!-- div to display group profile -->
+<div class="groupDisplay">
+	
+	<h1> Study Groups </h1>
+	<!-- if no groups yet -->
+	<div ng-hide="groupsExist" id="default_view">
+	    <h2> You have no groups yet! </h2>
+	</div>
+	    
+
+	<!--groups already exist and chose one group to view-->
+	<div ng-show="groupsExist">
+
+	    <!-- delete group button if admin -->
+		<div ng-show="isOwner">
+				<button class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
+		</div>
+
+        <!-- group data -->
+	    <div id="groupPic" style="display:block;text-align:center; margin:0 auto;">
+			<img src="http://geekxgirls.com/images/_comics/totoro-gifs-04.gif" style="width:200px;height:200px;display:block;margin-right:auto;margin-left:auto;" />
+		    <h1 style="text-align:center;">{{groupName}}</h1>
+
+		    <!-- message button -->
+		 	<!-- NEED TO DO!! -->
+
+		</div>
+
+		<div id="Bio">
+			<h2 style="text-align: center">About Group</h2>
+	       	<h4 style="text-align: center">Group Bio</h4>
+	    </div>
+
+	    <div id="Members">
+			<h2 style="text-align: center">Members</h2>
+	       	<h4>{{members}}</h4>
+	    </div>
+
+	</div>
+</div>

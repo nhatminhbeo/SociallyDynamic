@@ -25,7 +25,7 @@ button {
 
 	border: none;
 	border-radius: 20px;
-	padding: 12px 16px;
+	padding: 8px 8px;
 	background-color: #6677cd;
 	color: white;
 	cursor: pointer;
@@ -50,4 +50,14 @@ button:hover {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+.listView {
+	padding-right: 5px;
+	padding-top: 20px;
+}
+
+.listItem {
+	color: white;
+	font-weight: 1px;
+	
 }

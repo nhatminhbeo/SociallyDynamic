@@ -6,6 +6,11 @@ function($scope, authService, $location ,$http, $rootScope) {
         inbox : false,
         partnerMatch : false
     };
+    $scope.inboxToggles = {
+        requests: false,
+        conversations: false
+    };
+    $scope.friendRequestList = ["Sup","Hi","yo"];
 
     $scope.matching = {
         Class : "class",
@@ -77,5 +82,23 @@ function($scope, authService, $location ,$http, $rootScope) {
             $scope.matchList = data.data;
             console.log($scope.matchList);
         });        
-    }
+    };
+
+    $scope.getInbox = function (type){
+        $scope.navBarContents.contacts = false;
+        $scope.navBarContents.partnerMatch = false;
+        $scope.navBarContents.inbox = true;
+    };
+
+    $scope.getRequests = function(){
+        $scope.inboxToggles.conversations = false;
+        $scope.inboxToggles.requests = true;
+        /*$http({
+            method: "GET",
+            url: "/api/inbox/message/" + currentUser.uid,
+        }).then(function(data){
+            console.log(data);
+            $scope.friendRequestList = data.data;
+        });*/
+    };
 }]);

@@ -139,33 +139,66 @@
 								</div>
 							</div>
 						  	<div ng-show="navBarContents.inbox">
-						  			<div class="row"> 
-								  		<div class="col-sm-4"> <button selected="true" ng-click="getMatch(matching.Class)">Class</button>&emsp;</div>  
-								  		<div class="col-sm-4"> <button ng-click="getMatch(matching.Major)">Major</button>&emsp;</div> 
-								  		<div class="col-sm-3"> <button ng-click="getMatch(matching.Habit)">Habit</button></div>
+						  			<div class="row">
+										<ul class="nav nav-tabs">
+										<div class="col-sm-1"></div> 
+								  		<div class="col-sm-3"> <li class="login_anchor" ng-click="getRequests()">Requests</li>&emsp;</div>  
+										<div class="col-sm-3"></div>
+								  		<div class="col-sm-3"> <li class="login_anchor" ng-click="getMessages()">Messages</li></div>
+										<div class="col-sm-1"></div>
+										</ul>
 						  			</div>
-								<a ng-repeat="friend in friendList" >
-								  {{friend.FirstName}} {{friend.LastName}}
-								</a>
+									<div ng-show="inboxToggles.requests">
+									<h1> Friend Requests </h1>
+									<div class="row" ng-repeat="friendRequest in friendRequestList">
+										<div class="col-sm-4">
+											{{friendRequest}}
+										</div>
+										<div class="col-sm-2">
+											<button class="btn btn-success">Accept</button>
+										</div>
+										<div class="col-sm-2">
+											<button class="btn btn-danger">Deny</button>
+										</div>
+								</div>
+								<h1>Group Requests</h1>
+								<div class="row" ng-repeat="groupRequest in groupRequestList">
+									<div class="col-sm-4">
+										{{groupRequest}}
+									</div>
+									<div class="col-sm-2">
+										<button class="btn btn-success">Accept</button>
+									</div>
+									<div class="col-sm-2">
+										<button class="btn btn-danger">Deny</button>
+									</div>
+								</div>
+								</div>
 							</div>
 						  	<div ng-show="navBarContents.partnerMatch">
 						  		<div class="row"> 
-							  		<div class="col-sm-4"> <button selected="true" ng-click="getMatch(matching.Class)">Class</button>&emsp;</div>  
-							  		<div class="col-sm-4"> <button ng-click="getMatch(matching.Major)">Major</button>&emsp;</div> 
-							  		<div class="col-sm-3"> <button ng-click="getMatch(matching.Habit)">Habit</button></div>
+									<div class="col-sm-1"></div>
+									<ul class="nav nav-tabs">
+							  		<div class="col-sm-3"> <li class="active login_anchor" ng-click="getMatch(matching.Class)">Class</li>&emsp;</div>  
+							  		<div class="col-sm-3"> <li class="login_anchor"ng-click="getMatch(matching.Major)">Major</li>&emsp;</div> 
+							  		<div class="col-sm-3"> <li class="login_anchor"ng-click="getMatch(matching.Habit)">Habit</li></div>
+									<div class="col-sm-1"></div></ul>
 						  		</div>
 						  		<div class="row"> 
-							  		<div class="col-sm-5"></div>  
-							  		<div class="col-sm-5"> <div class="loader" ng-show="loading"></div> </div> 
+									  <div class="col-sm-5"></div>
+									  <div class="col-sm-4">
+									   <div class="loader" ng-show="loading"></div> 
+									   </div>
 							  		
 						  		</div>
 						  		
-								<div ng-repeat="match in matchList">
-								  <a ng-href="/profile/{{match._id}}">
+								<div>
+								<ul class="listView">
+								  <li class="login_anchor listItem"
+								  ng-repeat="match in matchList">
 								  	{{match.FirstName}} {{match.LastName}}
-								  </a>
-								  <div ng-show="match.Major">
-								  	<p>&emsp;Matches: {{match.Match}}</p>
+								  </li>
+								  </ul>
 								  </div>
 								</div>
 							</div>						
@@ -188,7 +221,7 @@
     <!-- Scripts -->
 	<script>
 	function openNav() {
-		document.getElementById("mySlidenav").style.width = "350px";
+		document.getElementById("mySlidenav").style.width = "330px";
 		//document.getElementById("main").style.marginLeft = "350px";
 	}
 
@@ -210,7 +243,7 @@
 	<!-- This is the Firebase script for use in all controllers -->
 	<script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
-
+    <script src="/socket/socket.io.js"></script>
 	
 	<!-- OUR master app.js file -->
 	<script src="controller/app.js"></script>

@@ -94,9 +94,9 @@ $http, currentUser, $routeParams) {
                 console.log($scope.major);
             }
 
-            // TODO
             majorOld = $scope.major;
             putStudent();
+
             // Clear the search box
             $scope.majorFilter = '';
         }
@@ -138,9 +138,9 @@ $http, currentUser, $routeParams) {
                 console.log($scope.classList);
             }
 
-            // TODO
             classListOld = $scope.classList;
             putStudent();
+
             // Clear the search box
             $scope.classFilter = '';
         }
@@ -196,10 +196,8 @@ $http, currentUser, $routeParams) {
                 console.log($scope.userBio);
             }
 
-            // TODO
             userBioOld = $scope.userBio;
             putStudent();
-
         }
 
         // Toggle editability
@@ -231,9 +229,9 @@ $http, currentUser, $routeParams) {
                 console.log($scope.studyHabit);
             }
 
-            // TODO
             studyHabitOld = $scope.studyHabit;
             putStudent();
+
             // Clear the search box
             $scope.studyHabitFilter = '';
         }
@@ -283,45 +281,111 @@ $http, currentUser, $routeParams) {
 
     $scope.addFriend = function() {
 
-        // Add Friend 
+        // Add Frend 
         if (DEBUG) {
             console.log("addFriend() called");
         }
 
+        // HTTP GET request to check if already friends
         $http({
             method: "GET",
             url: "/api/friend/",
             headers: {
-                'Sender': currentUser.uid,
-                'Receiver': $routeParams.id
+                'sender': currentUser.uid,
+                'receiver': $routeParams.id
             }
         }).then( function(data) {
 
+            if (DEBUG) {
+                console.log(data);
+            }
+
+            // Check if already friends
             if (data.data !== "") {
 
                 if (DEBUG) {
-                    console.log("Already Friends!");
+                    console.log("DELETE-ing a friend");
                 }
 
-            }
-
-            else if (currentUser.uid !== $routeParams.id) {
-
-                if (DEBUG) {
-                    console.log("Adding as a Friend");
-                }
-
+                // TODO: HTTP DELETE request to delete the friend
                 $http({
-                    method: "POST",
+                    method: "DELETE",
                     url: "/api/friend/request",
                     data: {
                         'Sender': currentUser.uid,
                         'Receiver': $routeParams.id
-                    },
+                    }
+                });
+
+                $scope.friendBtn = "Add as Friend"
+            }
+
+            // Check if adding another person
+            else if (currentUser.uid !== $routeParams.id) {
+
+                if (DEBUG) {
+                    console.log("Attempting to add as a friend");
+                }
+
+                // HTTP GET request to check if a friend request is already pending
+                $http({
+                    method: "GET",
+                    url: "/api/friend/request",
+                    headers: {
+                        'sender': currentUser.uid,
+                        'receiver': $routeParams.id 
+                    }
+                }).then( function(data) {
+
+                    if (DEBUG) {
+                        console.log(data);
+                    }
+
+                    // Friend request exists; HTTP DELETE request to delete a friend request
+                    if (data.data !== "") {
+
+                        if (DEBUG) {
+                            console.log("DELETE-ing a friend request");
+                        }
+
+                        $http({
+                            method: "DELETE",
+                            url: "/api/friend/request",
+                            data: {
+                                'Sender': currentUser.uid,
+                                'Receiver': $routeParams.id
+                            },
+                            headers: {
+                                'Content-type': 'application/json;charset=utf-8'
+                            }
+                        });
+
+                        $scope.friendBtn = "Add as Friend";
+                    }
+
+                    // HTTP POST request to send a friend request
+                    else {
+
+                        if (DEBUG) {
+                            console.log("POST-ing a friend request")
+                        }
+
+                        $http({
+                            method: "POST",
+                            url: "/api/friend/request",
+                            data: {
+                                'Sender': currentUser.uid,
+                                'Receiver': $routeParams.id
+                            }
+                        });
+
+                        $scope.friendBtn = "Cancel Friend Request";
+                    }
                 });
 
             }
 
+            // Why are you trying to be friends with yourself?
             else {
 
                 if (DEBUG) {
@@ -340,13 +404,12 @@ $http, currentUser, $routeParams) {
 
         $scope.DEBUG = DEBUG;
 
-        // TODO: see if viewing own profile
         $scope.isSelf = currentUser.uid === $routeParams.id;
         $scope.isEdit_major = false;
         $scope.isEdit_classList = false;
         $scope.isEdit_studyHabit = false;
+        $scope.recRec = false;
 
-        // TODO: get stuff from the DB
         $scope.firstName = "";
         $scope.lastName = "";
         $scope.email = "";
@@ -387,6 +450,82 @@ $http, currentUser, $routeParams) {
         $scope.userBioBtn = "Edit";
         $scope.studyHabitBtn = "Edit";
         $scope.friendBtn = "Add as Friend"
+
+        // HTTP GET request to check if already friends
+        $http({
+            method: "GET",
+            url: "/api/friend/",
+            headers: {
+                'sender': currentUser.uid,
+                'receiver': $routeParams.id
+            }
+        }).then(function(data) {
+
+            if (DEBUG) {
+                console.log(data);
+            }
+
+            // Check if already friends
+            if (data.data !== "") {
+
+                if (DEBUG) {
+                    console.log("Already friends");
+                }
+
+                $scope.friendBtn = "Unfriend Friend";
+            }
+        });
+
+        // HTTP GET request to check if a friend request is already pending
+        $http({
+            method: "GET",
+            url: "/api/friend/request",
+            headers: {
+                'sender': currentUser.uid,
+                'receiver': $routeParams.id 
+            }
+        }).then( function(data) {
+
+            if (DEBUG) {
+                console.log(data);
+            }
+
+            // Friend request exists
+            if (data.data !== "") {
+
+                if (DEBUG) {
+                    console.log("Friend request exists");
+                }
+
+                $scope.friendBtn = "Cancel Friend Request";
+            }
+        });
+
+        // HTTP GET request to check if a friend request was received 
+        $http({
+            method: "GET",
+            url: "/api/friend/request",
+            headers: {
+                'receiver': currentUser.uid,
+                'sender': $routeParams.id 
+            }
+        }).then( function(data) {
+
+            if (DEBUG) {
+                console.log(data);
+            }
+
+            // Friend request exists
+            if (data.data !== "") {
+
+                if (DEBUG) {
+                    console.log("Friend request exists");
+                }
+
+                $scope.friendBtn = "I want to be friends! Check your Inbox!";
+                $scope.reqRec = true;
+            }
+        });
 
         // For DEBUG purposes only
         $scope.viewMode = $scope.isSelf ? "View as Public" : "View as Self";

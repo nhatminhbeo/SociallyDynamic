@@ -14,15 +14,18 @@
 		<ul style = "list-style-type: none"> 
 			<div class = "row" >
 				<div class = "col-sm-4">
-					<div class = "friend_speech"> pls work pls workpls workpls workpls 1workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls workpls work 
+					<div ng-repeat = "message in messages track by $index"> 
+						<div ng-switch = "message.Sender">
+							<div ng-switch-when = "message.Sender == currentUserid">
+								<div class = "friend_speech"> {{message.Content}}</div>
+							</div>
+							<div ng-switch-default>
+								<div class = "user_speech"> {{message.Content}} </div>
+							</div>
+						</div>
 					</div>
-					<div class = "user_speech" ng-repeat = "message in messages track by $index">{{message}}</div>
-					
-					<li>:)</li>
-				</div>
 				<div class = "col-sm-4"></div>
-				<div class = "col-sm-4"></div>
-
+				<div class = "col-sm-4"></div>	
 			</div>
 		</ul>
 	</div>
