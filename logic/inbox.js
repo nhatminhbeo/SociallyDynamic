@@ -37,8 +37,8 @@ module.exports.getInboxMessageWithId = function (req, res) {
 				FriendStudentID = thisConversation.studentID[1];
 			}
 
-			var a = models.Student.find({"_id": FriendStudentID});
-			var b = models.GroupMessage.find({"_id": thisConversation._id});
+			var a = models.Student.findOne({"_id": FriendStudentID});
+			var b = models.GroupMessage.findOne({"_id": thisConversation._id});
 			return models.Promise.join(a, b, function(student, message) {
 				list.push({
 					FirstName: student.FirstName,
