@@ -15,8 +15,10 @@
 // ===============================================================================================================================================
 
 var api = require('../logic/message.js');
-module.exports.route = function(app) {
-	app.get('/api/message', api.getMessage);
-	app.put('/api/message', api.putMessage);
-	app.post('/api/message', api.postMessage);
+module.exports.route = function(app, io) {
+	app.get('/api/conversation/:id', api.getConversationWithId);
+
+	io.on('connection', function(socket) {
+		api.onPersonalMessageReceived(socket);
+	});
 };

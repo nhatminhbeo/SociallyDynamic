@@ -89,7 +89,7 @@ module.exports.deleteFriend = function (req, res) {
 };
 
 // ================================================================================
-//  Function: postFriendRequest
+//  Function: getFriendRequest
 //  REST: GET:/api/friend/request
 //  Description: The purpose of this method is to let the front end get all the friend
 //		requests that are made from a certain receiver and sender. However I think 
@@ -122,10 +122,11 @@ module.exports.getFriendRequest = function (req, res) {
 				return res.status(400).send(err);
 
 			// we have found the request
-			return res.status(200).json(data);
+			return res.status(200).send(data);
 		}
 	);
 };
+
 
 // ================================================================================
 //  Function: postFriendRequest
@@ -144,11 +145,11 @@ module.exports.postFriendRequest = function (req, res) {
 		Receiver: req.body.Receiver
 	});
 
-	friendRequest.save(function(err){
+	friendRequest.save(function(err, data){
 		if (err) 
 			return res.status(400).send(err);
 
-		return res.status(200).send('Saved friendRequest');
+		return res.status(200).send(data);
 	});
 };
 
@@ -178,7 +179,7 @@ module.exports.deleteFriendRequest = function(req, res) {
 				return res.status(400).send(err);
 			
 			// we have deleted the user
-			return res.status(200).json(data);
+			return res.status(200).send(data);
 		}
 	);
 };
