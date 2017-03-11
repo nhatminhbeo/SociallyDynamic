@@ -13,6 +13,36 @@
 // ===============================================================================================================================================
 
 // ================================================================================
+//  Function: getConversation
+//  REST: GET:/api/conversation
+//  Description: Get conversation ID between two people, see whether or not it
+//					exists
+//  Expected input (req.header): JSON:
+//		First: String -- id of one person
+//		Second: String -- id of second person
+//		
+//  Expected output (res): ConversationID of the conversation between two people.
+//					This is null if conversation between two people doesn't exist
+//  Author: 
+// ================================================================================
+module.exports.getConversation = function (req, res) {
+};
+
+// ================================================================================
+//  Function: postConversation
+//  REST: POST:/api/conversation
+//  Description: Create a new conversation between two people.
+//  Expected input (req.body): JSON:
+//		First: id of the one person
+//		Second: id of the second person
+//
+//  Expected output (res): ConversationID of the newly created conversation.
+//  Author: 
+// ================================================================================
+module.exports.postConversation = function (req, res) {
+};
+
+// ================================================================================
 //  Function: getConversationWithId
 //  REST: GET:/api/conversation/:id
 //  Description: Return a list 50 most recent message by default, otherwise
@@ -30,6 +60,28 @@
 //  Author: 
 // ================================================================================
 module.exports.getConversationWithId = function (req, res) {
+};
+
+// ================================================================================
+//  Function: putConversationWithId
+//  REST: PUT:/api/conversation/:id
+//  Description: Update the "seen" field of corresponding user of the conversation
+//				with specified id
+//  Expected input (req.body): JSON:
+//			SeenPerson: id of the person who checked the conversation and saw
+//				the message.
+//				If SeenPerson = StudentID[0] => Clear Student1Seen
+//				If SeenPerson = StudentID[1] => Clear Student2Seen
+//  Expected output (res): JSON list:
+//		[ {
+//			Sender: String -- id of the sender,
+//			SenderFirstName: String -- First name of the sender,
+//		},
+//			.......
+//		]
+//  Author: 
+// ================================================================================
+module.exports.putConversationWithId = function (req, res) {
 };
 
 
