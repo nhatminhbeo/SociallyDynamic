@@ -26,4 +26,19 @@ function($scope, authService, $location ,$http, $rootScope) {
             $location.path('/');
         });
     }
+
+    // get friendlist, save in $scope.friendList
+    function getFriendList() {
+        $http({
+            method: "GET",
+            url: "/api/student/friend/" + $rootScope.currentUser.uid
+        }).then(function (data) {
+            $scope.friendList = data.data;
+        });
+    }
+
+    // get match by something
+    function getMatch(type) {
+
+    }
 }]);
