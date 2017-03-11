@@ -283,45 +283,109 @@ $http, currentUser, $routeParams) {
 
     $scope.addFriend = function() {
 
-        // Add Friend 
+        // Add Frend 
         if (DEBUG) {
             console.log("addFriend() called");
         }
 
+        // HTTP GET request to check if already friends
         $http({
             method: "GET",
             url: "/api/friend/",
             headers: {
-                'Sender': currentUser.uid,
-                'Receiver': $routeParams.id
+                'sender': currentUser.uid,
+                'receiver': $routeParams.id
             }
         }).then( function(data) {
 
+            if (DEBUG) {
+                console.log(data);
+            }
+
+            // Check if already friends
             if (data.data !== "") {
 
                 if (DEBUG) {
-                    console.log("Already Friends!");
+                    console.log("Already friends");
                 }
 
             }
 
+            // Check if adding another person
             else if (currentUser.uid !== $routeParams.id) {
 
                 if (DEBUG) {
-                    console.log("Adding as a Friend");
+                    console.log("Attempting to add as a friend");
                 }
 
+                // HTTP GET request to check if a friend request is already pending
                 $http({
-                    method: "POST",
+                    method: "GET",
                     url: "/api/friend/request",
-                    data: {
-                        'Sender': currentUser.uid,
-                        'Receiver': $routeParams.id
-                    },
+                    headers: {
+                        'sender': currentUser.uid,
+                        'receiver': $routeParams.id 
+                    }
+                }).then( function(data) {
+
+                    if (DEBUG) {
+                        console.log(data);
+                    }
+
+                    // Friend request exists; HTTP DELETE request to delete a friend request
+                    if (data.data !== "") {
+
+                        if (DEBUG) {
+                            console.log("DELETE-ing a friend request");
+                        }
+
+                        var toDelete = {
+                            'Sender': currentUser.uid,
+                            'Receiver': $routeParams.id
+                        };
+
+                        console.log(toDelete);
+
+                        $http.delete("/api/friend/request", toDelete).then(function(data){console.log(data)});
+
+                        $http({
+                            method: "DELETE",
+                            url: "/api/friend/request",
+                            data: {
+                                'Sender': currentUser.uid,
+                                'Receiver': $routeParams.id
+                            },
+                            headers: {
+                                'Content-type': 'application/json;charset=utf-8'
+                            }
+                        });
+
+                        $scope.friendBtn = "Add as Friends";
+                    }
+
+                    // HTTP POST request to send a friend request
+                    else {
+
+                        if (DEBUG) {
+                            console.log("POST-ing a friend request")
+                        }
+
+                        $http({
+                            method: "POST",
+                            url: "/api/friend/request",
+                            data: {
+                                'Sender': currentUser.uid,
+                                'Receiver': $routeParams.id
+                            }
+                        });
+
+                        $scope.friendBtn = "Cancel Friend Request";
+                    }
                 });
 
             }
 
+            // Why are you trying to be friends with yourself?
             else {
 
                 if (DEBUG) {
@@ -387,6 +451,56 @@ $http, currentUser, $routeParams) {
         $scope.userBioBtn = "Edit";
         $scope.studyHabitBtn = "Edit";
         $scope.friendBtn = "Add as Friend"
+
+        // HTTP GET request to check if already friends
+        $http({
+            method: "GET",
+            url: "/api/friend/",
+            headers: {
+                'sender': currentUser.uid,
+                'receiver': $routeParams.id
+            }
+        }).then(function(data) {
+
+            if (DEBUG) {
+                console.log(data);
+            }
+
+            // Check if already friends
+            if (data.data !== "") {
+
+                if (DEBUG) {
+                    console.log("Already friends");
+                }
+
+                $scope.friendBtn = "Already Friends";
+            }
+        });
+
+        // HTTP GET request to check if a friend request is already pending
+        $http({
+            method: "GET",
+            url: "/api/friend/request",
+            headers: {
+                'sender': currentUser.uid,
+                'receiver': $routeParams.id 
+            }
+        }).then( function(data) {
+
+            if (DEBUG) {
+                console.log(data);
+            }
+
+            // Friend request exists
+            if (data.data !== "") {
+
+                if (DEBUG) {
+                    console.log("Friend request exists");
+                }
+
+                $scope.friendBtn = "Cancel Friend Request";
+            }
+        });
 
         // For DEBUG purposes only
         $scope.viewMode = $scope.isSelf ? "View as Public" : "View as Self";
