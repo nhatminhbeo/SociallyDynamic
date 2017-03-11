@@ -76,7 +76,7 @@ module.exports.getInboxFriendWithId = function (req, res) {
 	    // For each such class:
 		return models.Promise.each(friendRequests, function(friendRequest) {
 
-			return models.Student.find({"_id" : friendRequest.Sender})
+			return models.Student.findOne({"_id" : friendRequest.Sender})
 			.then(function(user) {
 				list.push({
 					FirstName: user.FirstName,
