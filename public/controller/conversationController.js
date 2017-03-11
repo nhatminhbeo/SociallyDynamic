@@ -1,8 +1,12 @@
-app.controller('conversationController', ['$scope', 'authService', '$location','$http', 'currentUser', function($scope, authService, $location,
- $http, currentUser) {
+app.controller('conversationController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
+ $http, currentUser,routeParams) {
     $scope.conversationController = "conversationController";
     $scope.message="";
-    $scope.messages = [];
+    $scope.messages = []; // holds all the messages
+    $scope.currentUserid = currentUser.uid;
+
+
+//logout
     $scope.logout = function() {
         // log user out
         authService.Auth.$signOut().then(function(){
@@ -10,25 +14,62 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
         });
 }
 
-     $scope.sendMessage = function() {
-     	$scope.message = "";
+
+//get first 50 msgs if there exist 
+    $http({
+        method: "GET",
+        url: "/api/conversation/" + $routeParams.id
+    }).then(function (data) {
+        console.log(data);
+        $scope.data = data.data;
+        for (var i = 0; i < data.data.length; i++) {
+        //	if(data.data[i]["Sender"] == currentUser.uid){
+       // 		return;
+        //	}
+
+            $scope.messages.push(data.data[i]);
+            socket.emit('personal message ' + ConversationID, data)
+        	}
+        }
+    });
+
+
+
+//receive new messages
+socket.on("personal message" + ConversationID, function (msg) {
+//	        	if(msg.Sender == currentUser.uid){
+//        		return;
+ //       	}
+
+            $scope.messages.push(msg);
+        	}
+}
+
+
+//get message from friend
+//     $scope.sendMessage = function() {
+ //    	$scope.message = "";
      // Modify User Class List
-     if (true) {
-        console.log("sendMessage() called")
-     }
-    }    
-<<<<<<< HEAD
-console.log($scope.messages);
+   //  if (true) {
+   //     console.log("sendMessage() called")
+    // }
+    //}    
+
+//console.log($scope.messages);
 
     //take user inputted message and display on chat screen
+
+
+
     $scope.userSendMessage = function(){
     	$scope.message = $scope.message.trim();
     	if($scope.message=="") {
     		return;
     	}
-    	$scope.messages.push($scope.message);
+    	socket.emit('personal message ' + ConversationID, {"Content": $scope.message,
+    	 "Sender": currentUser.uid})
     	$scope.message = "";
-    }i
+    }
 
 }]);
 
