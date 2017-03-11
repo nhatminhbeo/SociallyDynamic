@@ -162,6 +162,7 @@ loggedIn, $http, $rootScope){
 		console.log(c);
 		if(!$scope.selectedClasses[c]){
 			$scope.selectedClasses[c] = c;
+			$scope.classFilter = '';
 		}
 	};
 
@@ -169,6 +170,7 @@ loggedIn, $http, $rootScope){
 	$scope.majorFunc = function(m){
 		console.log(m);
 		$scope.selectedMajor = m;
+		$scope.majorFilter = '';
 	};
 
 	// studyt habits function
@@ -176,6 +178,7 @@ loggedIn, $http, $rootScope){
 		console.log(s);
 		if(!$scope.selectedHabits[s]){
 			$scope.selectedHabits[s] = s;
+			$scope.studyHabitFilter = '';
 		}
 	};
 	// delete a selected class 
