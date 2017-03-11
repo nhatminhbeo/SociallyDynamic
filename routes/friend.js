@@ -22,6 +22,7 @@ module.exports.route = function(app) {
 	app.post('/api/friend', api.postFriend);
 	app.delete('/api/friend', api.deleteFriend);
 	app.get('/api/friend/request', api.getFriendRequest);
+	app.get('/api/friend/request', api.getFriendRequestWithId);
 	app.post('/api/friend/request', api.postFriendRequest);
 	app.delete('/api/friend/request', api.deleteFriendRequest);
 };
