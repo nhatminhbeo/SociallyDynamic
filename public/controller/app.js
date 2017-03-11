@@ -17,7 +17,16 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 				controller: 'createGroupController',
 				resolve: {
 					currentUser: ['authService', function(authService){
-						return authService.Auth.$waitForSignIn();;
+						return authService.Auth.$waitForSignIn();
+					}]
+				}
+			}).
+			when('/group/:id', {
+				templateUrl: 'scenes/group',
+				controller: 'groupController',
+				resolve: {
+					currentUser:['authService', function(authService){
+						return authService.Auth.$waitForSignIn();
 					}]
 				}
 			}).
@@ -59,6 +68,8 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 				}
 			});
 			$locationProvider.html5Mode(true);
+			
+
 
 }]);
 /*.run(function($rootScope,$location){

@@ -50,12 +50,7 @@ socket.on("personal message" + ConversationID, function (msg) {
 //     $scope.sendMessage = function() {
  //    	$scope.message = "";
      // Modify User Class List
-   //  if (true) {
-   //     console.log("sendMessage() called")
-    // }
-    //}    
 
-//console.log($scope.messages);
 
     //take user inputted message and display on chat screen
 
