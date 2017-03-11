@@ -122,7 +122,7 @@ module.exports.getFriendRequest = function (req, res) {
 				return res.status(400).send(err);
 
 			// we have found the request
-			return res.status(200).json(data);
+			return res.status(200).send(data);
 		}
 	);
 };
@@ -144,11 +144,11 @@ module.exports.postFriendRequest = function (req, res) {
 		Receiver: req.body.Receiver
 	});
 
-	friendRequest.save(function(err){
+	friendRequest.save(function(err, data){
 		if (err) 
 			return res.status(400).send(err);
 
-		return res.status(200).send('Saved friendRequest');
+		return res.status(200).send(data);
 	});
 };
 
@@ -178,7 +178,7 @@ module.exports.deleteFriendRequest = function(req, res) {
 				return res.status(400).send(err);
 			
 			// we have deleted the user
-			return res.status(200).json(data);
+			return res.status(200).send(data);
 		}
 	);
 };
