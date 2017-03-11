@@ -1,20 +1,13 @@
 app.controller('createGroupController', ['$scope', 'authService', '$location','$http', 'currentUser', function($scope, authService, $location,
 $http, currentUser) {
     $scope.createGroupController = "createGroupController";
+
+    //logout
     $scope.logout = function() {
-        // log user out
         authService.Auth.$signOut().then(function(){
             $location.path('/');
         });
     }
-
-    // check if user has groups created already to view
-    $scope.groupsExist = false;
-    //check if user is an admin of group, to show delete button or not
-    $scope.isAdmin = false;
-    //check if user is viewing groups or creating a group
-    $scope.viewGroups = false;
-
 
     // auto-complete
     $scope.friendsFilter = "";
@@ -23,6 +16,7 @@ $http, currentUser) {
 
     //create group fields
     $scope.groupName = "";
+    $scope.groupInfo = "";
 
     $http({
         method: "GET",
@@ -55,16 +49,40 @@ $http, currentUser) {
         console.log($scope.selectedMembers);
     }
 
-
     // create group
     $scope.createGroup = function() {
         var name = $scope.groupName.trim();
-        if (name == "") {
-            alert("Please add a group name.");
+        var info = $scope.groupInfo;
+        var memberList = [];
+        
+        // make final list of members
+        for (var key in $scope.selectedMembers) {
+            console.log("key: " + key);
+            memberList.push(key);
+        }
+
+        // check that all boxes are filled in
+        if (name == "" || info == "" || memberList.length == 0) {
+            alert("Please make sure all fields are filled in.");
             return;
         }
+
+        $http({
+            method: "POST",
+            url: '/api/group',
+            data: {
+                name : name,
+                owner : currentUser.uid,
+                member : memberList
+            }
+
+            }).then(function(data){
+            $location.path('/group/' + data);
+        });
     }
 
     // cancel create group
-    //$scope.cancel = function() {}
+    $scope.cancel = function() {
+        $location.path('/group/') ;
+    }
 }]);
