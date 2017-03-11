@@ -128,7 +128,7 @@ module.exports.getFriendRequest = function (req, res) {
 
   		"Sender": req.headers.sender,
         "Receiver": req.headers.receiver
-    }
+    },
 		function(err, data) {
 			if (err) 
 				return res.status(400).send(err);
