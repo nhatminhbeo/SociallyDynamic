@@ -2,6 +2,11 @@
 app.controller('loginController', ['$scope', 'authService', '$location', 'loggedIn', '$http', '$rootScope',
 function($scope, authService, $location, 
 loggedIn, $http, $rootScope){
+
+
+	$rootScope.currentUser = loggedIn;
+	$rootScope.hello = "HELLO WORLD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+
 	// checking authentication
 	$rootScope.isNavbar = false;
 	$scope.isLoggedIn = loggedIn;
@@ -94,8 +99,8 @@ loggedIn, $http, $rootScope){
 		authService.Auth.$signInWithEmailAndPassword($scope.email, $scope.password).then(function(data){
 			console.log(data);
 			$rootScope.isNavbar = true;
+			$rootScope.currentUser = data;
 			$rootScope.myProfile = '/profile/' + data.uid;
-			$rootScope.currentuser = loggedIn;
 			$location.path('/profile/' + data.uid);
 		}).catch(function(error){
 			console.log(error);
@@ -151,9 +156,9 @@ loggedIn, $http, $rootScope){
 						Habit : habitList
 					}
 				}).then(function(){
+					$rootScope.currentUser = data;
 					$rootScope.isNavbar = true;
 					$rootScope.myProfile = '/profile/' + data.uid;
-					$rootScope.currentuser = loggedIn;
 					$location.path('/profile/' + data.uid);
 				});
 			}).catch(function(error){

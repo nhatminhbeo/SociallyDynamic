@@ -4,10 +4,17 @@ function($scope, authService, $location ,$http, $rootScope) {
     $scope.navBarContents = {
         contacts : false,
         inbox : false,
-        partnerMatch : false,
-    }
+        partnerMatch : false
+    };
 
-    $rootScope.currentuser = '';
+    $scope.matching = {
+        Class : "class",
+        Major : "major",
+        Habit : "habit",
+        Waiting: "W"
+    };
+    $scope.loading = false;
+
     $rootScope.myProfile = '';
     $rootScope.isNavbar = false;
     if($location.path() != '/'){
@@ -28,25 +35,47 @@ function($scope, authService, $location ,$http, $rootScope) {
         });
     }
 
+    $scope.friendList = [];
+
+
     // get friendlist, save in $scope.friendList
     $scope.getFriendList = function() {
         $scope.navBarContents.contacts = true;
+        $scope.navBarContents.inbox = false;
+        $scope.navBarContents.partnerMatch = false;
+
+        var currentUser = authService.Auth.$getAuth();
+        console.log(currentUser.uid);
+        
         $http({
             method: "GET",
-            url: "/api/student/friend/" + $rootScope.currentUser.uid
+            url: "/api/student/friend/" + currentUser.uid
         }).then(function (data) {
             console.log(data);
             $scope.friendList = data.data;
         });
+        
     }
 
     // get match by something
-    function getMatch(type) {
+    $scope.getMatch = function (type) {
+        $scope.navBarContents.contacts = false;
+        $scope.navBarContents.inbox = false;
+        $scope.navBarContents.partnerMatch = true;
+        $scope.matchList = [];
+        if (type == $scope.matching.Waiting) {
+            return;
+        }
+        $scope.loading = true;
+
+        var currentUser = authService.Auth.$getAuth();
         $http({
             method: "GET",
-            url: "/api/match/" + type
+            url: "/api/match/" + type + "/" + currentUser.uid
         }).then(function (data) {
+            $scope.loading = false;
             $scope.matchList = data.data;
+            console.log($scope.matchList);
         });        
     }
 }]);
