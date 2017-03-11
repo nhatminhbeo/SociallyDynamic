@@ -348,15 +348,6 @@ $http, currentUser, $routeParams) {
                             console.log("DELETE-ing a friend request");
                         }
 
-                        var toDelete = {
-                            'Sender': currentUser.uid,
-                            'Receiver': $routeParams.id
-                        };
-
-                        console.log(toDelete);
-
-                        $http.delete("/api/friend/request", toDelete).then(function(data){console.log(data)});
-
                         $http({
                             method: "DELETE",
                             url: "/api/friend/request",
