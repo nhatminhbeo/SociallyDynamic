@@ -107,15 +107,20 @@ module.exports.deleteFriend = function (req, res) {
 // ================================================================================
 module.exports.getFriendRequest = function (req, res) {
 	var FriendRequest = models.FriendRequest;
-	var friendRequestSender = req.headers.sender; //auto converted to lowercase in
-	var friendRequestReceiver = req.headers.receiver; //http headers by http 
+	var toFind = {
+    	UserID: req.headers.sender
+    };
+    var toFindAlt = {
+    	UserID: req.headers.receiver
+    }
+	//var friendRequestSender = req.headers.sender; //auto converted to lowercase in
+	//var friendRequestReceiver = req.headers.receiver; //http headers by http 
 	//console.log(req); for debugging: note above 2 comments ie 'Sender'->'sender'
 	//https://github.com/mitre/HTTP-Proxy-Servlet/issues/65
 	//here^^ is a link referring to this issue. pretty interesting~~
 	FriendRequest.findOne(
 		{ 
-			Sender: friendRequestSender, 
-			Receiver: friendRequestReceiver
+			'$and': [toFind, toFindAlt]
 		}, 
 		function(err, data) {
 			if (err) 
