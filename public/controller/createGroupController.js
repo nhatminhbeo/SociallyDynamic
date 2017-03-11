@@ -83,6 +83,6 @@ $http, currentUser) {
 
     // cancel create group
     $scope.cancel = function() {
-        $location.path('/group/') ;
+        $location.path('/profile/' + currentUser.uid) ;
     }
 }]);

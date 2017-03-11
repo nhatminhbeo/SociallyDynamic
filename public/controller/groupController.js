@@ -31,19 +31,19 @@ if(currentUser){
     var getMembers = function(){
         $http({
             method: 'GET',
-            url: '/api/group/user' + $routeParams.id
+            url: '/api/group/' + $routeParams.id
         }).then(function(data){
-            for (var i = 0; i < data.data.length; i++){
-                $scope.members.push(data.data[i].Name);
+            for (var i = 0; i < data.data.Member.length; i++){
+                $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
             }
             
         });
-        console.log(members);
+        console.log($scope.Members);
     }
 
 
 
 $scope.groupController = "Hello from group controller";
 console.log(currentUser);
-
+getMembers();
 }]);
