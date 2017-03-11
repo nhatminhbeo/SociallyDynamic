@@ -7,11 +7,13 @@ function($scope, authService, $location ,$http, $rootScope) {
         partnerMatch : false
     };
 
-    $scope.match = {
+    $scope.matching = {
         Class : "class",
         Major : "major",
-        Habit : "habit"
+        Habit : "habit",
+        Waiting: "W"
     };
+    $scope.loading = false;
 
     $rootScope.myProfile = '';
     $rootScope.isNavbar = false;
@@ -60,12 +62,18 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.contacts = false;
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.partnerMatch = true;
+        $scope.matchList = [];
+        if (type == $scope.matching.Waiting) {
+            return;
+        }
+        $scope.loading = true;
 
         var currentUser = authService.Auth.$getAuth();
         $http({
             method: "GET",
             url: "/api/match/" + type + "/" + currentUser.uid
         }).then(function (data) {
+            $scope.loading = false;
             $scope.matchList = data.data;
             console.log($scope.matchList);
         });        
