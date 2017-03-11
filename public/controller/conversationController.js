@@ -17,7 +17,7 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
         console.log("sendMessage() called")
      }
     }    
-<<<<<<< HEAD
+
 console.log($scope.messages);
 
     //take user inputted message and display on chat screen
@@ -28,7 +28,7 @@ console.log($scope.messages);
     	}
     	$scope.messages.push($scope.message);
     	$scope.message = "";
-    }i
+    }
 
 }]);
 
