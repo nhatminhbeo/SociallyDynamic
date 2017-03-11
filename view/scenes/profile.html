@@ -31,6 +31,10 @@
 		</a>
 	</ul>
 
+	<div ng-hide="isSelf">
+		<button ng-click="addFriend()">{{friendBtn}}</button>
+	</div>
+
 	<div ng-show="isSelf">
 		<button ng-click="modifyMajor()">{{majorBtn}}</button>
 	</div>

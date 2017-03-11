@@ -45,20 +45,26 @@ module.exports.getMatchClassWithId = function (req, res) {
 				return models.Promise.each(otherStu, function (other) {
 					id = other.StudentID;
 
-					// Only count if other student is not the current student
-					if ((id != req.params.id)) {
-						if (map[id] != null) {
-							map[id].Match = map[id].Match + 1;
-							map[id].Classes.push(thisClass.Class);
+					return models.Student.findOne({"_id": id}).exec()
+
+					.then(function (stu) {
+						// Only count if other student is not the current student
+						if ((id != req.params.id)) {
+							if (map[id] != null) {
+								map[id].Match = map[id].Match + 1;
+								map[id].Classes.push(thisClass.Class);
+							}
+							else {
+								map[id] = {
+									_id: id,
+									FirstName: stu.FirstName,
+									LastName: stu.LastName,
+									Match: 1,
+									Classes: [thisClass.Class]
+								};
+							}
 						}
-						else {
-							map[id] = {
-								_id: id,
-								Match: 1,
-								Classes: [thisClass.Class]
-							};
-						}
-					}
+					});
 				});
 			});
 		});
@@ -108,22 +114,30 @@ module.exports.getMatchHabitWithId = function (req, res) {
 
 				// For each such relationship, increase the counter for the otherStu
 				return models.Promise.each(otherStu, function (other) {
+
 					id = other.StudentID;
 
-					// Only count if other student is not the current student
-					if ((id != req.params.id)) {
-						if (map[id] != null) {
-							map[id].Match = map[id].Match + 1;
-							map[id].Habits.push(habit.Habit);
+					return models.Student.findOne({"_id": id}).exec()
+
+					.then(function (stu) {
+
+						// Only count if other student is not the current student
+						if ((id != req.params.id)) {
+							if (map[id] != null) {
+								map[id].Match = map[id].Match + 1;
+								map[id].Habits.push(habit.Habit);
+							}
+							else {
+								map[id] = {
+									_id: id,
+									FirstName: stu.FirstName,
+									LastName: stu.LastName,
+									Match: 1,
+									Habits: [habit.Habit]
+								};
+							}
 						}
-						else {
-							map[id] = {
-								_id: id,
-								Match: 1,
-								Habits: [habit.Habit]
-							};
-						}
-					}
+					});
 				});
 			});
 		});
@@ -169,13 +183,17 @@ module.exports.getMatchMajorWithId = function (req, res) {
 		.then(function (otherStudents) {
 
 			return models.Promise.each(otherStudents, function(otherStu) {
+
 				// Add student with same major to the list
-				list.push({
-					_id: otherStu._id,
-					FirstName: otherStu.FirstName,
-					LastName: otherStu.LastName,
-					Major: otherStu.Major
-				});
+				if (otherStu._id != req.params.id) 
+				{
+					list.push({
+						_id: otherStu._id,
+						FirstName: otherStu.FirstName,
+						LastName: otherStu.LastName,
+						Major: otherStu.Major
+					});
+				}
 			});
 		});
 	})

@@ -68,6 +68,8 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 				}
 			});
 			$locationProvider.html5Mode(true);
+			
+
 
 }]);
 /*.run(function($rootScope,$location){
