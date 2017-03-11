@@ -8,6 +8,7 @@ loggedIn, $http, $rootScope){
 	$rootScope.hello = "HELLO WORLD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 
 	// checking authentication
+	$rootScope.isNavbar = false;
 	$scope.isLoggedIn = loggedIn;
 	console.log(loggedIn);
 	if(loggedIn){
