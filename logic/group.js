@@ -104,8 +104,6 @@ module.exports.getGroupWithId = function (req, res) {
     .then(null, function() {
         return res.status(400).send('Something Broke');
     })
-
-    console.log(studentList);
 };
 
 
