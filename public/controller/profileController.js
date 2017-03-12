@@ -310,10 +310,13 @@ $http, currentUser, $routeParams) {
                 // TODO: HTTP DELETE request to delete the friend
                 $http({
                     method: "DELETE",
-                    url: "/api/friend/request",
+                    url: "/api/friend/",
                     data: {
                         'Sender': currentUser.uid,
                         'Receiver': $routeParams.id
+                    },
+                    headers: {
+                        'Content-type': 'application/json;charset=utf-8'
                     }
                 });
 
@@ -440,7 +443,10 @@ $http, currentUser, $routeParams) {
                 for (var i = 0; i < studyHabitArr.length; i++) {
                     studyHabitOld[studyHabitArr[i]] = $scope.studyHabit[studyHabitArr[i]] = "";
                 }
-                console.log(data);
+
+                if (DEBUG) {
+                    console.log(data);
+                }
             });
         }
 
@@ -471,6 +477,7 @@ $http, currentUser, $routeParams) {
                 if (DEBUG) {
                     console.log("Already friends");
                 }
+
 
                 $scope.friendBtn = "Unfriend Friend";
             }
