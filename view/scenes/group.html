@@ -36,7 +36,7 @@
 				<h2 style="text-align: center">Members</h2>
 			<ul class="list-group" style="list-style-type: none;">
 				<a ng-repeat="m in members" >
-					<li> {{m}} </li>
+					<li ng-click="profilePage(m)"> {{m}} </li>
 					<!-- <li><a href="default.asp">Home</a></li> -->
 				</a>
 			</ul>

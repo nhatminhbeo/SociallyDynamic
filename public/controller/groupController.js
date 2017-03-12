@@ -25,6 +25,7 @@ if(currentUser){
 
 	/* member stuff */
 	$scope.members = [];
+	$scope.memberMap = {};
 	$scope.owner = "";
 	$scope.groupname = "";
 
@@ -43,6 +44,7 @@ if(currentUser){
             // Get member list
             for (var i = 0; i < data.data.Member.length; i++){
                 $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
+                $scope.memberMap[data.data.Member[i].FirstName + " " + data.data.Member[i].LastName] = data.data.Member[i]._id;
             }
 
             console.log(data.data.GroupName);
@@ -53,6 +55,7 @@ if(currentUser){
 
             // Get owner of group
             return $scope.owner = data.data.Owner;
+
         })
         .then(function(data) {
         	//console.log($scope.owner);
@@ -78,6 +81,16 @@ if(currentUser){
 	        $location.path('/profile/' + currentUser.uid);
 	    });
 	}
+
+    // Delete the group as the owner
+	$scope.profilePage = function(person){
+		console.log($scope.memberMap);
+		console.log(person);
+		console.log($scope.memberMap[person]);
+		var id = $scope.memberMap[person];
+		$location.path('/profile/' + id)
+	}
+
 
 	// Leave group as a non-owner
 	$scope.leaveGroup = function(){
