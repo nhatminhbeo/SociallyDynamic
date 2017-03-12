@@ -5,6 +5,7 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
     $scope.messages = []; // holds all the messages
     var ConversationID = $routeParams.id;
     $scope.currentUserid = currentUser.uid;
+    $scope.friendName = "";
 
     var socket = io();
 
@@ -29,6 +30,7 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
             console.log("hello");
             console.log(data);
             //get name of friend
+            $scope.friendName = data.firstName
             $scope.messages = data.data.Messages;
             setTimeout(function() {
                 var element = document.getElementById("scroll");
