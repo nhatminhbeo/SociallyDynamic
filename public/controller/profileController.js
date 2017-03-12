@@ -275,6 +275,17 @@ $http, currentUser, $routeParams) {
             console.log("deleteUserProfile() called");
         }
 
+        // TODO
+        // $http({
+        //     method: "DELETE",
+        //     url: "api/student/" + currentUser.uid,
+        //     headers: {
+        //         'Content-type': 'application/json;charset=utf-8'
+        //     }
+        // }).then(function() {
+        //     $location.path('/')
+        // });
+
     };
 
     $scope.addFriend = function() {
@@ -305,7 +316,7 @@ $http, currentUser, $routeParams) {
                     console.log("DELETE-ing a friend");
                 }
 
-                // TODO: HTTP DELETE request to delete the friend
+                // HTTP DELETE request to delete the friend
                 $http({
                     method: "DELETE",
                     url: "/api/friend/",
