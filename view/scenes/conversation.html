@@ -13,20 +13,24 @@
 	<!-- chat bubble views start -->
 	<div id="scroll" class="scroll" style= scroll>
 		<ul style = "list-style-type: none"> 
-			<div class = "row" >
-				<div class = "col-sm-4">
-					<div ng-repeat = "message in messages track by $index"> 
+			<div ng-repeat = "message in messages track by $index"> 
+
+				<div class = "row" >
+					<div class = "col-sm-12">
 
 						<div ng-if = "message.Sender == currentUserid">
-							<div class = "user_speech"> {{message.Content}}</div>
+						<p>
+							<div class = "user_speech"> {{message.Content}}</div><br/>
+						</p>
 						</div>
 						<div ng-if = "message.Sender != currentUserid">
-							<div class = "friend_speech"> {{message.Content}} </div>
+						<p>
+							<div class = "friend_speech"> {{message.Content}} </div><br/>
+						</p>
 						</div>
 					</div>
-
-				<div class = "col-sm-4"></div>
-				<div class = "col-sm-4"></div>	
+				</div>
+				
 			</div>
 		</ul>
 	</div>
