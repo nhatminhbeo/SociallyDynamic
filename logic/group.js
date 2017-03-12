@@ -8,6 +8,7 @@ var models = require('./general');
 var Group = models.Group;
 var StudentGroup = models.StudentGroup;
 var GroupRequest = models.GroupRequest;
+var GroupConversation = models.GroupMessage;
 var Promise = models.Promise;
 
 // ===============================================================================================================================================
@@ -161,10 +162,10 @@ module.exports.deleteGroupWithId = function (req, res) {
 	}
 
     Group.findByIdAndRemove(req.params.id).then(function () {
-    	return models.StudentGroup.remove(sGroup);
+    	return StudentGroup.remove(sGroup);
     })
     .then(function () {
-    	return models.GroupMessage.remove(gMess);
+    	return GroupMessage.remove(gMess);
     })
     .then(function () {
     	return GroupRequest.remove(gReq);
