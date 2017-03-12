@@ -2,8 +2,6 @@ app.controller('groupController', ['$scope', 'authService', '$location', 'curren
 function($scope, authService, $location, 
 currentUser, $http, $rootScope, $routeParams){
 
-    // check if user has groups created already to view
-    $scope.groupsExist = true;
     //check if user is an admin of group, to show delete button or not
     $scope.isOwner = false;
 
@@ -27,29 +25,54 @@ if(currentUser){
 	/* member stuff */
 	$scope.members = [];
 	$scope.owner = "";
+
     // Retrives the entire list of group members
-    var getMembers = function(){
+    var getGroupInfo = function(){
         $http({
             method: 'GET',
             url: '/api/group/' + $routeParams.id
         }).then(function(data){
-            
-            //get member list
+            console.log(data);
+            // Get member list
             for (var i = 0; i < data.data.Member.length; i++){
                 $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
             }
 
-            //get owner of group
-            $scope.owner = data.data.Owner;
-            console.log($scope.owner);
-        });
-        console.log($scope.Members);
-        console.log($scope.owner);
+            // Get owner of group
+            return $scope.owner = data.data.Owner;
+        })
+        .then(function(data) {
+        	console.log($scope.owner);
+
+        	// Check if user is the owner of group
+			if ($scope.owner === currentUser.uid) {
+				$scope.isOwner = true;
+			}
+    	});
     }
 
+    // Delete the group as the owner
+	$scope.deleteGroup = function(){
+	    $http({
+	        method: 'DELETE',
+	        url: '/api/group/' + $routeParams.id
+	    }).then(function(data){
+	        console.log("deleted group");
+	        $location.path('/profile/' + currentUser.uid);
+	    });
+	}
 
-
-$scope.groupController = "Hello from group controller";
-console.log(currentUser);
-getMembers();
+	// Leave group as a non-owner
+	$scope.leaveGroup = function(){
+	    $http({
+	        method: 'DELETE',
+	        url: '/api/group/' + currentUser.uid + "/user"
+	    }).then(function(data){
+	        console.log("left group");
+	        $location.path('/profile/' + currentUser.uid);
+	    });
+	}
+	
+	// Render group page
+	getGroupInfo();
 }]);

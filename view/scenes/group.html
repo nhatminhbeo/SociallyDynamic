@@ -4,18 +4,13 @@
 <div class="groupDisplay">
 	
 	<h1> Study Groups </h1>
-	<!-- if no groups yet -->
-	<div ng-hide="groupsExist" id="default_view">
-	    <h2> You have no groups yet! </h2>
-	</div>
-	    
-
-	<!--groups already exist and chose one group to view-->
-	<div ng-show="groupsExist">
-
 	    <!-- delete group button if admin -->
 		<div ng-show="isOwner">
 				<button class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
+		</div>
+
+		<div ng-hide="isOwner">
+				<button class="btn btn-primary" ng-click="leaveGroup()" style="display:block;margin-left:90%">Leave</button>	
 		</div>
 
         <!-- group data -->
@@ -25,6 +20,7 @@
 
 		    <!-- message button -->
 		 	<!-- NEED TO DO!! -->
+		 	<button class="btn btn-primary" ng-click="leaveGroup()" style="display:block;margin-right:auto;margin-left:auto;">Message</button>	
 
 		</div>
 
@@ -41,6 +37,4 @@
 				</a>
 			</ul>
 	    </div>
-
-	</div>
 </div>

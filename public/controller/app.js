@@ -72,6 +72,7 @@ var app = angular.module('SD' , ['ngRoute', 'firebase'])
 
 
 }]);
+
 /*.run(function($rootScope,$location){
 	$rootScope.$on("navState", function(event, next, current) {
 		if(next.templateUrl == "scenes/login"){

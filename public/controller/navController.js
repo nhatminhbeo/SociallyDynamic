@@ -153,6 +153,8 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.group = true;
 
+        $scope.groupList = [];
+
         var currentUser = authService.Auth.$getAuth();
 
         $http({

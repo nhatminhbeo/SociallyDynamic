@@ -17,7 +17,7 @@ var socket = require('socket.io');
 
 var app = express();
 var server = require('http').createServer(app);
-var io = socket(server);
+var io = socket.listen(server);
 
 var port = process.env.PORT || 3000;
 
@@ -50,7 +50,7 @@ app.enable('trust proxy');
 // =========================
 // Start Listening Requests
 // =========================
-app.listen(port, function() {
+server.listen(port, function() {
   console.log('Server running!');
 });
 
@@ -150,13 +150,13 @@ app.use(function(err, req, res, next) {
 // Routings
 // =========================
 
+
 var stu = require('./routes/student');  stu.route(app);
 var fri = require('./routes/friend');   fri.route(app);
 var mat = require('./routes/match');    mat.route(app);
-/*var mes = require('./routes/message');  mes.route(app, io);*/
+var mes = require('./routes/message');  mes.route(app, io);
 var gro = require('./routes/group');    gro.route(app);
 var inb = require('./routes/inbox');    inb.route(app);
 var dat = require('./routes/data');     dat.route(app);
-
 
 var pub = require('./routes/public');   pub.route(app, __dirname);
