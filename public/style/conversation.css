@@ -30,23 +30,27 @@
 
 .friend_speech {
   position: relative;
+  float: left;
   right: 3.2vh;
-  max-width: 350px;
+  max-width: 310px;
   text-align: center;
   line-height: 15px;
   background-color: #EEEEEE;
   border: 0;
-  border-radius: 20px;
+  border-radius: 20px; 
+  color: #000000;
   word-wrap: break-word;
   display: inline-block;
   padding: 15px 20px;
   margin-bottom: -5px;
+  overflow-y: visible;
   clear:both;
 }
 
 .user_speech {
   position: relative;
   float: right;
+  right:1vh;
   max-width: 310px;
   text-align: center;
   line-height: 15px;
