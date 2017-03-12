@@ -2,6 +2,7 @@
 <html lang="en">
 
 	<head>
+
 		<title>Team Socially Dynamic</title>
 		<base href='/'>
 		<meta charset="utf-8"/>
@@ -87,6 +88,7 @@
 	</head>
 
 	<body ng-app="SD">
+
 		<div ng-controller="navController">
 			<!--<h1>{{navController}}</h1>-->
 			<!-- TODO: UNCOMMENT LINE ABOVE WHEN RUNNING SERVER -->
@@ -213,8 +215,8 @@
 						  		</div>
 						  		
 								<div>
-									<div class="list-group">
-										<a ng-href="/profile/{{match._id}}" class="list-group-item borderless" ng-repeat="match in matchList">
+									<div class="list-group nav_list-group">
+										<a ng-href="/profile/{{match._id}}" class="list-group-item nav_list-group-item borderless" ng-repeat="match in matchList">
 											{{match.FirstName}} {{match.LastName}}
 											<span class="badge badge-default badge-pill pull-right">{{match.Match}}</span>
 										</a>
@@ -268,6 +270,7 @@
 	<!-- This is the Firebase script for use in all controllers -->
 	<script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
 	
 	<!-- OUR master app.js file -->
 	<script src="controller/app.js"></script>
@@ -277,6 +280,7 @@
 	<script src="controller/loginController.js"></script>
 	<script src="controller/profileController.js"></script>
 	<script src="controller/conversationController.js"></script>
+	
 	<script src="controller/navController.js"></script>
 	<script src="controller/createGroupController.js"></script>
 	<script src="controller/groupConversationController.js"></script>

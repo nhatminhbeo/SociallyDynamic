@@ -1,12 +1,18 @@
 app.controller('profileController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
 $http, currentUser, $routeParams) {
 
-    if (!currentUser) {
-        $location.path('/');
-    }
-
     var DEBUG = true;
     var DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+    if (!currentUser) {
+
+        if (DEBUG) {
+            console.log("Not logged in; redirecting");
+        }
+
+        $location.path('/');
+    }
+    else { // <-- Do not delete this
 
     // Limit for search
     $scope.quantity = 5;
@@ -310,10 +316,13 @@ $http, currentUser, $routeParams) {
                 // TODO: HTTP DELETE request to delete the friend
                 $http({
                     method: "DELETE",
-                    url: "/api/friend/request",
+                    url: "/api/friend/",
                     data: {
                         'Sender': currentUser.uid,
                         'Receiver': $routeParams.id
+                    },
+                    headers: {
+                        'Content-type': 'application/json;charset=utf-8'
                     }
                 });
 
@@ -440,7 +449,10 @@ $http, currentUser, $routeParams) {
                 for (var i = 0; i < studyHabitArr.length; i++) {
                     studyHabitOld[studyHabitArr[i]] = $scope.studyHabit[studyHabitArr[i]] = "";
                 }
-                console.log(data);
+
+                if (DEBUG) {
+                    console.log(data);
+                }
             });
         }
 
@@ -471,6 +483,7 @@ $http, currentUser, $routeParams) {
                 if (DEBUG) {
                     console.log("Already friends");
                 }
+
 
                 $scope.friendBtn = "Unfriend Friend";
             }
@@ -581,4 +594,5 @@ $http, currentUser, $routeParams) {
     getClasses();
     getMajors();
     getStudyHabits();
+    } // <-- Do not delete this
 }]);
