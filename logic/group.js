@@ -78,6 +78,7 @@ module.exports.getGroupWithId = function (req, res) {
 	Group.findById(req.params.id)
 	.then(function(entry) {
 		group = entry;
+		console.log(group);
         sGroup = {
         	GroupID: entry.id,
         };
@@ -96,9 +97,11 @@ module.exports.getGroupWithId = function (req, res) {
     	});
     })
     .then(function() {
+    	console.log(group);
     	sendback = {
     		Owner: group.Owner,
     		Member: studentList,
+    		GroupName: group.GroupName,
     	}
     	return res.status(200).send(sendback);
     })

@@ -25,7 +25,9 @@ if(currentUser){
 
 	/* member stuff */
 	$scope.members = [];
+	$scope.memberMap = {};
 	$scope.owner = "";
+	$scope.groupname = "";
 
     // Retrives the entire list of group members
     var getGroupInfo = function(){
@@ -42,13 +44,21 @@ if(currentUser){
             // Get member list
             for (var i = 0; i < data.data.Member.length; i++){
                 $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
+                $scope.memberMap[data.data.Member[i].FirstName + " " + data.data.Member[i].LastName] = data.data.Member[i]._id;
             }
+
+            console.log(data.data.GroupName);
+
+            // Get group name
+            $scope.groupname = data.data.GroupName;
+
 
             // Get owner of group
             return $scope.owner = data.data.Owner;
+
         })
         .then(function(data) {
-        	console.log($scope.owner);
+        	//console.log($scope.owner);
 
         	// Check if user is the owner of group
 			if ($scope.owner === currentUser.uid) {
@@ -72,6 +82,16 @@ if(currentUser){
 	    });
 	}
 
+    // Delete the group as the owner
+	$scope.profilePage = function(person){
+		console.log($scope.memberMap);
+		console.log(person);
+		console.log($scope.memberMap[person]);
+		var id = $scope.memberMap[person];
+		$location.path('/profile/' + id)
+	}
+
+
 	// Leave group as a non-owner
 	$scope.leaveGroup = function(){
 		console.log("trying to leave group");
@@ -90,6 +110,11 @@ if(currentUser){
 	    });
 	}
 	
+	// Go to group conversation
+	$scope.goToGroupMessage = function(){
+	    $location.path('/group/conversation/' + $routeParams.id);
+	}
+
 	// Render group page
 	getGroupInfo();
 }]);

@@ -102,6 +102,7 @@ button:hover {
 #requests {
 	position: relative;
 	left: 20px;
+	color: white;
 }
 
 .glyphicon-ok {
@@ -114,4 +115,7 @@ button:hover {
 
 .glyphicon-plus {
 	color: #818181;
+}
+.glyphicon-send {
+	color: blue;
 }

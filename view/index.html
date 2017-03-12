@@ -110,16 +110,16 @@
 							<a href="/"><span style=""><img alt="My Profile" src="images/profile.png" class="img-responsive" title="profile" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span  ng-click="getFriendList()" onclick="toggleNav()" style=""><img title="Contacts" src="images/contacts.png" class="img-responsive" alt="Contacts" width="60" height="60"></span></a>
+							<a href=""><span  ng-click="getFriendList()" onclick="toggleNav(1)" style=""><img title="Contacts" src="images/contacts.png" class="img-responsive" alt="Contacts" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="toggleNav()" style=""><img title="Inbox" src="images/inbox.png" class="img-responsive" alt="Inbox" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="toggleNav(2)" style=""><img title="Inbox" src="images/inbox.png" class="img-responsive" alt="Inbox" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span ng-click="getGroup()" style="" onclick="toggleNav()" style=""><img title="Groups" src="images/group.png" class="img-responsive" alt="Groups" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getGroup()" style="" onclick="toggleNav(3)" style=""><img title="Groups" src="images/group.png" class="img-responsive" alt="Groups" width="60" height="60"></span></a>
 						</li>	
 						<li>
-							<a href=""><span ng-click="getMatch(matching.Class)" style="" onclick="toggleNav()" style=""><img title="Find Partner Match" src="images/partner match.png" class="img-responsive" alt="Find Partner Match" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getMatch(matching.Class)" style="" onclick="toggleNav(4)" style=""><img title="Find Partner Match" src="images/partner match.png" class="img-responsive" alt="Find Partner Match" width="60" height="60"></span></a>
 						</li>					
 						<li ng-click="logout()">
 							<a href=""><img title="Log out" src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
@@ -136,13 +136,17 @@
 
 
 							<!--Contact expand nav -->
-						  	<div ng-show="navBarContents.contacts">
-								<div ng-repeat="friend in friendList" >
-								  <a ng-href="/profile/{{friend._id}}">
-								  	{{friend.FirstName}} {{friend.LastName}}
-								  </a>
+						  	<div id="requests" ng-show="navBarContents.contacts">
+								<div class="row" ng-repeat="friend in friendList track by $index">
+									<div class="col-sm-7">
+									<div class="login_anchor" ng-click="goToProfile(friend._id)">
+										{{friend.FirstName}} {{friend.LastName}}
+									</div>
+									</div>
+								<div class="col-sm-5">
+									<span class="glyphicon glyphicon-send login_anchor"></span>
+								</div>
 								  <!-- ng-href="/conversation/{{friend.ConversationID}}" -->
-								  <div class="row"> <div class="col-sm-4"><a> M </a></div><div class="col-sm-4"> <a> J </a></div> </div>
 								</div>
 							</div>
 
@@ -160,7 +164,6 @@
 						  		</div>
 
 								<div id="requests" ng-show="inboxToggles.requests">
-									<h3> Friend Requests </h3>
 									<div class="row" ng-repeat="friendRequest in friendRequestList track by $index">
 										<div class="col-sm-7">
 											<div class="login_anchor" ng-click="goToProfile(friendRequest.OtherID)">
@@ -178,7 +181,7 @@
 								</div> 
 							</div>
 
-							<div ng-show="navBarContents.group">
+							<div id="requests" ng-show="navBarContents.group">
 								<div class="row">
 									<div class="col-sm-9">
 									</div>
@@ -186,18 +189,20 @@
 										<span ng-click="toCreateGroup()" class="login_anchor glyphicon glyphicon-plus"></span>
 									</div>
 								</div>
-								<div ng-repeat="group in groupList" >
-								  <a ng-href="/group/{{group._id}}">
+								<div class="row" ng-repeat="group in groupList">
+									<div class="col-sm-7">
+									<div class="login_anchor" ng-click="goToGroup(group._id)">
 								  	{{group.GroupName}}
-								  </a>
-								  <!-- ng-href="/conversation/{{friend.ConversationID}}" -->
-								  <div class="row"> <div class="col-sm-4"><a> M </a></div><div class="col-sm-4"> <a> J </a></div> </div>
+									</div>
+									</div>
+									<div class="col-sm-5">
+										<span class="login_anchor glyphicon glyphicon-send"></span>
+									</div>
+									</div>
 								</div>
-							</div>
 
 
-
-						  	<div ng-show="navBarContents.partnerMatch">
+						  	<div id="requests" ng-show="navBarContents.partnerMatch">
 						  		<div class="row"> 
 									<div class="col-sm-1"></div>
 									<ul class="nav nav-tabs">
@@ -214,15 +219,16 @@
 							  		
 						  		</div>
 						  		
-								<div>
-									<div class="list-group nav_list-group">
-										<a ng-href="/profile/{{match._id}}" class="list-group-item nav_list-group-item borderless" ng-repeat="match in matchList">
-											{{match.FirstName}} {{match.LastName}}
-											<span class="badge badge-default badge-pill pull-right">{{match.Match}}</span>
-										</a>
+									<div class="row" ng-repeat="match in matchList">
+									<div class="col-sm-7">
+										<div class="login_anchor" ng-click="goToProfile(match._id)"> 
+										{{match.FirstName}} {{match.LastName}}
+										</div>
+										</div>
+									<div class="col-sm-5">
+									<span style="color:white; position:relative; bottom:5px;"class="badge badge-default badge-pill">{{match.Match}}</span>
 									</div>
-
-								  </div>
+									</div>
 								</div>
 							</div>						
 						</div>
@@ -244,7 +250,12 @@
     <!-- Scripts -->
 	<script>
 	var naTo = false;
-	function toggleNav() {
+	var currentTab;
+	function toggleNav(a) {
+		if(naTo && currentTab != a){
+			currentTab = a;
+			return;
+		}
 		if (!naTo) {
 			document.getElementById("mySlidenav").style.width = "330px";
 			naTo = true;
