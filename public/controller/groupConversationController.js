@@ -1,25 +1,27 @@
 app.controller('groupConversationController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
  $http, currentUser, $routeParams) {
 
-   $scope.message="";
+    $scope.message="";
     $scope.messages = []; // holds all the messages
-    var ConversationID = $routeParams.id;
+    var GroupID = $routeParams.id;
+
     $scope.currentUserid = currentUser.uid;
 
     var socket = io();
 
-    // Mark that the current person has seen
-    $http({
-        method: "PUT",
-        url: "/api/conversation/" + ConversationID,
-        data: {
-            "SeenPerson": currentUser.uid
-        }
-    });
 
-    //get first 50 msgs if there exist 
+    // // Mark that the current person has seen
+    // $http({
+    //     method: "PUT",
+    //     url: "/api/conversation/" + ConversationID,
+    //     data: {
+    //         "SeenPerson": currentUser.uid
+    //     }
+    // });
+
+    //get first 15 msgs if there exist 
     $scope.getConversation = function() {
-        $http.get("/api/conversation/"  + $routeParams.id, {
+        $http.get("/api/group/conversation/"  + GroupID, {
             headers: {
                 "start": 0,
                 "sender": currentUser.uid
@@ -28,17 +30,23 @@ app.controller('groupConversationController', ['$scope', 'authService', '$locati
             console.log(currentUser.uid);
             console.log("hello");
             console.log(data);
-            //get name of friend
+            $scope.GroupName = data.data.GroupName;
             $scope.messages = data.data.Messages;
+            setTimeout(function() {
+                var element = document.getElementById("scroll");
+                element.scrollTop = element.scrollHeight;
+            }, 1);
         });  
     }
 
     $scope.getConversation();  
 
+    socket.emit('group message', {"GroupID": GroupID});
+
     socket.emit('personal message', {"ConversationID": ConversationID});
 //splice message array for 25
     //receive new messages
-    socket.on('personal message ' + ConversationID, function (msg) {
+    socket.on('group message ' + GroupID, function (msg) {
 
 
         $scope.messages.push(msg);  
@@ -47,6 +55,8 @@ app.controller('groupConversationController', ['$scope', 'authService', '$locati
         //console.log(msg);
         //console.log($scope.messages); 
 
+        var element = document.getElementById("scroll");
+        element.scrollTop = element.scrollHeight;
     });
 
 
@@ -58,14 +68,13 @@ app.controller('groupConversationController', ['$scope', 'authService', '$locati
             return;
         }
 
-        socket.emit('personal message ' + ConversationID, {
+        socket.emit('group message ' + GroupID, {
             "Content": $scope.message,
             "Sender": currentUser.uid
         });
 
         $scope.message="";
         
-
     };
 
 
