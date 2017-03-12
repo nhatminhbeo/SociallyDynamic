@@ -477,7 +477,7 @@ $http, currentUser, $routeParams) {
                 }
 
 
-                $scope.friendBtn = "Unfriend Friend";
+                $scope.friendBtn = "Unfriend";
             }
         });
 
