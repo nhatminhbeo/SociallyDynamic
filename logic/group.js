@@ -8,6 +8,7 @@ var models = require('./general');
 var Group = models.Group;
 var StudentGroup = models.StudentGroup;
 var GroupRequest = models.GroupRequest;
+var GroupMessage = models.GroupMessage;
 var Promise = models.Promise;
 
 // ===============================================================================================================================================
@@ -153,7 +154,7 @@ module.exports.deleteGroupWithId = function (req, res) {
 	var sGroup = {
 		GroupID: req.params.id,
 	}
-	var gConvo = {
+	var gMess = {
 		GroupID: req.params.id,
 	}
 	var gReq = {
@@ -161,20 +162,20 @@ module.exports.deleteGroupWithId = function (req, res) {
 	}
 
     Group.findByIdAndRemove(req.params.id).then(function () {
-    	return Group.remove(sGroup);
+    	return StudentGroup.remove(sGroup);
     })
     .then(function () {
-    	return Group.remove(gConvo);
+    	return GroupMessage.remove(gMess);
     })
     .then(function () {
-    	return Group.remove(gReq);
+    	return GroupRequest.remove(gReq);
     })
     .then(function () {
     	res.status(200).send();
-    })
-    .then(null, function () {
-    	res.status(400).send();
-    })
+    });
+    // .then(null, function () {
+    // 	res.status(400).send();
+    // });
 
 };
 

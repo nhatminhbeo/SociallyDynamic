@@ -9,6 +9,10 @@
 				<button class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
 		</div>
 
+		<div ng-show="notOwner">
+				<button class="btn btn-primary" ng-click="leaveGroup()" style="display:block;margin-left:90%">Leave</button>	
+		</div>
+
         <!-- group data -->
 	    <div id="groupPic" style="display:block;text-align:center; margin:0 auto;">
 			<img src="http://geekxgirls.com/images/_comics/totoro-gifs-04.gif" style="width:200px;height:200px;display:block;margin-right:auto;margin-left:auto;" />
@@ -16,9 +20,7 @@
 
 		    <!-- message button -->
 		 	<!-- NEED TO DO!! -->
-
-		 	<!-- leave button -->
-		 	<!-- NEED TO DO !! -->
+		 	<button class="btn btn-primary" style="display:block;margin-right:auto;margin-left:auto;">Message</button>	
 
 		</div>
 
