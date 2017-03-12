@@ -5,9 +5,6 @@
 // Last updated: Feb 12 2017
 // ===========================================================================
 
-var models = require("./general");
-
-
 // ===============================================================================================================================================
 //                                   Message systems (PM)
 // ===============================================================================================================================================
@@ -95,8 +92,6 @@ module.exports.postConversation = function (req, res) {
 // ================================================================================
 module.exports.getConversationWithId = function (req, res) {
 
-<<<<<<< HEAD
-=======
 	var limit = 15;
 	if (req.headers) {
 		limit = limit + parseInt(req.headers.start);
@@ -122,13 +117,12 @@ module.exports.getConversationWithId = function (req, res) {
 				"Messages": result.slice(result.length - limit, result.length - limit + 15)
 			});
 		});
+	})
+
+	.then(null, function() {
+		res.status(400).send("Something wrong");
 	});
 
-
-	// .then(null, function() {
-	// 	res.status(400).send("Something wrong");
-	// });
->>>>>>> frontend
 };
 
 // ================================================================================
@@ -228,20 +222,12 @@ module.exports.onPersonalMessageReceived = function (socket, io) {
 			.then(function (conversation) {
 				if (message.Sender == conversation.StudentID[0]) {
 					return models.Conversation.update({"_id": conversation._id}, {
-<<<<<<< HEAD
-						Student1Seen : conversation.Student1Seen + 1,
-=======
 						"Student2Seen": conversation.Student1Seen + 1
->>>>>>> frontend
 					});
 				}
 				else {
 					return models.Conversation.update({"_id": conversation._id}, {
-<<<<<<< HEAD
-						Student2Seen : conversation.Student2Seen + 1,
-=======
 						"Student1Seen": conversation.Student2Seen + 1
->>>>>>> frontend
 					});
 				}
 			})

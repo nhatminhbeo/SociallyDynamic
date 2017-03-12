@@ -14,7 +14,7 @@
 //    /api/inbox/group/:id    |   GET       |   Get list of group invitation of student described by id from other students
 // ===============================================================================================================================================
 
-var api = require('../logic/inbox.js');
+var api = require('../logic/inbox');
 module.exports.route = function(app) {
 	app.get('/api/inbox/message/:id', api.getInboxMessageWithId);
 	app.get('/api/inbox/friend/:id', api.getInboxFriendWithId);
