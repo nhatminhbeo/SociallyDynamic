@@ -43,8 +43,6 @@ app.controller('groupConversationController', ['$scope', 'authService', '$locati
 
     socket.emit('group message', {"GroupID": GroupID});
 
-    socket.emit('personal message', {"ConversationID": ConversationID});
-//splice message array for 25
     //receive new messages
     socket.on('group message ' + GroupID, function (msg) {
 
