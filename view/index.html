@@ -110,16 +110,16 @@
 							<a href="/"><span style=""><img alt="My Profile" src="images/profile.png" class="img-responsive" title="profile" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span  ng-click="getFriendList()" onclick="toggleNav(1)" style=""><img title="Contacts" src="images/contacts.png" class="img-responsive" alt="Contacts" width="60" height="60"></span></a>
+							<a href=""><span  onclick="toggleNav(1)" ng-click="getFriendList()" style=""><img title="Contacts" src="images/contacts.png" class="img-responsive" alt="Contacts" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="toggleNav(2)" style=""><img title="Inbox" src="images/inbox.png" class="img-responsive" alt="Inbox" width="60" height="60"></span></a>
+							<a href=""><span onclick="toggleNav(2)"ng-click="getInbox(inbox.Wait)"  style=""><img title="Inbox" src="images/inbox.png" class="img-responsive" alt="Inbox" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span ng-click="getGroup()" style="" onclick="toggleNav(3)" style=""><img title="Groups" src="images/group.png" class="img-responsive" alt="Groups" width="60" height="60"></span></a>
+							<a href=""><span onclick="toggleNav(3)" ng-click="getGroup()" style=""><img title="Groups" src="images/group.png" class="img-responsive" alt="Groups" width="60" height="60"></span></a>
 						</li>	
 						<li>
-							<a href=""><span ng-click="getMatch(matching.Class)" style="" onclick="toggleNav(4)" style=""><img title="Find Partner Match" src="images/partner match.png" class="img-responsive" alt="Find Partner Match" width="60" height="60"></span></a>
+							<a href=""><span onclick="toggleNav(4)" ng-click="getMatch(matching.Class)" style=""><img title="Find Partner Match" src="images/partner match.png" class="img-responsive" alt="Find Partner Match" width="60" height="60"></span></a>
 						</li>					
 						<li ng-click="logout()">
 							<a href=""><img title="Log out" src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
@@ -143,6 +143,7 @@
 								<div class="loader" ng-show="loading"></div> 
 								</div>
 								</div>
+								<h3>Contacts</h3>
 								<div class="row" ng-repeat="friend in friendList track by $index">
 									<div class="col-sm-7">
 									<div class="login_anchor" ng-click="goToProfile(friend._id)">
@@ -216,6 +217,7 @@
 									<div class="loader" ng-show="loading"></div> 
 								</div>
 							  	</div>
+								<h3>Groups</h3>
 								<div class="row" ng-repeat="group in groupList">
 									<div class="col-sm-7">
 										<div class="login_anchor" ng-click="goToGroup(group._id)">
@@ -277,8 +279,9 @@
     <!-- Scripts -->
 	<script>
 	var naTo = false;
-	var currentTab;
+	var currentTab = 0;
 	function toggleNav(a) {
+		
 		if(naTo && currentTab != a){
 			currentTab = a;
 			return;
@@ -286,6 +289,7 @@
 		if (!naTo) {
 			document.getElementById("mySlidenav").style.width = "330px";
 			naTo = true;
+			currentTab = a;
 		}
 		else {
 			document.getElementById("mySlidenav").style.width = "0";

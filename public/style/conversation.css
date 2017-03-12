@@ -30,29 +30,35 @@
 
 .friend_speech {
   position: relative;
-  right: 3.2vh;
-  max-width: 350px;
-  text-align: center;
+  float: left;
+  right: 3.5vh;
+  max-width: 310px;
+  text-align: left;
+  font-size: .9em;
   line-height: 15px;
   background-color: #EEEEEE;
   border: 0;
-  border-radius: 20px;
+  border-radius: 30px; 
+  color: #000000;
   word-wrap: break-word;
   display: inline-block;
   padding: 15px 20px;
   margin-bottom: -5px;
+  overflow-y: visible;
   clear:both;
 }
 
 .user_speech {
   position: relative;
   float: right;
+  right:1vh;
   max-width: 310px;
-  text-align: center;
+  text-align: left;
+  font-size:.9em;
   line-height: 15px;
   background-color: #CF636C;
   border: 0;
-  border-radius: 20px; 
+  border-radius: 30px; 
   color: #FFFFFF;
   word-wrap: break-word;
   display: inline-block;
