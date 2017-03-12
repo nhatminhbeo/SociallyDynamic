@@ -2,8 +2,6 @@ app.controller('groupController', ['$scope', 'authService', '$location', 'curren
 function($scope, authService, $location, 
 currentUser, $http, $rootScope, $routeParams){
 
-    // check if user has groups created already to view
-    $scope.groupsExist = true;
     //check if user is an admin of group, to show delete button or not
     $scope.isOwner = false;
 
@@ -45,7 +43,7 @@ if(currentUser){
         })
         .then(function(data) {
         	console.log($scope.owner);
-        	
+
         	// Check if user is the owner of group
 			if ($scope.owner === currentUser.uid) {
 				$scope.isOwner = true;
@@ -53,24 +51,17 @@ if(currentUser){
     	});
     }
 
-   /* var printMembers = function (member_list) {
-    // Create the list element:
-    var list = document.createElement('ul');
-
-    for(var i = 0; i < array.length; i++) {
-        // Create the list item:
-        var item = document.createElement('li');
-
-        // Set its contents:
-        item.appendChild(document.createTextNode(array[i]));
-
-        // Add it to the list:
-        list.appendChild(item);
-    }
-
-    // Finally, return the constructed list:
-    return list;
-}*/
-
 	getGroupInfo();
+
+	$scope.deleteGroup = function(){
+		console.log("going to delete")
+	    $http({
+	        method: 'DELETE',
+	        url: '/api/group/' + $routeParams.id
+	    }).then(function(data){
+	        console.log("deleted group");
+	        $location.path('/profile/' + currentUser.uid);
+	    });
+	}
+
 }]);

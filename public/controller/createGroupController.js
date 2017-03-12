@@ -78,7 +78,6 @@ $http, currentUser) {
 
             }).then(function(data){
             $location.path('/group/' + data);
-            console.log
         });
     }
 
