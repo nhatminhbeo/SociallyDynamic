@@ -2,7 +2,7 @@
 
 
 <!-- top bar displays name of person user is talking to-->
-<script src="/socket.io/socket.io.js"></script>
+
 <div id = "header">
    <h1 style= "text-align: center; font-size: 120%;" >Name</h1>
 </div>
@@ -16,15 +16,15 @@
 			<div class = "row" >
 				<div class = "col-sm-4">
 					<div ng-repeat = "message in messages track by $index"> 
-						<div ng-switch = "message.Sender">
-							<div ng-switch-when = "message.Sender == currentUserid">
-								<div class = "friend_speech"> {{message.Content}}</div>
-							</div>
-							<div ng-switch-default>
-								<div class = "user_speech"> {{message.Content}} </div>
-							</div>
+
+						<div ng-if = "message.Sender == currentUserid">
+							<div class = "user_speech"> {{message.Content}}</div>
+						</div>
+						<div ng-if = "message.Sender != currentUserid">
+							<div class = "friend_speech"> {{message.Content}} </div>
 						</div>
 					</div>
+
 				<div class = "col-sm-4"></div>
 				<div class = "col-sm-4"></div>	
 			</div>

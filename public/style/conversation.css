@@ -3,6 +3,7 @@
   border-width: .01px;
 }
 .scroll {
+  position: relative;
   padding-bottom: 5vh;
   padding-top: 1vh;
   background-color: #FFFFFF;
@@ -25,9 +26,9 @@
 }
 
 .friend_speech {
-  float: left;
   position: relative;
-  width: 200px;
+  right: 3.2vh;
+  width: 30vh;
   text-align: center;
   line-height: 15px;
   background-color: #EEEEEE;
@@ -41,9 +42,9 @@
 
 .user_speech {
   position: relative;
-  float: right;
+  left: 37.5vh;
   padding-left: 110vh;
-  width: 200px;
+  width: 30vh;
   text-align: center;
   line-height: 15px;
   background-color: #CF636C;
