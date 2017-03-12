@@ -12,7 +12,7 @@ $http, currentUser, $routeParams) {
 
         $location.path('/');
     }
-    else { // <-- Do not delete this
+    else {
 
     // Limit for search
     $scope.quantity = 5;
@@ -597,5 +597,5 @@ $http, currentUser, $routeParams) {
     getClasses();
     getMajors();
     getStudyHabits();
-    } // <-- Do not delete this
+    }
 }]);
