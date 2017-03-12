@@ -12,6 +12,8 @@
 //    /api/conversation/:id   |   GET       |   Return messages in an interval of a certain conversation defined in parameter.
 // ===============================================================================================================================================
 
+var models = require('./general');
+
 // ================================================================================
 //  Function: getConversation
 //  REST: GET:/api/conversation
@@ -117,12 +119,12 @@ module.exports.putConversationWithId = function (req, res) {
 	.then(function (conversation) {
 		if (req.body.SeenPerson == conversation.StudentID[0]) {
 			return models.Conversation.update({"_id": conversation._id}, {
-				Student1Seen = conversation.Student1Seen + 1;
+				"Student1Seen": conversation.Student1Seen + 1
 			});
 		}
 		else {
 			return models.Conversation.update({"_id": conversation._id}, {
-				Student2Seen = conversation.Student2Seen + 1;
+				"Student2Seen": conversation.Student2Seen + 1
 			});
 		}
 	})
@@ -155,13 +157,18 @@ module.exports.onPersonalMessageReceived = function (socket) {
 	// conversation id to listen to
 	socket.on('personal message', function (data) {
 
+		console.log("GOT CONVERSATION ID: " +data.ConversationID);
+		console.log("LISTENING TO THE CONVERSATION");
+
 		// Now, as we know the conversation id, create a dynamic
 		// personal message + data.ConversationId to listen to a specific message
 		// from a specific conversation.
 		socket.on('personal message ' + data.ConversationID, function(message) {
 
+			console.log("GOT MSG: " + message.Content);
+
 			// Find the student so the other end knows the name of the sender
-			models.Student.findOneById(message.Sender).exec()
+			models.Student.findOne({"_id": message.Sender}).exec()
 			.then(function (student) {
 				message["SenderName"] = student.FirstName;
 
@@ -177,18 +184,18 @@ module.exports.onPersonalMessageReceived = function (socket) {
 			})
 
 			.then(function() {
-					return models.Conversation.findOneById(data.ConversationID);
+					return models.Conversation.findOne({"_id": data.ConversationID});
 			})
 
 			.then(function (conversation) {
 				if (message.Sender == conversation.StudentID[0]) {
 					return models.Conversation.update({"_id": conversation._id}, {
-						Student1Seen = conversation.Student1Seen + 1;
+						"Student1Seen": conversation.Student1Seen + 1
 					});
 				}
 				else {
 					return models.Conversation.update({"_id": conversation._id}, {
-						Student2Seen = conversation.Student2Seen + 1;
+						"Student2Seen": conversation.Student2Seen + 1
 					});
 				}
 			})

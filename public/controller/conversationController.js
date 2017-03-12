@@ -1,21 +1,15 @@
 app.controller('conversationController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
- $http, currentUser,routeParams) {
+ $http, currentUser, $routeParams) {
     $scope.conversationController = "conversationController";
     $scope.message="";
     $scope.messages = []; // holds all the messages
     $scope.currentUserid = currentUser.uid;
+    var ConversationID = $routeParams.id;
 
+    var socket = io();
+/*
 
-//logout
-    $scope.logout = function() {
-        // log user out
-        authService.Auth.$signOut().then(function(){
-            $location.path('/');
-        });
-}
-
-
-//get first 50 msgs if there exist 
+    //get first 50 msgs if there exist 
     $http({
         method: "GET",
         url: "/api/conversation/" + $routeParams.id
@@ -23,27 +17,25 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
         console.log(data);
         $scope.data = data.data;
         for (var i = 0; i < data.data.length; i++) {
-        //	if(data.data[i]["Sender"] == currentUser.uid){
-       // 		return;
-        //	}
-
+            //	if(data.data[i]["Sender"] == currentUser.uid){
+            // 		return;
+            //	}
             $scope.messages.push(data.data[i]);
-            socket.emit('personal message ' + ConversationID, data)
-        	}
+            socket.emit('personal message ' + ConversationID, data);
         }
     });
 
+*/
 
+    socket.emit('personal message', {"ConversationID": ConversationID});
 
-//receive new messages
-socket.on("personal message" + ConversationID, function (msg) {
-//	        	if(msg.Sender == currentUser.uid){
-//        		return;
- //       	}
-
-            $scope.messages.push(msg);
-        	}
-}
+    //receive new messages
+    socket.on("personal message" + ConversationID, function (msg) {
+    //	        	if(msg.Sender == currentUser.uid){
+    //        		return;
+     //       	}
+        $scope.messages.push(msg);
+    });
 
 
 //get message from friend
@@ -61,11 +53,12 @@ socket.on("personal message" + ConversationID, function (msg) {
     	if($scope.message=="") {
     		return;
     	}
-    	socket.emit('personal message ' + ConversationID, {"Content": $scope.message,
-    	 "Sender": currentUser.uid})
+    	socket.emit('personal message ' + ConversationID, {
+            "Content": $scope.message,
+            "Sender": currentUser.uid
+        });
     	$scope.message = "";
     }
-
 }]);
 
 
