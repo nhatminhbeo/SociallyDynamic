@@ -1,10 +1,10 @@
 app.controller('conversationController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
  $http, currentUser, $routeParams) {
 
-    console.log("FIX ME");
     $scope.message="";
     $scope.messages = []; // holds all the messages
     var ConversationID = $routeParams.id;
+    $scope.currentUserid = currentUser.uid;
 
     var socket = io();
 
@@ -16,9 +16,10 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
                 "sender": currentUser.uid
             }
         }).then(function (data) {
+            console.log(currentUser.uid);
             console.log("hello");
             console.log(data);
-            $scope.data = data;
+            $scope.messages = data.data.Messages;
         });  
     }
 
@@ -40,12 +41,12 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
     //take user inputted message and give  to  backend
     $scope.userSendMessage = function(){
         console.log("MINHHH");
-    	$scope.message = $scope.message.trim();
-    	if($scope.message=="") {
-    		return;
-    	}
+        $scope.message = $scope.message.trim();
+        if($scope.message=="") {
+            return;
+        }
 
-    	socket.emit('personal message ' + ConversationID, {
+        socket.emit('personal message ' + ConversationID, {
             "Content": $scope.message,
             "Sender": currentUser.uid
         });

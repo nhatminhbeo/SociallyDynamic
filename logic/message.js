@@ -76,13 +76,13 @@ module.exports.postConversation = function (req, res) {
 // ================================================================================
 //  Function: getConversationWithId
 //  REST: GET:/api/conversation/:id
-//  Description: Return a list 50 most recent message by default, otherwise
+//  Description: Return a list 15 most recent message by default, otherwise
 //				 specified in req.header
 //  Expected input (req.header): JSON:
-//		start: int -- starting most of 50 most recent messages.
+//		start: int -- starting most of 15 most recent messages.
 //		sender: the current User
 //		
-//			i.e req.header.start: 100 will return 101th to 150th most recent messages 
+//			i.e req.header.start: 100 will return 101th to 115th most recent messages 
 //  Expected output (res): JSON list:
 //		[ {
 //			Sender: String -- id of the sender,
@@ -94,7 +94,7 @@ module.exports.postConversation = function (req, res) {
 // ================================================================================
 module.exports.getConversationWithId = function (req, res) {
 
-	var limit = 50;
+	var limit = 15;
 	if (req.headers) {
 		limit = limit + parseInt(req.headers.start);
 	}
@@ -116,7 +116,7 @@ module.exports.getConversationWithId = function (req, res) {
 				"Sender": otherStudent._id,
 				"SenderFirstName": otherStudent.FirstName,
 				"SenderLastName": otherStudent.LastName,
-				"Messages": result.slice(result.length - limit, result.length - limit + 50)
+				"Messages": result.slice(result.length - limit, result.length - limit + 15)
 			});
 		});
 	});
