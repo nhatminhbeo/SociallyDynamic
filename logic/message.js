@@ -80,6 +80,8 @@ module.exports.postConversation = function (req, res) {
 //				 specified in req.header
 //  Expected input (req.header): JSON:
 //		start: int -- starting most of 50 most recent messages.
+//		sender: the current User
+//		
 //			i.e req.header.start: 100 will return 101th to 150th most recent messages 
 //  Expected output (res): JSON list:
 //		[ {
@@ -91,6 +93,38 @@ module.exports.postConversation = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.getConversationWithId = function (req, res) {
+
+	var limit = 50;
+	if (req.headers) {
+		limit = limit + parseInt(req.headers.start);
+	}
+
+	models.Message.find({"ConversationID": req.params.id})
+	.sort({"_id": 1}).limit(limit).exec()
+
+	.then(function (result) {
+		return models.Conversation.findOne({"_id": req.params.id}).exec()
+		.then(function (conversation) {
+			var otherStudent = (req.headers.sender == conversation.StudentID[0]) 
+				? conversation.StudentID[1] : conversation.StudentID[0];
+			return models.Student.findOne({"_id": otherStudent});
+		})
+		.then(function (otherStudent) {
+			var ress = result.slice(req.headers.start, limit);
+			console.log(ress.length);
+			res.status(200).send({
+				"Sender": otherStudent._id,
+				"SenderFirstName": otherStudent.FirstName,
+				"SenderLastName": otherStudent.LastName,
+				"Messages": result.slice(req.headers.start, limit)
+			});
+		});
+	});
+
+
+	// .then(null, function() {
+	// 	res.status(400).send("Something wrong");
+	// });
 };
 
 // ================================================================================
@@ -203,13 +237,12 @@ module.exports.onPersonalMessageReceived = function (socket, io) {
 			// Successfully added message to database
 			.then (function () {
 				console.log('mesasge added to ' + data.ConversationID);
-			});
+			})
 
-			// // Failed to add message to database
-			// .then (null, function () {
-			// 	console.log('message failed to add to ' + data.ConversationID);
-			// });
-			
+			// Failed to add message to database
+			.then (null, function () {
+				console.log('message failed to add to ' + data.ConversationID);
+			});
 		});
 	});
 };
