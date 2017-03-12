@@ -39,14 +39,6 @@ $http, currentUser, $routeParams) {
     var userBioOld = "";
     var studyHabitOld = {};
 
-
-    $scope.logout = function() {
-        // Log user out
-        authService.Auth.$signOut().then(function(){
-            $location.path('/');
-        });
-    }
-
     // Retrives the entire class data from the database
     var getClasses = function(){
         $http({

@@ -5,6 +5,6 @@
 .login_list a:hover {
 	color: white;
 	transition: color 0.5s ease;
-	background-color: #ff3333;
+	background-color: #ff6666;
 	transition: background-color 0.5s ease;
 }

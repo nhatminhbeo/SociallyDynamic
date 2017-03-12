@@ -1,5 +1,6 @@
 <img href="/" src="images/studyr.png" style="width:30%;height:30%;"/>
 
+<div class="login_button_margin">
 <div ng-hide="isLoggedIn">
 <div ng-show="isLogin">
 	<div class="form-group">
@@ -8,14 +9,17 @@
 		<label for="passwordLogin">Password </label>
 		<input type="password" autocomplete="off" class="form-control" placeholder="Password" id="passwordLogin" ng-model="password"></input>
 		<br>
-		<button class="btn btn-primary" ng-click="signIn()">Sign In</button>
-		<button class="btn btn-primary" ng-click="changeForm()">Don't have an account? Sign Up!</button>
+		<button ng-click="signIn()">Sign In</button>
+		<button ng-click="changeForm()">Don't have an account? Sign Up!</button>
 	</div>
 </div>
 </div>
 
 <div ng-hide="isLogin">
-	<button ng-click="changeForm()" class="btn">Return to the home page</button>
+
+	<br>
+	<button ng-click="changeForm()">Return to the Home Page</button>
+	<br><br>
 
 	<div class="form-group">
 		<label for="exampleInputEmail1">First Name</label>
@@ -121,6 +125,7 @@
     	<textarea style="resize:none;" class="form-control" id="Bio" rows="5" ng-model="bio"></textarea>
     </div>
 
-    <button ng-click="createAccount()" class="btn btn-primary" >Sign Up</button>
-    <button ng-click="changeForm()" class="btn btn-primary">Cancel</button>
+    <button ng-click="createAccount()">Sign Up</button>
+    <button ng-click="changeForm()">Cancel</button>
+</div>
 </div>
