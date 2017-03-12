@@ -94,7 +94,7 @@ module.exports.postConversation = function (req, res) {
 module.exports.getConversationWithId = function (req, res) {
 
 	var limit = 15;
-	if (req.headers) {
+	if (req.headers.start) {
 		limit = limit + parseInt(req.headers.start);
 	}
 
@@ -110,7 +110,7 @@ module.exports.getConversationWithId = function (req, res) {
 		})
 		.then(function (otherStudent) {
 			var start = (result.length >= limit) ? result.length - limit : 0;
-			var end = (result.length >= limit) ? result.length - limit + 15 : 15;
+			var end = (result.length + 15 >= limit) ? result.length - limit + 15 : 0;
 			res.status(200).send({
 				"Sender": otherStudent._id,
 				"SenderFirstName": otherStudent.FirstName,
@@ -279,7 +279,7 @@ module.exports.getGroupConversationWithId = function (req, res) {
 		return models.Group.findOne({"_id": req.params.id}).exec()
 		.then(function (group) {
 			var start = (result.length >= limit) ? result.length - limit : 0;
-			var end = (result.length >= limit) ? result.length - limit + 15 : 15;
+			var end = (result.length +15 >= limit) ? result.length - limit + 15 : 0;
 			res.status(200).send({
 				"GroupID": group._id,
 				"GroupName": group.GroupName,
