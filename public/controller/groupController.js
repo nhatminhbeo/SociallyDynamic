@@ -51,10 +51,8 @@ if(currentUser){
     	});
     }
 
-	getGroupInfo();
-
+    // Delete the group as the owner
 	$scope.deleteGroup = function(){
-		console.log("going to delete")
 	    $http({
 	        method: 'DELETE',
 	        url: '/api/group/' + $routeParams.id
@@ -64,4 +62,17 @@ if(currentUser){
 	    });
 	}
 
+	// Leave group as a non-owner
+	$scope.leaveGroup = function(){
+	    $http({
+	        method: 'DELETE',
+	        url: '/api/group/' + currentUser.uid + "/user"
+	    }).then(function(data){
+	        console.log("left group");
+	        $location.path('/profile/' + currentUser.uid);
+	    });
+	}
+	
+	// Render group page
+	getGroupInfo();
 }]);
