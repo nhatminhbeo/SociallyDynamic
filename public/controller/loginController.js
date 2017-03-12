@@ -116,7 +116,7 @@ loggedIn, $http, $rootScope){
 	$scope.createAccount = function(){
 		// TODO check frontend validation service
 		// check for whitespace on sides of the string 
-		var age = $scope.age.trim();
+		var age = $scope.age;
 		var firstName = $scope.firstName.trim();
 		var lastName = $scope.lastName.trim();
 		var bio = $scope.bio.trim();
