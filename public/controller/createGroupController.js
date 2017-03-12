@@ -77,7 +77,7 @@ $http, currentUser, $routeParams) {
             }
 
             }).then(function(data){
-            $location.path('/group/' + data);
+            $location.path('/group/' + data.data);
         });
     }
 
