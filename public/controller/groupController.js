@@ -2,8 +2,9 @@ app.controller('groupController', ['$scope', 'authService', '$location', 'curren
 function($scope, authService, $location, 
 currentUser, $http, $rootScope, $routeParams){
 
-    //check if user is an admin of group, to show delete button or not
-    $scope.isOwner = false;
+	$scope.isOwner;
+	$scope.notOwner;
+
 
 	 //logout
     $scope.logout = function() {
@@ -28,6 +29,11 @@ if(currentUser){
 
     // Retrives the entire list of group members
     var getGroupInfo = function(){
+
+    	//check if user is an admin of group, to show delete button or not
+    	$scope.isOwner = false;
+    	$scope.notOwner = true;
+        
         $http({
             method: 'GET',
             url: '/api/group/' + $routeParams.id
@@ -47,6 +53,7 @@ if(currentUser){
         	// Check if user is the owner of group
 			if ($scope.owner === currentUser.uid) {
 				$scope.isOwner = true;
+				$scope.notOwner = false;
 			}
     	});
     }

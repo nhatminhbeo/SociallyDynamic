@@ -9,7 +9,7 @@
 				<button class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
 		</div>
 
-		<div ng-hide="isOwner">
+		<div ng-show="notOwner">
 				<button class="btn btn-primary" ng-click="leaveGroup()" style="display:block;margin-left:90%">Leave</button>	
 		</div>
 
