@@ -30,17 +30,17 @@
 
 .profile_list button {
 	padding: 0px 8px;
-	color: white;
+	color: #444;
 	transition: color 0.5s ease;
-	background-color: red;
+	background-color: rgba(0,0,0,0);
 	transition: background-color 0.5s ease;
 	float: right;
 }
 
 .profile_list button:hover {
-	color: red;
+	color: white;
 	transition: color 0.5s ease;
-	background-color: white;
+	background-color: red;
 	transition: background-color 0.5s ease;
 	float: right;
 }
