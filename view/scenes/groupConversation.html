@@ -1,4 +1,4 @@
-<!--<h1>Hello from groupconversation.html and {{groupConversationController}}</h1>-->
+<!--<h1>Hello from conversation.html and {{conversationController}}</h1>-->
 
 
 <!-- top bar displays name of person user is talking to-->
@@ -11,21 +11,26 @@
 <!--body of page-->
 <div>
 	<!-- chat bubble views start -->
-	<div id="scroll" class="scroll">
+	<div id="scroll" class="scroll" style= scroll>
 		<ul style = "list-style-type: none"> 
 			<div ng-repeat = "message in messages track by $index"> 
-				<div class = "row" >
-					<div class = "col-sm-4">
+
+				<div class = "row"  >
+					<div class = "col-sm-12">
+
 						<div ng-if = "message.Sender == currentUserid">
-							<div class = "user_speech"> {{message.Content}}</div>
+							<p>
+								<div class = "user_speech"> {{message.Content}}</div>
+							</p>
 						</div>
 						<div ng-if = "message.Sender != currentUserid">
-							<div class = "friend_speech">{{message.SenderFirstName}} {{message.SenderLastName}}: {{message.Content}} </div>
+							<p>
+								<div class = "friend_speech">{{message.SenderFirstName}} {{message.SenderLastName}}: {{message.Content}} </div>
+							</p>
 						</div>
 					</div>
-
-				<div class = "col-sm-4"></div>
-				<div class = "col-sm-4"></div>	
+				</div>
+				
 			</div>
 		</ul>
 	</div>
@@ -47,3 +52,9 @@
     </div>
   </form>
  </div> <!-- message box ends -->
+
+
+<scr></scr>
+
+
+
