@@ -51,6 +51,10 @@ function($scope, authService, $location ,$http, $rootScope) {
 
     // get friendlist, save in $scope.friendList
     $scope.getFriendList = function() {
+        if($scope.navBarContents.contacts == true){
+            $scope.navBarContents.contacts = false;
+            return;
+        }
         $scope.navBarContents.contacts = true;
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.partnerMatch = false;
@@ -73,6 +77,10 @@ function($scope, authService, $location ,$http, $rootScope) {
 
     // get match by something
     $scope.getMatch = function (type) {
+      /*  if($scope.navBarContents.partnerMatch == true){
+            $scope.navBarContents.partnerMatch = false;
+            return;
+        }*/
         $scope.navBarContents.contacts = false;
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.partnerMatch = true;
@@ -96,6 +104,10 @@ function($scope, authService, $location ,$http, $rootScope) {
     };
 
     $scope.getInbox = function (type){
+        if($scope.navBarContents.inbox == true){
+            $scope.navBarContents.inbox = false;
+            return;
+        }
         $scope.navBarContents.contacts = false;
         $scope.navBarContents.partnerMatch = false;
         $scope.navBarContents.inbox = true;
@@ -168,6 +180,10 @@ function($scope, authService, $location ,$http, $rootScope) {
     };
 
     $scope.getGroup = function () {
+        if($scope.navBarContents.group == true){
+            $scope.navBarContents.group == false;
+            return;
+        }
         $scope.navBarContents.contacts = false;
         $scope.navBarContents.partnerMatch = false;
         $scope.navBarContents.inbox = false;
