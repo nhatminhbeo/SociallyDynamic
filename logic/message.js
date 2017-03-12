@@ -100,7 +100,7 @@ module.exports.getConversationWithId = function (req, res) {
 	}
 
 	models.Message.find({"ConversationID": req.params.id})
-	.sort({"_id": 1}).limit(limit).exec()
+	.sort({"_id": 1}).exec()
 
 	.then(function (result) {
 		return models.Conversation.findOne({"_id": req.params.id}).exec()
@@ -116,7 +116,7 @@ module.exports.getConversationWithId = function (req, res) {
 				"Sender": otherStudent._id,
 				"SenderFirstName": otherStudent.FirstName,
 				"SenderLastName": otherStudent.LastName,
-				"Messages": result.slice(req.headers.start, limit)
+				"Messages": result.slice(result.length - limit, result.length - limit + 50)
 			});
 		});
 	});
