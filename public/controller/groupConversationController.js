@@ -1,4 +1,4 @@
-app.controller('conversationController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
+app.controller('groupConversationController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
  $http, currentUser, $routeParams) {
 
     $scope.conversationController = "conversationController";

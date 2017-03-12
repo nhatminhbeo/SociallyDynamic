@@ -159,7 +159,7 @@
 									<div class="col-sm-1"></div>
 									<ul class="nav nav-tabs">
 							  		<div class="col-sm-5"> <li class="active login_anchor" ng-click="getRequests()">Requests</li>&emsp;</div>  
-							  		<div class="col-sm-5"> <li class="login_anchor"ng-click="getMessages()">Messages</li>&emsp;</div> 
+							  		<div class="col-sm-5"> <li class="login_anchor" ng-click="getMessages()">Messages</li>&emsp;</div> 
 									<div class="col-sm-1"></div></ul>
 						  		</div>
 
@@ -176,8 +176,17 @@
 										</div>
 									</div>
 								</div>
-								<div id="messages" ng-show="inboxToggles.conversations">
-								<h3> Messages </h3>
+								<div id="requests" ng-show="inboxToggles.conversations">
+									<div class="row" ng-repeat="conversation in conversationList track by $index">
+										<div class="col-sm-7">
+											<div class="login_anchor" ng-click="goToConversation(conversation.ConversationID, $index)">
+											{{conversation.FirstName}} {{conversation.LastName}}
+											</div>
+										</div>
+										<div class="col-sm-5">
+											<span style="color:white; position:relative; bottom:5px;"class="badge badge-default badge-pill">{{conversation.Unseen}}</span>
+										</div>
+									</div>
 								</div> 
 							</div>
 

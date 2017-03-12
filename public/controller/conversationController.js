@@ -8,6 +8,15 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
 
     var socket = io();
 
+    // Mark that the current person has seen
+    $http({
+        method: "PUT",
+        url: "/api/conversation/" + ConversationID,
+        data: {
+            "SeenPerson": currentUser.uid
+        }
+    });
+
     //get first 50 msgs if there exist 
     $scope.getConversation = function() {
         $http.get("/api/conversation/"  + $routeParams.id, {
@@ -29,6 +38,8 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
 
     //receive new messages
     socket.on('personal message ' + ConversationID, function (msg) {
+
+
 
         $scope.messages.push(msg);  
         $scope.$digest();

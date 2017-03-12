@@ -115,6 +115,21 @@ function($scope, authService, $location ,$http, $rootScope) {
         });
     };
 
+    $scope.getMessages = function() {
+        $scope.inboxToggles.conversations = true;
+        $scope.inboxToggles.requests = false;
+        var currentUser = authService.Auth.$getAuth();
+
+        $http({
+            method: "GET",
+            url: "/api/inbox/message/" + currentUser.uid,
+        }).then(function(data){
+            console.log(data);
+            $scope.conversationList = data.data;
+        });
+
+    };
+
     $scope.goToProfile = function (id) {
         $location.path('/profile/'+id);
     };
@@ -173,5 +188,10 @@ function($scope, authService, $location ,$http, $rootScope) {
     $scope.goToGroup = function (groupId) {
         $location.path('/group/' + groupId);
 
+    };
+
+    $scope.goToConversation = function (conversationId, index) {
+        $scope.conversationList[index].Unseen = 0;
+        $location.path('/conversation/' + conversationId);
     };
 }]);
