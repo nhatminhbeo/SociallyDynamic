@@ -304,7 +304,7 @@ module.exports.getGroupConversationWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-module.exports.onPersonalMessageReceived = function (socket, io) {
+module.exports.onGroupMessageReceived = function (socket, io) {
 
 	// Listen to personal message events to know which 
 	// conversation id to listen to
@@ -323,16 +323,19 @@ module.exports.onPersonalMessageReceived = function (socket, io) {
 			// Find the student so the other end knows the name of the sender
 			models.Student.findOne({"_id": message.Sender}).exec()
 			.then(function (student) {
-				message["SenderName"] = student.FirstName;
+				message["SenderFirstName"] = student.FirstName;
+				message["SenderLastName"] = student.LastName;
 
 				// Now, fire the message back to whoever is in that conversation.
-				io.emit('group message ' + data.ConversationID, message);
+				io.emit('group message ' + data.GroupID, message);
 
 				// And, store the message to database
 				return models.GroupMessage({
 					GroupID: data.GroupID,
 					Content: message.Content,
-					Sender: message.Sender
+					Sender: message.Sender,
+					SenderFirstName: student.FirstName,
+					SenderLastName: student.LastName
 				}).save();
 			})
 

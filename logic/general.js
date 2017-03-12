@@ -115,6 +115,8 @@ module.exports.GroupRequest = mongoose.model('GroupRequest', new Schema({
 module.exports.GroupMessage = mongoose.model('GroupMessage', new Schema({
 	GroupID: String,
 	Sender: String,
+	SenderFirstName: String,
+	SenderLastName: String,
 	Content: String,
 	Chronology: Number
 }, {collection: 'GroupMessage'}));
