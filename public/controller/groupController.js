@@ -26,19 +26,25 @@ if(currentUser){
 
 	/* member stuff */
 	$scope.members = [];
-
+	$scope.owner = "";
     // Retrives the entire list of group members
     var getMembers = function(){
         $http({
             method: 'GET',
             url: '/api/group/' + $routeParams.id
         }).then(function(data){
+            
+            //get member list
             for (var i = 0; i < data.data.Member.length; i++){
                 $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
             }
-            
+
+            //get owner of group
+            $scope.owner = data.data.Owner;
+            console.log($scope.owner);
         });
         console.log($scope.Members);
+        console.log($scope.owner);
     }
 
 
