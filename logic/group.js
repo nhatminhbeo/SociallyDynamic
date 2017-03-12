@@ -153,7 +153,7 @@ module.exports.deleteGroupWithId = function (req, res) {
 	var sGroup = {
 		GroupID: req.params.id,
 	}
-	var gConvo = {
+	var gMess = {
 		GroupID: req.params.id,
 	}
 	var gReq = {
@@ -161,13 +161,13 @@ module.exports.deleteGroupWithId = function (req, res) {
 	}
 
     Group.findByIdAndRemove(req.params.id).then(function () {
-    	return Group.remove(sGroup);
+    	return models.StudentGroup.remove(sGroup);
     })
     .then(function () {
-    	return Group.remove(gConvo);
+    	return models.GroupMessage.remove(gMess);
     })
     .then(function () {
-    	return Group.remove(gReq);
+    	return GroupRequest.remove(gReq);
     })
     .then(function () {
     	res.status(200).send();
