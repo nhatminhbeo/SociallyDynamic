@@ -62,7 +62,10 @@ if(currentUser){
 	$scope.deleteGroup = function(){
 	    $http({
 	        method: 'DELETE',
-	        url: '/api/group/' + $routeParams.id
+	        url: '/api/group/' + $routeParams.id,
+	    	headers: {
+               'Content-type': 'application/json;charset=utf-8'
+            }
 	    }).then(function(data){
 	        console.log("deleted group");
 	        $location.path('/profile/' + currentUser.uid);
@@ -71,9 +74,16 @@ if(currentUser){
 
 	// Leave group as a non-owner
 	$scope.leaveGroup = function(){
+		console.log("trying to leave group");
 	    $http({
 	        method: 'DELETE',
-	        url: '/api/group/' + currentUser.uid + "/user"
+	        url: '/api/group/' + $routeParams.id + "/user",
+	        headers: {
+               'Content-type': 'application/json;charset=utf-8'
+            },
+            data : {
+            	StudentID : currentUser.uid
+            }
 	    }).then(function(data){
 	        console.log("left group");
 	        $location.path('/profile/' + currentUser.uid);
