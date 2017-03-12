@@ -29,7 +29,7 @@
 .friend_speech {
   position: relative;
   right: 3.2vh;
-  width: 30vh;
+  max-width: 350px;
   text-align: center;
   line-height: 15px;
   background-color: #EEEEEE;
@@ -37,15 +37,15 @@
   border-radius: 20px;
   word-wrap: break-word;
   display: inline-block;
-  padding: 13px;
+  padding: 20px;
   margin-bottom: 10px;
+  clear:both;
 }
 
 .user_speech {
   position: relative;
-  left: 37.5vh;
-  padding-left: 110vh;
-  width: 30vh;
+  float: right;
+  max-width: 310px;
   text-align: center;
   line-height: 15px;
   background-color: #CF636C;
@@ -54,6 +54,8 @@
   color: #FFFFFF;
   word-wrap: break-word;
   display: inline-block;
-  padding: 13px;
+  padding: 15px 20px;
   margin-bottom: 10px;
+  overflow-y: visible;
+  clear:both;
 }
