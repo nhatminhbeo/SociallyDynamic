@@ -2,6 +2,8 @@
   border-bottom-style: solid;
   border-width: .01px;
 }
+
+
 .scroll {
   position: relative;
   padding-bottom: 5vh;
@@ -37,8 +39,8 @@
   border-radius: 20px;
   word-wrap: break-word;
   display: inline-block;
-  padding: 20px;
-  margin-bottom: 10px;
+  padding: 15px 20px;
+  margin-bottom: -5px;
   clear:both;
 }
 
@@ -55,7 +57,7 @@
   word-wrap: break-word;
   display: inline-block;
   padding: 15px 20px;
-  margin-bottom: 10px;
+  margin-bottom: -5px;
   overflow-y: visible;
   clear:both;
 }
