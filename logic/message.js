@@ -108,13 +108,13 @@ module.exports.getConversationWithId = function (req, res) {
 			return models.Student.findOne({"_id": otherStudent});
 		})
 		.then(function (otherStudent) {
-			var ress = result.slice(req.headers.start, limit);
-			console.log(ress.length);
+			var start = (result.length >= limit) ? result.length - limit : 0;
+			var end = (result.length >= limit) ? result.length - limit + 15 : 15;
 			res.status(200).send({
 				"Sender": otherStudent._id,
 				"SenderFirstName": otherStudent.FirstName,
 				"SenderLastName": otherStudent.LastName,
-				"Messages": result.slice(result.length - limit, result.length - limit + 15)
+				"Messages": result.slice(start, end)
 			});
 		});
 	})
@@ -173,9 +173,8 @@ module.exports.putConversationWithId = function (req, res) {
 
 
 // ================================================================================
-//  Function: messageReceived
-//  REST: GET:/api/message/
-//  Description:
+//  Function: onPersonalMessageReceived
+//  Description: Handle event of personal messages socket io
 //  Expected input (emit('personal message', data)): 
 //			message.Content: String -- the message that is sent
 //			data.ConversationID: String -- id of the CONVERSATION, not user
@@ -240,6 +239,111 @@ module.exports.onPersonalMessageReceived = function (socket, io) {
 			// Failed to add message to database
 			.then (null, function () {
 				console.log('message failed to add to ' + data.ConversationID);
+			});
+		});
+	});
+};
+
+
+// ================================================================================
+//  Function: getGroupConversationWithId
+//  REST: GET:/api/group/conversation/:id
+//  Description: Return a list 15 most recent message by default, otherwise
+//				 specified in req.header
+//  Expected input (req.header): JSON:
+//		start: int -- starting most of 15 most recent messages.
+//		sender: the current User
+//		
+//			i.e req.header.start: 100 will return 101th to 115th most recent messages 
+//  Expected output (res): JSON list:
+//		[ {
+//			Sender: String -- id of the sender,
+//			SenderFirstName: String -- First name of the sender,
+//		},
+//			.......
+//		]
+//  Author: 
+// ================================================================================
+module.exports.getGroupConversationWithId = function (req, res) {
+
+	var limit = 15;
+	if (req.headers) {
+		limit = limit + parseInt(req.headers.start);
+	}
+
+	models.GroupMessage.find({"GroupID": req.params.id})
+	.sort({"_id": 1}).exec()
+
+	.then(function (result) {
+		return models.Group.findOne({"_id": req.params.id}).exec()
+		.then(function (group) {
+			var start = (result.length >= limit) ? result.length - limit : 0;
+			var end = (result.length >= limit) ? result.length - limit + 15 : 15;
+			res.status(200).send({
+				"GroupID": group._id,
+				"GroupName": group.GroupName,
+				"Messages": result.slice(start, end)
+			});
+		});
+	})
+
+	.then(null, function() {
+		res.status(400).send("Something wrong");
+	});
+
+};
+
+
+// ================================================================================
+//  Function: onGroupMessageReceived
+//  Description: Handle event of group messages socket io
+//  Expected input (emit('personal message', data)): 
+//			message.Content: String -- the message that is sent
+//			data.ConversationID: String -- id of the CONVERSATION, not user
+//			message.Sender: String -- id of Sender, which is a user
+//  Expected output (res):
+//  Author: 
+// ================================================================================
+module.exports.onPersonalMessageReceived = function (socket, io) {
+
+	// Listen to personal message events to know which 
+	// conversation id to listen to
+	socket.on('group message', function (data) {
+
+		console.log("GOT GROUP ID: " +data.GroupID);
+		console.log("LISTENING TO THE GROUP CONVERSATION");
+
+		// Now, as we know the conversation id, create a dynamic
+		// personal message + data.ConversationId to listen to a specific message
+		// from a specific conversation.
+		socket.on('group message ' + data.GroupID, function(message) {
+
+			console.log("GOT MSG: " + message.Content);
+
+			// Find the student so the other end knows the name of the sender
+			models.Student.findOne({"_id": message.Sender}).exec()
+			.then(function (student) {
+				message["SenderName"] = student.FirstName;
+
+				// Now, fire the message back to whoever is in that conversation.
+				io.emit('group message ' + data.ConversationID, message);
+
+				// And, store the message to database
+				return models.GroupMessage({
+					GroupID: data.GroupID,
+					Content: message.Content,
+					Sender: message.Sender
+				}).save();
+			})
+
+			// Successfully added message to database
+			.then (function () {
+				console.log('mesasge added to ' + data.GroupID);
+			})
+
+			// Failed to add message to database
+			.then (null, function () {
+				console.log('message failed to add to ' + data.GroupID);
 			});
 		});
 	});
