@@ -33,9 +33,13 @@
 	       	<h4 style="text-align: center">Group Bio</h4>
 	    </div>
 
-	    <div id="Members">
-			<h2 style="text-align: center">Members</h2>
-	       	<h4>{{members}}</h4>
+	    <div id="Members" style="text-align: center;">
+				<h2 style="text-align: center">Members</h2>
+			<ul class="list-group" style="list-style-type: none;">
+				<a ng-repeat="m in members" >
+					<li> {{m}} </li>
+				</a>
+			</ul>
 	    </div>
 
 	</div>

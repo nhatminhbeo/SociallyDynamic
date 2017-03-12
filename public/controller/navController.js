@@ -4,8 +4,19 @@ function($scope, authService, $location ,$http, $rootScope) {
     $scope.navBarContents = {
         contacts : false,
         inbox : false,
-        partnerMatch : false
+        partnerMatch : false,
+        group : false
     };
+    $scope.inboxToggles = {
+        requests: false,
+        conversations: false
+    };
+
+    $scope.res = {
+        accept: true,
+        deny: false
+    }
+    //$scope.friendRequestList = ["Sup","Hi","yo"];
 
     $scope.matching = {
         Class : "class",
@@ -43,15 +54,16 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.contacts = true;
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.partnerMatch = false;
+        $scope.navBarContents.group = false;
 
         var currentUser = authService.Auth.$getAuth();
-        console.log(currentUser.uid);
+
         
         $http({
             method: "GET",
             url: "/api/student/friend/" + currentUser.uid
         }).then(function (data) {
-            console.log(data);
+
             $scope.friendList = data.data;
         });
         
@@ -62,6 +74,8 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.contacts = false;
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.partnerMatch = true;
+        $scope.navBarContents.group = false;
+
         $scope.matchList = [];
         if (type == $scope.matching.Waiting) {
             return;
@@ -75,7 +89,82 @@ function($scope, authService, $location ,$http, $rootScope) {
         }).then(function (data) {
             $scope.loading = false;
             $scope.matchList = data.data;
-            console.log($scope.matchList);
+
         });        
+    };
+
+    $scope.getInbox = function (type){
+        $scope.navBarContents.contacts = false;
+        $scope.navBarContents.partnerMatch = false;
+        $scope.navBarContents.inbox = true;
+        $scope.navBarContents.group = false;
+        $scope.getRequests();
+    };
+
+    $scope.getRequests = function(){
+        $scope.inboxToggles.conversations = false;
+        $scope.inboxToggles.requests = true;
+        var currentUser = authService.Auth.$getAuth();
+
+        $http({
+            method: "GET",
+            url: "/api/inbox/friend/" + currentUser.uid,
+        }).then(function(data){
+            console.log(data);
+            $scope.friendRequestList = data.data;
+        });
+    };
+
+    $scope.goToProfile = function (id) {
+        $location.path('/profile/'+id);
+    };
+
+    $scope.responseFriend = function (accept, otherId, index) {
+        $scope.friendRequestList.splice(index,1);
+        var currentUser = authService.Auth.$getAuth();
+        $http({
+            method: "DELETE",
+            url: "/api/friend/request/",
+            data: {
+                "Sender": otherId,
+                "Receiver": currentUser.uid
+            },
+            headers: {
+                "Content-type": "application/json;charset=utf-8"
+            }
+
+        }).then(function (){
+            if (accept) {
+                return $http({
+                    method: "POST",
+                    url: "/api/friend",
+                    data: {
+                        "Sender": otherId,
+                        "Receiver": currentUser.uid
+                    }
+                });
+            }
+        });
+    };
+
+    $scope.getGroup = function () {
+        $scope.navBarContents.contacts = false;
+        $scope.navBarContents.partnerMatch = false;
+        $scope.navBarContents.inbox = false;
+        $scope.navBarContents.group = true;
+
+        var currentUser = authService.Auth.$getAuth();
+
+        $http({
+            method: "GET",
+            url: "/api/group/user/" + currentUser.uid,
+        }).then(function(data){
+            console.log(data);
+            $scope.groupList = data.data;
+        });
+    };
+
+    $scope.toCreateGroup = function () {
+        $location.path('/createGroup');
     }
 }]);
