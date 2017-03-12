@@ -4,7 +4,8 @@ function($scope, authService, $location ,$http, $rootScope) {
     $scope.navBarContents = {
         contacts : false,
         inbox : false,
-        partnerMatch : false
+        partnerMatch : false,
+        group : false
     };
     $scope.inboxToggles = {
         requests: false,
@@ -53,6 +54,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.contacts = true;
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.partnerMatch = false;
+        $scope.navBarContents.group = false;
 
         var currentUser = authService.Auth.$getAuth();
 
@@ -72,6 +74,8 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.contacts = false;
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.partnerMatch = true;
+        $scope.navBarContents.group = false;
+
         $scope.matchList = [];
         if (type == $scope.matching.Waiting) {
             return;
@@ -93,6 +97,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.contacts = false;
         $scope.navBarContents.partnerMatch = false;
         $scope.navBarContents.inbox = true;
+        $scope.navBarContents.group = false;
         $scope.getRequests();
     };
 
@@ -141,4 +146,21 @@ function($scope, authService, $location ,$http, $rootScope) {
             }
         });
     };
+
+    $scope.getGroup = function () {
+        $scope.navBarContents.contacts = false;
+        $scope.navBarContents.partnerMatch = false;
+        $scope.navBarContents.inbox = false;
+        $scope.navBarContents.group = true;
+
+        var currentUser = authService.Auth.$getAuth();
+
+        $http({
+            method: "GET",
+            url: "/api/group/user/" + currentUser.uid,
+        }).then(function(data){
+            console.log(data);
+            $scope.groupList = data.data;
+        });
+    }
 }]);
