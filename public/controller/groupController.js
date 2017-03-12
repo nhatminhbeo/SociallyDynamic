@@ -27,29 +27,50 @@ if(currentUser){
 	/* member stuff */
 	$scope.members = [];
 	$scope.owner = "";
+
     // Retrives the entire list of group members
-    var getMembers = function(){
+    var getGroupInfo = function(){
         $http({
             method: 'GET',
             url: '/api/group/' + $routeParams.id
         }).then(function(data){
-            
-            //get member list
+            console.log(data);
+            // Get member list
             for (var i = 0; i < data.data.Member.length; i++){
                 $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
             }
 
-            //get owner of group
-            $scope.owner = data.data.Owner;
-            console.log($scope.owner);
-        });
-        console.log($scope.Members);
-        console.log($scope.owner);
+            // Get owner of group
+            return $scope.owner = data.data.Owner;
+        })
+        .then(function(data) {
+        	console.log($scope.owner);
+        	
+        	// Check if user is the owner of group
+			if ($scope.owner === currentUser.uid) {
+				$scope.isOwner = true;
+			}
+    	});
     }
 
+   /* var printMembers = function (member_list) {
+    // Create the list element:
+    var list = document.createElement('ul');
 
+    for(var i = 0; i < array.length; i++) {
+        // Create the list item:
+        var item = document.createElement('li');
 
-$scope.groupController = "Hello from group controller";
-console.log(currentUser);
-getMembers();
+        // Set its contents:
+        item.appendChild(document.createTextNode(array[i]));
+
+        // Add it to the list:
+        list.appendChild(item);
+    }
+
+    // Finally, return the constructed list:
+    return list;
+}*/
+
+	getGroupInfo();
 }]);
