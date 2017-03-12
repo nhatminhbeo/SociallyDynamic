@@ -29,22 +29,23 @@ var models = require('./general');
 module.exports.getConversation = function (req, res) {
 
 	var toFind = {
-    	UserID: req.headers.first
+    	StudentID: req.headers.first
     };
     var toFindAlt = {
-    	UserID: req.headers.second
+    	StudentID: req.headers.second
     };
 
 
 	models.Conversation.findOne({ '$and': [toFind, toFindAlt]}).exec()
 
 	.then(function (conversation) {
+
 		return res.status(200).send({"ConversationID": conversation._id});
 	})
 
 	.then(null, function() {
-		return res.status(400).send({"ConversatoinID": null});
-	})
+		return res.status(200).send({"ConversationID": null});
+	});
 };
 
 // ================================================================================

@@ -275,7 +275,7 @@ $http, currentUser, $routeParams) {
             console.log("deleteUserProfile() called");
         }
 
-        // TODO
+        // TODO: FUTURE
         // $http({
         //     method: "DELETE",
         //     url: "api/student/" + currentUser.uid,
