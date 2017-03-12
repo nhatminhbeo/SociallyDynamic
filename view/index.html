@@ -32,7 +32,7 @@
 			z-index: 1;
 			top: 0;
 			left: 0;
-			background-color: #111;
+			background-color: rgba(1,1,1,0.8);
 			overflow-x: hidden;
 			transition: 0.5s;
 			padding-top: 59px;
@@ -114,7 +114,7 @@
 							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="openNav()" style=""><img src="images/inbox.png" class="img-responsive" alt="inbox" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span ng-click="getMatch(matching.Wait)" style="" onclick="openNav()" style=""><img src="images/partner match.png" class="img-responsive" alt="partner match" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getMatch(matching.Class)" style="" onclick="openNav()" style=""><img src="images/partner match.png" class="img-responsive" alt="partner match" width="60" height="60"></span></a>
 						</li>
 						<li ng-click="logout()">
 							<a href=""><img src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
@@ -139,33 +139,58 @@
 								</div>
 							</div>
 						  	<div ng-show="navBarContents.inbox">
-						  			<div class="row"> 
-								  		<div class="col-sm-4"> <button selected="true" ng-click="getMatch(matching.Class)">Class</button>&emsp;</div>  
-								  		<div class="col-sm-4"> <button ng-click="getMatch(matching.Major)">Major</button>&emsp;</div> 
-								  		<div class="col-sm-3"> <button ng-click="getMatch(matching.Habit)">Habit</button></div>
-						  			</div>
-								<a ng-repeat="friend in friendList" >
-								  {{friend.FirstName}} {{friend.LastName}}
-								</a>
+
+						  		<div class="row"> 
+									<div class="col-sm-1"></div>
+									<ul class="nav nav-tabs">
+							  		<div class="col-sm-5"> <li class="active login_anchor" ng-click="getRequests()">Requests</li>&emsp;</div>  
+							  		<div class="col-sm-5"> <li class="login_anchor"ng-click="getMessages()">Messages</li>&emsp;</div> 
+									<div class="col-sm-1"></div></ul>
+						  		</div>
+
+								<div id="requests" ng-show="inboxToggles.requests">
+									<h3> Friend Requests </h3>
+									<div class="row" ng-repeat="friendRequest in friendRequestList track by $index">
+										<div class="col-sm-7">
+											<div class="login_anchor" ng-click="goToProfile(friendRequest.OtherID)">
+											{{friendRequest.FirstName}} {{friendRequest.LastName}}
+											</div>
+										</div>
+										<div class="col-sm-5">
+											<span ng-click="responseFriend(res.accept,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-ok"></span>
+											<span ng-click="responseFriend(res.deny,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-remove"></span>
+										</div>
+									</div>
+								</div>
+								<div id="messages" ng-show="inboxToggles.conversations">
+								<h3> Messages </h3>
+								</div> 
 							</div>
 						  	<div ng-show="navBarContents.partnerMatch">
 						  		<div class="row"> 
-							  		<div class="col-sm-4"> <button selected="true" ng-click="getMatch(matching.Class)">Class</button>&emsp;</div>  
-							  		<div class="col-sm-4"> <button ng-click="getMatch(matching.Major)">Major</button>&emsp;</div> 
-							  		<div class="col-sm-3"> <button ng-click="getMatch(matching.Habit)">Habit</button></div>
+									<div class="col-sm-1"></div>
+									<ul class="nav nav-tabs">
+							  		<div class="col-sm-3"> <li class="active login_anchor" ng-click="getMatch(matching.Class)">Class</li>&emsp;</div>  
+							  		<div class="col-sm-3"> <li class="login_anchor"ng-click="getMatch(matching.Major)">Major</li>&emsp;</div> 
+							  		<div class="col-sm-3"> <li class="login_anchor"ng-click="getMatch(matching.Habit)">Habit</li></div>
+									<div class="col-sm-1"></div></ul>
 						  		</div>
 						  		<div class="row"> 
-							  		<div class="col-sm-5"></div>  
-							  		<div class="col-sm-5"> <div class="loader" ng-show="loading"></div> </div> 
+									  <div class="col-sm-5"></div>
+									  <div class="col-sm-4">
+									   <div class="loader" ng-show="loading"></div> 
+									   </div>
 							  		
 						  		</div>
 						  		
-								<div ng-repeat="match in matchList">
-								  <a ng-href="/profile/{{match._id}}">
-								  	{{match.FirstName}} {{match.LastName}}
-								  </a>
-								  <div ng-show="match.Major">
-								  	<p>&emsp;Matches: {{match.Match}}</p>
+								<div>
+									<div class="list-group">
+										<a ng-href="/profile/{{match._id}}" class="list-group-item borderless" ng-repeat="match in matchList">
+											{{match.FirstName}} {{match.LastName}}
+											<span class="badge badge-default badge-pill pull-right">{{match.Match}}</span>
+										</a>
+									</div>
+
 								  </div>
 								</div>
 							</div>						
@@ -188,7 +213,7 @@
     <!-- Scripts -->
 	<script>
 	function openNav() {
-		document.getElementById("mySlidenav").style.width = "350px";
+		document.getElementById("mySlidenav").style.width = "330px";
 		//document.getElementById("main").style.marginLeft = "350px";
 	}
 

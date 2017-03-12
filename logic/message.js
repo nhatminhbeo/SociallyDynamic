@@ -13,6 +13,65 @@
 // ===============================================================================================================================================
 
 // ================================================================================
+//  Function: getConversation
+//  REST: GET:/api/conversation
+//  Description: Get conversation ID between two people, see whether or not it
+//					exists
+//  Expected input (req.header): JSON:
+//		first: String -- id of one person
+//		second: String -- id of second person
+//		
+//  Expected output (res): ConversationID of the conversation between two people.
+//					This is null if conversation between two people doesn't exist
+//  Author: 
+// ================================================================================
+module.exports.getConversation = function (req, res) {
+
+	var toFind = {
+    	UserID: req.headers.first
+    };
+    var toFindAlt = {
+    	UserID: req.headers.second
+    };
+
+
+	models.Conversation.findOne({ '$and': [toFind, toFindAlt]}).exec()
+
+	.then(function (conversation) {
+		return res.status(200).send({"ConversationID": conversation._id});
+	})
+
+	.then(null, function() {
+		return res.status(400).send({"ConversatoinID": null});
+	})
+};
+
+// ================================================================================
+//  Function: postConversation
+//  REST: POST:/api/conversation
+//  Description: Create a new conversation between two people.
+//  Expected input (req.body): JSON:
+//		First: id of the one person
+//		Second: id of the second person
+//
+//  Expected output (res): {ConversationID: of the newly created conversation}
+//  Author: 
+// ================================================================================
+module.exports.postConversation = function (req, res) {
+
+	var conversation = models.Conversation({
+		StudentID: [req.body.First, req.body.Second],
+		Student1Seen: 0,
+		Student2Seen: 0
+	});
+
+	conversation.save(function (err) {
+		if (err) return res.status(400).send('failed');
+		res.status(200).send({ConversationID: conversatoin._id});
+	});
+};
+
+// ================================================================================
 //  Function: getConversationWithId
 //  REST: GET:/api/conversation/:id
 //  Description: Return a list 50 most recent message by default, otherwise
@@ -32,15 +91,61 @@
 module.exports.getConversationWithId = function (req, res) {
 };
 
+// ================================================================================
+//  Function: putConversationWithId
+//  REST: PUT:/api/conversation/:id
+//  Description: Update the "seen" field of corresponding user of the conversation
+//				with specified id
+//  Expected input (req.body): JSON:
+//			SeenPerson: id of the person who checked the conversation and saw
+//				the message.
+//				If SeenPerson = StudentID[0] => Clear Student1Seen
+//				If SeenPerson = StudentID[1] => Clear Student2Seen
+//  Expected output (res): JSON list:
+//		[ {
+//			Sender: String -- id of the sender,
+//			SenderFirstName: String -- First name of the sender,
+//		},
+//			.......
+//		]
+//  Author: 
+// ================================================================================
+module.exports.putConversationWithId = function (req, res) {
+
+	models.Conversation.findOne({"_id": req.params.id}).exec()
+
+	.then(function (conversation) {
+		if (req.body.SeenPerson == conversation.StudentID[0]) {
+			return models.Conversation.update({"_id": conversation._id}, {
+				Student1Seen = conversation.Student1Seen + 1;
+			});
+		}
+		else {
+			return models.Conversation.update({"_id": conversation._id}, {
+				Student2Seen = conversation.Student2Seen + 1;
+			});
+		}
+	})
+
+	.then(function() {
+		res.status(200).send("success");
+	})
+
+	.then(null, function() {
+		res.status(400).send("fail");
+	});
+
+};
+
 
 // ================================================================================
 //  Function: messageReceived
 //  REST: GET:/api/message/
 //  Description:
 //  Expected input (emit('personal message', data)): 
-//			data.Content: String -- the message that is sent
+//			message.Content: String -- the message that is sent
 //			data.ConversationID: String -- id of the CONVERSATION, not user
-//			data.Sender: String -- id of Sender, which is a user
+//			message.Sender: String -- id of Sender, which is a user
 //  Expected output (res):
 //  Author: 
 // ================================================================================
@@ -69,6 +174,23 @@ module.exports.onPersonalMessageReceived = function (socket) {
 					Content: message.Content,
 					Sender: message.Sender
 				}).save();
+			})
+
+			.then(function() {
+					return models.Conversation.findOneById(data.ConversationID);
+			})
+
+			.then(function (conversation) {
+				if (message.Sender == conversation.StudentID[0]) {
+					return models.Conversation.update({"_id": conversation._id}, {
+						Student1Seen = conversation.Student1Seen + 1;
+					});
+				}
+				else {
+					return models.Conversation.update({"_id": conversation._id}, {
+						Student2Seen = conversation.Student2Seen + 1;
+					});
+				}
 			})
 
 			// Successfully added message to database
