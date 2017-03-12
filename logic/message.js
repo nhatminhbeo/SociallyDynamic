@@ -5,6 +5,8 @@
 // Last updated: Feb 12 2017
 // ===========================================================================
 
+var models = require("./general");
+
 
 // ===============================================================================================================================================
 //                                   Message systems (PM)
@@ -58,7 +60,6 @@ module.exports.getConversation = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.postConversation = function (req, res) {
-
 	var conversation = models.Conversation({
 		StudentID: [req.body.First, req.body.Second],
 		Student1Seen: 0,
@@ -67,7 +68,7 @@ module.exports.postConversation = function (req, res) {
 
 	conversation.save(function (err) {
 		if (err) return res.status(400).send('failed');
-		res.status(200).send({ConversationID: conversatoin._id});
+		res.status(200).send({ConversationID: conversation._id});
 	});
 };
 
@@ -89,6 +90,7 @@ module.exports.postConversation = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.getConversationWithId = function (req, res) {
+
 };
 
 // ================================================================================
@@ -117,12 +119,12 @@ module.exports.putConversationWithId = function (req, res) {
 	.then(function (conversation) {
 		if (req.body.SeenPerson == conversation.StudentID[0]) {
 			return models.Conversation.update({"_id": conversation._id}, {
-				Student1Seen = conversation.Student1Seen + 1;
+				Student1Seen : conversation.Student1Seen + 1,
 			});
 		}
 		else {
 			return models.Conversation.update({"_id": conversation._id}, {
-				Student2Seen = conversation.Student2Seen + 1;
+				Student2Seen : conversation.Student2Seen + 1,
 			});
 		}
 	})
@@ -183,12 +185,12 @@ module.exports.onPersonalMessageReceived = function (socket) {
 			.then(function (conversation) {
 				if (message.Sender == conversation.StudentID[0]) {
 					return models.Conversation.update({"_id": conversation._id}, {
-						Student1Seen = conversation.Student1Seen + 1;
+						Student1Seen : conversation.Student1Seen + 1,
 					});
 				}
 				else {
 					return models.Conversation.update({"_id": conversation._id}, {
-						Student2Seen = conversation.Student2Seen + 1;
+						Student2Seen : conversation.Student2Seen + 1,
 					});
 				}
 			})
