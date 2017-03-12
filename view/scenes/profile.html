@@ -31,7 +31,7 @@
 	<h2>Class List</h2>
 
 	<div class="profile_list" ng-repeat="(classkey, classvalue) in classList">
-		<p class="classList">{{classkey}}<button ng-click="deleteClass(classkey)" ng-show="isEdit_classList">X</button></p>
+		<p class="classList">{{classkey}}<button ng-click="deleteClass(classkey)" ng-show="isEdit_classList">&times;</button></p>
 	</div>
 	
 	<input type="text" class="form-control" placeholder="Search Classes" ng-model="classFilter" ng-show="isEdit_classList"/>
@@ -55,7 +55,7 @@
 	<h2>Study Habits</h2>
 
 	<div class="profile_list" ng-repeat="(habitkey, habitvalue) in studyHabit">
-		<p class="studyHabit">{{habitkey}}<button ng-click="deleteStudyHabit(habitkey)" ng-show="isEdit_studyHabit">X</button></p>
+		<p class="studyHabit">{{habitkey}}<button ng-click="deleteStudyHabit(habitkey)" ng-show="isEdit_studyHabit">&times;</button></p>
 	</div>
 
 	<input type="text" class="form-control" placeholder="Search Study Habits" ng-model="studyHabitFilter" ng-show="isEdit_studyHabit" />
