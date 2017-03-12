@@ -10,31 +10,27 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
 
     var socket = io();
 
-/*
-    //get first 50 msgs if there exist 
-    $http({
-        method: "GET",
-        url: "/api/conversation/" + $routeParams.id
-    }).then(function (data) {
-        console.log(data);
-        $scope.data = data.data;
-        for (var i = 0; i < data.data.length; i++) {
-
-            //	if(data.data[i]["Sender"] == currentUser.uid){
-            // 		return;
-            //	}
-            $scope.messages.push(data.data[i]);
-            socket.emit('personal message ' + ConversationID, data);
-
-            $scope.messages.push(data.data[i]);
-            socket.emit('personal message ' + ConversationID, data);        	
-
-        }
-    });
-*/
 
 
     socket.emit('personal message', {"ConversationID": ConversationID});
+
+    //get first 50 msgs if there exist 
+    $http({
+        method: "GET",
+        url: "/api/conversation/" + $routeParams.id,
+        headers: {
+        	start: 0,
+        	sender: currentUser.uid
+        }
+    }).then(function (data) {
+        console.log(data);
+        $scope.data = data.data;
+        //populate with messages
+        for (var i = 0; i < data.data.Messages.length; i++) {
+            $scope.messages.push(data.data[i]);
+            socket.emit('personal message ' + ConversationID, data);
+        }
+    });    
 
     //receive new messages
     socket.on('personal message ' + ConversationID, function (msg) {
