@@ -137,6 +137,12 @@
 
 							<!--Contact expand nav -->
 						  	<div id="requests" ng-show="navBarContents.contacts">
+								<div class="row"> 
+								<div class="col-sm-5"></div>
+								<div class="col-sm-4">
+								<div class="loader" ng-show="loading"></div> 
+								</div>
+								</div>
 								<div class="row" ng-repeat="friend in friendList track by $index">
 									<div class="col-sm-7">
 									<div class="login_anchor" ng-click="goToProfile(friend._id)">
@@ -164,6 +170,12 @@
 						  		</div>
 
 								<div id="requests" ng-show="inboxToggles.requests">
+								<div class="row"> 
+									<div class="col-sm-5"></div>
+									<div class="col-sm-4">
+									<div class="loader" ng-show="loading"></div> 
+									</div>
+							  	</div>
 									<div class="row" ng-repeat="friendRequest in friendRequestList track by $index">
 										<div class="col-sm-7">
 											<div class="login_anchor" ng-click="goToProfile(friendRequest.OtherID)">
@@ -198,6 +210,12 @@
 										<span ng-click="toCreateGroup()" class="login_anchor glyphicon glyphicon-plus"></span>
 									</div>
 								</div>
+								<div class="row"> 
+									<div class="col-sm-5"></div>
+									<div class="col-sm-4">
+									<div class="loader" ng-show="loading"></div> 
+								</div>
+							  	</div>
 								<div class="row" ng-repeat="group in groupList">
 									<div class="col-sm-7">
 										<div class="login_anchor" ng-click="goToGroup(group._id)">

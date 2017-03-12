@@ -55,6 +55,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.partnerMatch = false;
         $scope.navBarContents.group = false;
+        $scope.loading = true;
 
         var currentUser = authService.Auth.$getAuth();
 
@@ -65,6 +66,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         }).then(function (data) {
 
             $scope.friendList = data.data;
+            $scope.loading = false;
         });
         
     }
@@ -105,19 +107,21 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.inboxToggles.conversations = false;
         $scope.inboxToggles.requests = true;
         var currentUser = authService.Auth.$getAuth();
-
+        $scope.loading = true;
         $http({
             method: "GET",
             url: "/api/inbox/friend/" + currentUser.uid,
         }).then(function(data){
             console.log(data);
             $scope.friendRequestList = data.data;
+            $scope.loading = false;
         });
     };
 
     $scope.getMessages = function() {
         $scope.inboxToggles.conversations = true;
         $scope.inboxToggles.requests = false;
+        $scope.loading = true;
         var currentUser = authService.Auth.$getAuth();
 
         $http({
@@ -126,6 +130,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         }).then(function(data){
             console.log(data);
             $scope.conversationList = data.data;
+            $scope.loading = false;
         });
 
     };
@@ -167,6 +172,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.partnerMatch = false;
         $scope.navBarContents.inbox = false;
         $scope.navBarContents.group = true;
+        $scope.loading = true;
 
         $scope.groupList = [];
 
@@ -178,6 +184,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         }).then(function(data){
             console.log(data);
             $scope.groupList = data.data;
+            $scope.loading = false;
         });
     };
 

@@ -30,7 +30,7 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
             console.log("hello");
             console.log(data);
             //get name of friend
-            $scope.friendName = data.firstName
+            $scope.friendName = data.data.SenderFirstName + " " + data.data.SenderLastName;
             $scope.messages = data.data.Messages;
             setTimeout(function() {
                 var element = document.getElementById("scroll");
