@@ -208,6 +208,10 @@ function($scope, authService, $location ,$http, $rootScope) {
         $location.path('/createGroup');
     }
 
+    $scope.toGroupConversation = function (groupId) {
+        $location.path('/group/conversation/' + groupId);
+    };
+
     $scope.goToGroup = function (groupId) {
         $location.path('/group/' + groupId);
 
