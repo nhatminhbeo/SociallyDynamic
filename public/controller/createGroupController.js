@@ -1,4 +1,4 @@
-app.controller('createGroupController', ['$scope', 'authService', '$location','$http', 'currentUser', 'routeParams', function($scope, authService, $location,
+app.controller('createGroupController', ['$scope', 'authService', '$location','$http', 'currentUser', '$routeParams', function($scope, authService, $location,
 $http, currentUser, $routeParams) {
     $scope.createGroupController = "createGroupController";
 
