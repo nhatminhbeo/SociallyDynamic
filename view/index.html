@@ -139,20 +139,32 @@
 								</div>
 							</div>
 						  	<div ng-show="navBarContents.inbox">
-						  			<div class="row">
-										<ul class="nav nav-tabs">
-										<div class="col-sm-1"></div> 
-								  		<div class="col-sm-3"> <li class="login_anchor" ng-click="getRequests()">Requests</li>&emsp;</div>  
-										<div class="col-sm-3"></div>
-								  		<div class="col-sm-3"> <li class="login_anchor" ng-click="getMessages()">Messages</li></div>
-										<div class="col-sm-1"></div>
-										</ul>
-						  			</div>
-									<div ng-show="inboxToggles.requests">
-									<h1> Friend Requests </h1>
-									<div class="row" ng-repeat="friendRequest in friendRequestList">
+
+						  		<div class="row"> 
+									<div class="col-sm-1"></div>
+									<ul class="nav nav-tabs">
+							  		<div class="col-sm-5"> <li class="active login_anchor" ng-click="getRequests()">Requests</li>&emsp;</div>  
+							  		<div class="col-sm-5"> <li class="login_anchor"ng-click="getMessages()">Messages</li>&emsp;</div> 
+									<div class="col-sm-1"></div></ul>
+						  		</div>
+
+								<div id="requests" ng-show="inboxToggles.requests">
+									<h3> Friend Requests </h3>
+									<div class="row" ng-repeat="friendRequest in friendRequestList track by $index">
+										<div class="col-sm-7">
+											<div class="login_anchor" ng-click="goToProfile(friendRequest.OtherID)">
+											{{friendRequest.FirstName}} {{friendRequest.LastName}}
+											</div>
+										</div>
+										<div class="col-sm-5">
+											<span ng-click="responseFriend(res.accept,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-ok"></span>
+											<span ng-click="responseFriend(res.deny,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-remove"></span>
+										</div>
+									</div>
+									<h3>Group Requests</h3>
+									<div class="row" ng-repeat="groupRequest in groupRequestList">
 										<div class="col-sm-4">
-											{{friendRequest}}
+											{{groupRequest}}
 										</div>
 										<div class="col-sm-2">
 											<button class="btn btn-success">Accept</button>
@@ -160,19 +172,7 @@
 										<div class="col-sm-2">
 											<button class="btn btn-danger">Deny</button>
 										</div>
-								</div>
-								<h1>Group Requests</h1>
-								<div class="row" ng-repeat="groupRequest in groupRequestList">
-									<div class="col-sm-4">
-										{{groupRequest}}
 									</div>
-									<div class="col-sm-2">
-										<button class="btn btn-success">Accept</button>
-									</div>
-									<div class="col-sm-2">
-										<button class="btn btn-danger">Deny</button>
-									</div>
-								</div>
 								</div>
 							</div>
 						  	<div ng-show="navBarContents.partnerMatch">
@@ -193,12 +193,13 @@
 						  		</div>
 						  		
 								<div>
-								<ul class="listView">
-								  <li class="login_anchor listItem"
-								  ng-repeat="match in matchList">
-								  	{{match.FirstName}} {{match.LastName}}
-								  </li>
-								  </ul>
+									<div class="list-group">
+										<a ng-href="/profile/{{match._id}}" class="list-group-item borderless" ng-repeat="match in matchList">
+											{{match.FirstName}} {{match.LastName}}
+											<span class="badge badge-default badge-pill pull-right">{{match.Match}}</span>
+										</a>
+									</div>
+
 								  </div>
 								</div>
 							</div>						

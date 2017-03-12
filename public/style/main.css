@@ -38,6 +38,7 @@ button:hover {
 }
 
 .loader {
+	margin-top: 20px;
     border: 4px solid #f3f3f3; /* Light grey */
     border-top: 4px solid #3498db; /* Blue */
     border-radius: 50%;
@@ -60,4 +61,58 @@ button:hover {
 	color: white;
 	font-weight: 1px;
 	
+}
+
+.nav-tabs {
+	color: white;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+.nav {
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+.list-group {
+	padding-top: 0px;
+	margin-top: 0px;
+}
+.list-group-item {
+	background: transparent;
+	color: white;
+	border-color: #818181;
+	border-top: 0 none;
+	border-left: 0 none;
+	border-right: 0 none;
+}
+
+.list-group-item :hover{
+	background: #696969;
+	color: white;
+	font-size: 18px;
+	padding: 1px;
+}
+
+.badge {
+	vertical-align: bottom;
+	display: inline
+	padding: 0px;
+}
+
+#requests {
+	position: relative;
+	left: 20px;
+}
+
+.btn {
+	padding: 0px;
+	margin: 2px;
+}
+
+.glyphicon-ok {
+	color: green;
+}
+
+.glyphicon-remove {
+	color: red;
 }
