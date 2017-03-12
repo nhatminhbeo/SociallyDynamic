@@ -50,7 +50,7 @@ app.enable('trust proxy');
 // =========================
 // Start Listening Requests
 // =========================
-server.listen(port, function() {
+app.listen(port, function() {
   console.log('Server running!');
 });
 
@@ -149,7 +149,7 @@ app.use(function(err, req, res, next) {
 // =========================
 // Routings
 // =========================
-var pub = require('./routes/public');   pub.route(app, __dirname);
+
 
 var stu = require('./routes/student');  stu.route(app);
 var fri = require('./routes/friend');   fri.route(app);
@@ -159,4 +159,4 @@ var gro = require('./routes/group');    gro.route(app);
 var inb = require('./routes/inbox');    inb.route(app);
 var dat = require('./routes/data');     dat.route(app);
 
-
+var pub = require('./routes/public');   pub.route(app, __dirname);

@@ -45,8 +45,8 @@ socket.emit('a','a');
     });
 
 
- //take user inputted message and give  to  backend
-   $scope.userSendMessage = function(){
+    //take user inputted message and give  to  backend
+    $scope.userSendMessage = function(){
     	$scope.message = $scope.message.trim();
     	if($scope.message=="") {
     		return;
