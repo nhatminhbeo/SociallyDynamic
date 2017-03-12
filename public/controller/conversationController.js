@@ -28,17 +28,21 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
             console.log(currentUser.uid);
             console.log("hello");
             console.log(data);
+            //get name of friend
             $scope.messages = data.data.Messages;
+            setTimeout(function() {
+                var element = document.getElementById("scroll");
+                element.scrollTop = element.scrollHeight;
+            }, 1);
         });  
     }
 
     $scope.getConversation();  
 
     socket.emit('personal message', {"ConversationID": ConversationID});
-
+//splice message array for 25
     //receive new messages
     socket.on('personal message ' + ConversationID, function (msg) {
-
 
 
         $scope.messages.push(msg);  
@@ -46,6 +50,8 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
         console.log("HI");
         //console.log(msg);
         //console.log($scope.messages); 
+        var element = document.getElementById("scroll");
+        element.scrollTop = element.scrollHeight;
     });
 
 
@@ -66,5 +72,6 @@ app.controller('conversationController', ['$scope', 'authService', '$location','
         
 
     };
+
 
 }]);

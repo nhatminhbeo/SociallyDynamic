@@ -13,6 +13,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   display: inline-block;
+  scroll-behavior: smooth;
 }
 
 #footer{
