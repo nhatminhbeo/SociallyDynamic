@@ -93,6 +93,7 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.navBarContents.contacts = false;
         $scope.navBarContents.partnerMatch = false;
         $scope.navBarContents.inbox = true;
+        $scope.getRequests();
     };
 
     $scope.getRequests = function(){

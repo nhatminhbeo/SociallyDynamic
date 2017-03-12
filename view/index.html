@@ -114,7 +114,7 @@
 							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="openNav()" style=""><img src="images/inbox.png" class="img-responsive" alt="inbox" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span ng-click="getMatch(matching.Wait)" style="" onclick="openNav()" style=""><img src="images/partner match.png" class="img-responsive" alt="partner match" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getMatch(matching.Class)" style="" onclick="openNav()" style=""><img src="images/partner match.png" class="img-responsive" alt="partner match" width="60" height="60"></span></a>
 						</li>
 						<li ng-click="logout()">
 							<a href=""><img src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
@@ -161,19 +161,10 @@
 											<span ng-click="responseFriend(res.deny,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-remove"></span>
 										</div>
 									</div>
-									<h3>Group Requests</h3>
-									<div class="row" ng-repeat="groupRequest in groupRequestList">
-										<div class="col-sm-4">
-											{{groupRequest}}
-										</div>
-										<div class="col-sm-2">
-											<button class="btn btn-success">Accept</button>
-										</div>
-										<div class="col-sm-2">
-											<button class="btn btn-danger">Deny</button>
-										</div>
-									</div>
 								</div>
+								<div id="messages" ng-show="inboxToggles.conversations">
+								<h3> Messages </h3>
+								</div> 
 							</div>
 						  	<div ng-show="navBarContents.partnerMatch">
 						  		<div class="row"> 
