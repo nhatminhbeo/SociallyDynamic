@@ -29,6 +29,7 @@
 }
 
 .profile_list button {
+	border-radius: 100%;
 	padding: 0px 8px;
 	color: #444;
 	transition: color 0.5s ease;
