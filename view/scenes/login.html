@@ -1,9 +1,7 @@
-
-
 <img href="/" src="images/studyr.png" style="width:30%;height:30%;"/>
+
 <div ng-hide="isLoggedIn">
 <div ng-show="isLogin">
-	<form>
 	<div class="form-group">
 		<label for="emailLogin">Email address </label>
 		<input type="text" autocomplete="off" class="form-control" placeholder="Email" id="emailLogin" ng-model="email"></input>
@@ -13,125 +11,116 @@
 		<button class="btn btn-primary" ng-click="signIn()">Sign In</button>
 		<button class="btn btn-primary" ng-click="changeForm()">Don't have an account? Sign Up!</button>
 	</div>
-</form>
 </div>
 </div>
-<div ng-hide="isLogin">
-<form>
-  <button ng-click="changeForm()" class="btn">Return to the home page</button>
-  <div class="form-group">
-    <label for="exampleInputEmail1">First Name</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name"
-		ng-model="firstName">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Last Name</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name"
-		ng-model="lastName">
-  </div>
-	<div class="form-group">
-    <label for="exampleInputEmail1">Age</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Age"
-		ng-model="age">
-  </div>
-	<div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
-		ng-model="email">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password"
-		ng-model="password">
-  </div>
 
-   <div class="form-group">
-		 <div class="row">
-		<div class="col-sm-6">
-    <label for="major">Major</label>
-    <input type="text" class="form-control" id="major" placeholder="Enter major" ng-model="majorFilter">
-	<ul class="list-group">
-		<a class="list-group-item login_anchor" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity
-		track by $index"
-		ng-click="majorFunc(major)"
-		ng-show="majorFilter">
-			{{major}}
-		</a>
-  </div>
-	<div class="col-sm-2">
+<div ng-hide="isLogin">
+	<button ng-click="changeForm()" class="btn">Return to the home page</button>
+
+	<div class="form-group">
+		<label for="exampleInputEmail1">First Name</label>
+    	<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name" ng-model="firstName">
 	</div>
-	<div class="col-sm-4">
-		<label>Selected Major</label>
-		<a class="list-group-item login_anchor" ng-click="deleteMajor(selectedMajor)" ng-show="selectedMajor">
-			{{selectedMajor}}
-			</a>
+
+	<div class="form-group">
+		<label for="exampleInputEmail1">Last Name</label>
+		<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name" ng-model="lastName">
+	</div>
+
+	<div class="form-group">
+		<label for="exampleInputEmail1">Age</label>
+		<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Age"
+		ng-model="age">
+	</div>
+
+	<div class="form-group">
+		<label for="exampleInputEmail1">Email address</label>
+		<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" ng-model="email">
+	</div>
+
+	<div class="form-group">
+		<label for="exampleInputPassword1">Password</label>
+		<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password" ng-model="password">
+	</div>
+
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-6">
+				<label for="major">Major</label>
+				<input type="text" class="form-control" id="major" placeholder="Enter major" ng-model="majorFilter">
+				<ul class="list-group">
+					<a class="list-group-item login_anchor" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity track by $index" ng-click="majorFunc(major)" ng-show="majorFilter">
+						{{major}}
+					</a>
+				</ul>
+			</div>
+
+			<div class="col-sm-2"></div>
+
+			<div class="col-sm-4 login_list">
+				<label>Selected Major</label>
+				<a class="list-group-item login_anchor" ng-show="selectedMajor" ng-click="deleteMajor(selectedMajor)">
+					{{selectedMajor}}
+				</a>
+			</div>
 		</div>
 	</div>
-	</div>
 
-     <div class="form-group">
-	<div class="row">
-	<div class="col-sm-6">
-    <label for="classList">Classes you are in</label>
-    <input type="text" class="form-control" id="classList" placeholder="Search classes" ng-model="classFilter"/>
-	<ul class="list-group">
-		<a class="list-group-item login_anchor" ng-repeat="class in classes | filter:classFilter | limitTo:quantity track by $index" 
-		ng-click="classFunc(class)"
-		ng-show="classFilter">
-			{{class}}
-		</a>
-	</ul>
-	</div>
-	<div class="col-sm-2">
-	</div>
-	<div class="col-sm-4">
-		<ul class="list-group">
-			<label>Selected Classes</label>
-				<a class="list-group-item login_anchor" ng-repeat="(classkey,classvalue) in selectedClasses"
-				ng-click="deleteClassFunc(classkey)">
-					{{classvalue}}
-					<button class="login_list">X</button>
-				</a>
-			</ul>
-	</div>
-	</div>
-  </div>
-
-<div class="form-group">
-	<div class="row">
-		<div class="col-sm-6">
-    <label for="studyHabits">Study Habits</label>
-    <input type="text" class="form-control" id="studyHabits" placeholder="Search and Pick your Study Habits" 
-	ng-model="studyHabitFilter"/>
-	<ul class="list-group">
-		<a class="list-group-item login_anchor" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity
-		track by $index"
-		ng-click="studyHabitFunc(habit)">
-			{{habit}}
-		</a>
-		</ul>
-		</div> 
-		<div class="col-sm-2">
-			</div>
-		<div class="col-sm-4">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-6">
+				<label for="classList">Classes you are in</label>
+				<input type="text" class="form-control" id="classList" placeholder="Search classes" ng-model="classFilter"/>
 				<ul class="list-group">
-			<label>Selected habits</label>
-				<a class="list-group-item login_anchor" ng-repeat="(habitkey,habitvalue) in selectedHabits"
-				ng-click="deleteHabitFunc(habitkey)">
-				{{habitvalue}}
-				</a> 
-  	</div>
+					<a class="list-group-item login_anchor" ng-repeat="class in classes | filter:classFilter | limitTo:quantity track by $index" ng-click="classFunc(class)" ng-show="classFilter">
+						{{class}}
+					</a>
+				</ul>
+			</div>
+
+			<div class="col-sm-2"></div>
+
+			<div class="col-sm-4 login_list">
+				<ul class="list-group">
+					<label>Selected Classes</label>
+					<a class="list-group-item login_anchor" ng-repeat="(classkey,classvalue) in selectedClasses" ng-click="deleteClassFunc(classkey)">
+						{{classvalue}}
+					</a>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-6">
+				<label for="studyHabits">Study Habits</label>
+				<input type="text" class="form-control" id="studyHabits" placeholder="Search and Pick your Study Habits" ng-model="studyHabitFilter"/>
+				<ul class="list-group">
+					<a class="list-group-item login_anchor" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity track by $index" ng-click="studyHabitFunc(habit)">
+						{{habit}}
+					</a>
+				</ul>
+			</div>
+
+			<div class="col-sm-2"></div>
+
+			<div class="col-sm-4 login_list">
+				<ul class="list-group">
+					<label>Selected habits</label>
+					<a class="list-group-item login_anchor" ng-repeat="(habitkey,habitvalue) in selectedHabits" ng-click="deleteHabitFunc(habitkey)">
+						{{habitvalue}}
+					</a> 
+				</ul>
+			</div>
+		</div> 
 	</div>
 
     <div class="form-group">
-    <label for="Bio">Bio</label>
-    <textarea style="resize:none;" class="form-control" id="Bio" rows="5"
-		ng-model="bio"></textarea>
-  </div>
+    	<label for="Bio">Bio</label>
+    	<textarea style="resize:none;" class="form-control" id="Bio" rows="5" ng-model="bio"></textarea>
+    </div>
 
- 
-  <button ng-click="createAccount()" class="btn btn-primary" >Sign Up</button>
-   <button ng-click="changeForm()" class="btn btn-primary">Cancel</button>
-</form>
+    <button ng-click="createAccount()" class="btn btn-primary" >Sign Up</button>
+    <button ng-click="changeForm()" class="btn btn-primary">Cancel</button>
 </div>
-
