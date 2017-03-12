@@ -26,6 +26,7 @@ if(currentUser){
 	/* member stuff */
 	$scope.members = [];
 	$scope.owner = "";
+	$scope.groupname = "";
 
     // Retrives the entire list of group members
     var getGroupInfo = function(){
@@ -44,11 +45,17 @@ if(currentUser){
                 $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
             }
 
+            console.log(data.data.GroupName);
+
+            // Get group name
+            $scope.groupname = data.data.GroupName;
+
+
             // Get owner of group
             return $scope.owner = data.data.Owner;
         })
         .then(function(data) {
-        	console.log($scope.owner);
+        	//console.log($scope.owner);
 
         	// Check if user is the owner of group
 			if ($scope.owner === currentUser.uid) {
@@ -90,6 +97,11 @@ if(currentUser){
 	    });
 	}
 	
+	// Go to group conversation
+	$scope.goToGroupMessage = function(){
+	    $location.path('/group/conversation/' + $routeParams.id);
+	}
+
 	// Render group page
 	getGroupInfo();
 }]);
