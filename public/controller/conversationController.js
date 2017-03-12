@@ -40,8 +40,12 @@ socket.emit('a','a');
     socket.emit('personal message', {"ConversationID": ConversationID});
 
     //receive new messages
-    socket.on("personal message" + ConversationID, function (msg) {
-        $scope.messages.push(msg);    	
+    socket.on('personal message ' + ConversationID, function (msg) {
+
+        $scope.messages.push(msg);  
+        $scope.$digest();
+        console.log(msg);
+        console.log($scope.messages); 	
     });
 
 
@@ -56,6 +60,9 @@ socket.emit('a','a');
             "Content": $scope.message,
             "Sender": currentUser.uid
         });
+
+        $scope.message="";
+    };
 
 }]);
 
