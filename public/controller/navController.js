@@ -162,5 +162,9 @@ function($scope, authService, $location ,$http, $rootScope) {
             console.log(data);
             $scope.groupList = data.data;
         });
+    };
+
+    $scope.toCreateGroup = function () {
+        $location.path('/createGroup');
     }
 }]);

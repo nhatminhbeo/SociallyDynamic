@@ -177,6 +177,13 @@
 							</div>
 
 							<div ng-show="navBarContents.group">
+								<div class="row">
+									<div class="col-sm-9">
+									</div>
+									<div class="col-sm-3">
+										<span ng-click="toCreateGroup()" class="login_anchor glyphicon glyphicon-plus"></span>
+									</div>
+								</div>
 								<div ng-repeat="group in groupList" >
 								  <a ng-href="/group/{{group._id}}">
 								  	{{group.GroupName}}
