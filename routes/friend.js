@@ -16,7 +16,7 @@
 //    /api/friend/request     |   DELETE    |   Delete a friend request from sender to receiver described in request body
 // ===============================================================================================================================================
 
-var api = require('../logic/friend.js');
+var api = require('../logic/friend');
 module.exports.route = function(app) {
 	app.get('/api/friend', api.getFriend);
 	app.post('/api/friend', api.postFriend);

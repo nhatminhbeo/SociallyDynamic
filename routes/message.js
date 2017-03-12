@@ -14,7 +14,7 @@
 //    /api/message/           |   POST      |   Post a message between two students, one is the sender, in request body
 // ===============================================================================================================================================
 
-var api = require('../logic/message.js');
+var api = require('../logic/message');
 module.exports.route = function(app, io) {
 	app.get('/api/conversation', api.getConversation);
 	app.post('/api/conversation', api.postConversation);

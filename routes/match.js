@@ -14,7 +14,7 @@
 //    /api/match/major/:id    |   GET       |   Get a list of potential partners for student described by id, priority major
 // ===============================================================================================================================================
 
-var api = require('../logic/match.js');
+var api = require('../logic/match');
 module.exports.route = function(app) {
 	app.get('/api/match/class/:id', api.getMatchClassWithId);
 	app.get('/api/match/habit/:id', api.getMatchHabitWithId);
