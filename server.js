@@ -50,7 +50,7 @@ app.enable('trust proxy');
 // =========================
 // Start Listening Requests
 // =========================
-app.listen(port, function() {
+server.listen(port, function() {
   console.log('Server running!');
 });
 

@@ -69,7 +69,7 @@ module.exports.postConversation = function (req, res) {
 
 	conversation.save(function (err) {
 		if (err) return res.status(400).send('failed');
-		res.status(200).send({ConversationID: conversatoin._id});
+		res.status(200).send({ConversationID: conversation._id});
 	});
 };
 
@@ -151,7 +151,7 @@ module.exports.putConversationWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-module.exports.onPersonalMessageReceived = function (socket) {
+module.exports.onPersonalMessageReceived = function (socket, io) {
 
 	// Listen to personal message events to know which 
 	// conversation id to listen to
@@ -173,7 +173,7 @@ module.exports.onPersonalMessageReceived = function (socket) {
 				message["SenderName"] = student.FirstName;
 
 				// Now, fire the message back to whoever is in that conversation.
-				socket.emit('personal message ' + data.conversationID, message);
+				io.emit('personal message ' + data.ConversationID, message);
 
 				// And, store the message to database
 				return models.Message({
@@ -203,12 +203,12 @@ module.exports.onPersonalMessageReceived = function (socket) {
 			// Successfully added message to database
 			.then (function () {
 				console.log('mesasge added to ' + data.ConversationID);
-			})
-
-			// Failed to add message to database
-			.then (null, function () {
-				console.log('message failed to add to ' + data.ConversationID);
 			});
+
+			// // Failed to add message to database
+			// .then (null, function () {
+			// 	console.log('message failed to add to ' + data.ConversationID);
+			// });
 			
 		});
 	});
