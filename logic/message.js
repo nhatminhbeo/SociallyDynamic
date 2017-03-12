@@ -14,6 +14,8 @@ var models = require("./general");
 //    /api/conversation/:id   |   GET       |   Return messages in an interval of a certain conversation defined in parameter.
 // ===============================================================================================================================================
 
+var models = require('./general');
+
 // ================================================================================
 //  Function: getConversation
 //  REST: GET:/api/conversation
@@ -75,11 +77,13 @@ module.exports.postConversation = function (req, res) {
 // ================================================================================
 //  Function: getConversationWithId
 //  REST: GET:/api/conversation/:id
-//  Description: Return a list 50 most recent message by default, otherwise
+//  Description: Return a list 15 most recent message by default, otherwise
 //				 specified in req.header
 //  Expected input (req.header): JSON:
-//		start: int -- starting most of 50 most recent messages.
-//			i.e req.header.start: 100 will return 101th to 150th most recent messages 
+//		start: int -- starting most of 15 most recent messages.
+//		sender: the current User
+//		
+//			i.e req.header.start: 100 will return 101th to 115th most recent messages 
 //  Expected output (res): JSON list:
 //		[ {
 //			Sender: String -- id of the sender,
@@ -91,6 +95,40 @@ module.exports.postConversation = function (req, res) {
 // ================================================================================
 module.exports.getConversationWithId = function (req, res) {
 
+<<<<<<< HEAD
+=======
+	var limit = 15;
+	if (req.headers) {
+		limit = limit + parseInt(req.headers.start);
+	}
+
+	models.Message.find({"ConversationID": req.params.id})
+	.sort({"_id": 1}).exec()
+
+	.then(function (result) {
+		return models.Conversation.findOne({"_id": req.params.id}).exec()
+		.then(function (conversation) {
+			var otherStudent = (req.headers.sender == conversation.StudentID[0]) 
+				? conversation.StudentID[1] : conversation.StudentID[0];
+			return models.Student.findOne({"_id": otherStudent});
+		})
+		.then(function (otherStudent) {
+			var ress = result.slice(req.headers.start, limit);
+			console.log(ress.length);
+			res.status(200).send({
+				"Sender": otherStudent._id,
+				"SenderFirstName": otherStudent.FirstName,
+				"SenderLastName": otherStudent.LastName,
+				"Messages": result.slice(result.length - limit, result.length - limit + 15)
+			});
+		});
+	});
+
+
+	// .then(null, function() {
+	// 	res.status(400).send("Something wrong");
+	// });
+>>>>>>> frontend
 };
 
 // ================================================================================
@@ -119,12 +157,12 @@ module.exports.putConversationWithId = function (req, res) {
 	.then(function (conversation) {
 		if (req.body.SeenPerson == conversation.StudentID[0]) {
 			return models.Conversation.update({"_id": conversation._id}, {
-				Student1Seen : conversation.Student1Seen + 1,
+				"Student1Seen": 0
 			});
 		}
 		else {
 			return models.Conversation.update({"_id": conversation._id}, {
-				Student2Seen : conversation.Student2Seen + 1,
+				"Student2Seen": 0
 			});
 		}
 	})
@@ -151,24 +189,29 @@ module.exports.putConversationWithId = function (req, res) {
 //  Expected output (res):
 //  Author: 
 // ================================================================================
-module.exports.onPersonalMessageReceived = function (socket) {
+module.exports.onPersonalMessageReceived = function (socket, io) {
 
 	// Listen to personal message events to know which 
 	// conversation id to listen to
 	socket.on('personal message', function (data) {
+
+		console.log("GOT CONVERSATION ID: " +data.ConversationID);
+		console.log("LISTENING TO THE CONVERSATION");
 
 		// Now, as we know the conversation id, create a dynamic
 		// personal message + data.ConversationId to listen to a specific message
 		// from a specific conversation.
 		socket.on('personal message ' + data.ConversationID, function(message) {
 
+			console.log("GOT MSG: " + message.Content);
+
 			// Find the student so the other end knows the name of the sender
-			models.Student.findOneById(message.Sender).exec()
+			models.Student.findOne({"_id": message.Sender}).exec()
 			.then(function (student) {
 				message["SenderName"] = student.FirstName;
 
 				// Now, fire the message back to whoever is in that conversation.
-				socket.emit('personal message ' + data.conversationID, message);
+				io.emit('personal message ' + data.ConversationID, message);
 
 				// And, store the message to database
 				return models.Message({
@@ -179,18 +222,26 @@ module.exports.onPersonalMessageReceived = function (socket) {
 			})
 
 			.then(function() {
-					return models.Conversation.findOneById(data.ConversationID);
+					return models.Conversation.findOne({"_id": data.ConversationID});
 			})
 
 			.then(function (conversation) {
 				if (message.Sender == conversation.StudentID[0]) {
 					return models.Conversation.update({"_id": conversation._id}, {
+<<<<<<< HEAD
 						Student1Seen : conversation.Student1Seen + 1,
+=======
+						"Student2Seen": conversation.Student1Seen + 1
+>>>>>>> frontend
 					});
 				}
 				else {
 					return models.Conversation.update({"_id": conversation._id}, {
+<<<<<<< HEAD
 						Student2Seen : conversation.Student2Seen + 1,
+=======
+						"Student1Seen": conversation.Student2Seen + 1
+>>>>>>> frontend
 					});
 				}
 			})
@@ -204,7 +255,6 @@ module.exports.onPersonalMessageReceived = function (socket) {
 			.then (null, function () {
 				console.log('message failed to add to ' + data.ConversationID);
 			});
-			
 		});
 	});
 };

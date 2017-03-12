@@ -4,39 +4,41 @@
 <div class="groupDisplay">
 	
 	<h1> Study Groups </h1>
-	<!-- if no groups yet -->
-	<div ng-hide="groupsExist" id="default_view">
-	    <h2> You have no groups yet! </h2>
-	</div>
-	    
-
-	<!--groups already exist and chose one group to view-->
-	<div ng-show="groupsExist">
 
 	    <!-- delete group button if admin -->
 		<div ng-show="isOwner">
 				<button class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
 		</div>
 
+		<!-- leave group button if not admin -->
+		<div ng-show="notOwner">
+				<button class="btn btn-primary" ng-click="leaveGroup()" style="display:block;margin-left:90%">Leave</button>	
+		</div>
+
         <!-- group data -->
 	    <div id="groupPic" style="display:block;text-align:center; margin:0 auto;">
 			<img src="http://geekxgirls.com/images/_comics/totoro-gifs-04.gif" style="width:200px;height:200px;display:block;margin-right:auto;margin-left:auto;" />
-		    <h1 style="text-align:center;">{{groupName}}</h1>
 
 		    <!-- message button -->
-		 	<!-- NEED TO DO!! -->
+		 	<button class="btn btn-primary" ng-click="goToGroupMessage()" style="display:block;margin-right:auto;margin-left:auto;">Message</button>	
 
+		 	<h1 style="text-align:center;"> {{groupname}}</h1>
 		</div>
 
+		<!-- display group bio
 		<div id="Bio">
 			<h2 style="text-align: center">About Group</h2>
 	       	<h4 style="text-align: center">Group Bio</h4>
-	    </div>
+	    </div> -->
 
-	    <div id="Members">
-			<h2 style="text-align: center">Members</h2>
-	       	<h4>{{members}}</h4>
+	    <!-- list all members -->
+	    <div id="Members" style="text-align: center;">
+				<h2 style="text-align: center">Members</h2>
+			<ul class="list-group" style="list-style-type: none;">
+				<a ng-repeat="m in members" >
+					<li ng-click="profilePage(m)"> {{m}} </li>
+					<!-- <li><a href="default.asp">Home</a></li> -->
+				</a>
+			</ul>
 	    </div>
-
-	</div>
 </div>

@@ -22,6 +22,6 @@ module.exports.route = function(app, io) {
 	app.put('/api/conversation/:id', api.putConversationWithId);
 
 	io.on('connection', function(socket) {
-		api.onPersonalMessageReceived(socket);
+		api.onPersonalMessageReceived(socket, io);
 	});
 };

@@ -24,27 +24,29 @@ var models = require("./general");
 module.exports.getInboxMessageWithId = function (req, res) {
 	var list = [];
 
-	models.Conversation.find({"_id": req.params.id}).exec()
+	models.Conversation.find({"StudentID": req.params.id}).exec()
 	.then(function (conversations) {
 
 		// For each such class:
-		return models.Promise.each(conversations, function(thisConversation) {
+		return models.Promise.each(conversations, function (thisConversation) {
             var FriendStudentID = "";
-			if (thisConversation.studentID[0] != req.params.id) {
-				FriendStudentID = thisConversation.studentID[0];
+			if (thisConversation.StudentID[0] != req.params.id) {
+				FriendStudentID = thisConversation.StudentID[0];
 			}
 			else {
-				FriendStudentID = thisConversation.studentID[1];
+				FriendStudentID = thisConversation.StudentID[1];
 			}
 
-			var a = models.Student.findOne({"_id": FriendStudentID});
-			var b = models.GroupMessage.findOne({"_id": thisConversation._id});
-			return models.Promise.join(a, b, function(student, message) {
+			return models.Student.findOne({"_id": FriendStudentID})
+			.then(function (student) {
+				var Unseen = (req.params.id == thisConversation.StudentID[0])
+					 ? thisConversation.Student1Seen : thisConversation.Student2Seen;
 				list.push({
-					FirstName: student.FirstName,
-					LastName: student.LastName,
-					OtherID: student._id,
-					Message: message.Content
+					"FirstName": student.FirstName,
+					"LastName": student.LastName,
+					"OtherID": student._id,
+					"Unseen": Unseen,
+					"ConversationID": thisConversation._id
 				});
 			});
 		});
@@ -53,12 +55,12 @@ module.exports.getInboxMessageWithId = function (req, res) {
 	// succeed
 	.then(function() {
 		return res.status(200).json(list);
-	})
-
-	// Failed
-	.then(null, function() {
-		res.status(400).send();
 	});
+
+	// // Failed
+	// .then(null, function() {
+	// 	res.status(400).send();
+	// });
 };
 
 // ================================================================================

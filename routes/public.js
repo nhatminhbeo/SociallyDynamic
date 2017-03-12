@@ -36,13 +36,10 @@ module.exports.route = function (app, dirname) {
 	app.get('/scenes/:name', function(req, res) {
 		res.sendFile(dirname + "/view/scenes/" + req.params.name + ".html");
 	});
-	
-	app.get('/:name/:id', function(req,res){
-		console.log(dirname + "/view/index.html");
-		res.sendFile(dirname + "/view/index.html");
-	});
-	
+
+
 	app.get('*', function(req,res){
 		res.sendFile(dirname + "/view/index.html");
 	});
+
 };

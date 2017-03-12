@@ -2,10 +2,9 @@ app.controller('groupController', ['$scope', 'authService', '$location', 'curren
 function($scope, authService, $location, 
 currentUser, $http, $rootScope, $routeParams){
 
-    // check if user has groups created already to view
-    $scope.groupsExist = true;
-    //check if user is an admin of group, to show delete button or not
-    $scope.isOwner = false;
+	$scope.isOwner;
+	$scope.notOwner;
+
 
 	 //logout
     $scope.logout = function() {
@@ -26,24 +25,96 @@ if(currentUser){
 
 	/* member stuff */
 	$scope.members = [];
+	$scope.memberMap = {};
+	$scope.owner = "";
+	$scope.groupname = "";
 
     // Retrives the entire list of group members
-    var getMembers = function(){
+    var getGroupInfo = function(){
+
+    	//check if user is an admin of group, to show delete button or not
+    	$scope.isOwner = false;
+    	$scope.notOwner = true;
+        
         $http({
             method: 'GET',
             url: '/api/group/' + $routeParams.id
         }).then(function(data){
+            console.log(data);
+            // Get member list
             for (var i = 0; i < data.data.Member.length; i++){
                 $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
+                $scope.memberMap[data.data.Member[i].FirstName + " " + data.data.Member[i].LastName] = data.data.Member[i]._id;
             }
-            
-        });
-        console.log($scope.Members);
+
+            console.log(data.data.GroupName);
+
+            // Get group name
+            $scope.groupname = data.data.GroupName;
+
+
+            // Get owner of group
+            return $scope.owner = data.data.Owner;
+
+        })
+        .then(function(data) {
+        	//console.log($scope.owner);
+
+        	// Check if user is the owner of group
+			if ($scope.owner === currentUser.uid) {
+				$scope.isOwner = true;
+				$scope.notOwner = false;
+			}
+    	});
     }
 
+    // Delete the group as the owner
+	$scope.deleteGroup = function(){
+	    $http({
+	        method: 'DELETE',
+	        url: '/api/group/' + $routeParams.id,
+	    	headers: {
+               'Content-type': 'application/json;charset=utf-8'
+            }
+	    }).then(function(data){
+	        console.log("deleted group");
+	        $location.path('/profile/' + currentUser.uid);
+	    });
+	}
+
+    // Delete the group as the owner
+	$scope.profilePage = function(person){
+		console.log($scope.memberMap);
+		console.log(person);
+		console.log($scope.memberMap[person]);
+		var id = $scope.memberMap[person];
+		$location.path('/profile/' + id)
+	}
 
 
-$scope.groupController = "Hello from group controller";
-console.log(currentUser);
-getMembers();
+	// Leave group as a non-owner
+	$scope.leaveGroup = function(){
+		console.log("trying to leave group");
+	    $http({
+	        method: 'DELETE',
+	        url: '/api/group/' + $routeParams.id + "/user",
+	        headers: {
+               'Content-type': 'application/json;charset=utf-8'
+            },
+            data : {
+            	StudentID : currentUser.uid
+            }
+	    }).then(function(data){
+	        console.log("left group");
+	        $location.path('/profile/' + currentUser.uid);
+	    });
+	}
+	
+	// Go to group conversation
+	$scope.goToGroupMessage = function(){
+	    $location.path('/group/conversation/' + $routeParams.id);
+	}
+
+	// Render group page
+	getGroupInfo();
 }]);
