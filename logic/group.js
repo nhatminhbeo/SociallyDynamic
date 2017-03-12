@@ -8,7 +8,7 @@ var models = require('./general');
 var Group = models.Group;
 var StudentGroup = models.StudentGroup;
 var GroupRequest = models.GroupRequest;
-var GroupConversation = models.GroupMessage;
+var GroupMessage = models.GroupMessage;
 var Promise = models.Promise;
 
 // ===============================================================================================================================================
@@ -172,10 +172,10 @@ module.exports.deleteGroupWithId = function (req, res) {
     })
     .then(function () {
     	res.status(200).send();
-    })
-    .then(null, function () {
-    	res.status(400).send();
-    })
+    });
+    // .then(null, function () {
+    // 	res.status(400).send();
+    // });
 
 };
 
