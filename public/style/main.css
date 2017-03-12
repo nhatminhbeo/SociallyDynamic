@@ -5,7 +5,7 @@ body{
 	font-size: 18px;
 	color: #444;
 	padding: 0 10px;
-	background-image: url("/images/jacobs_login.jpg");
+	background-image: url("/images/geisel_blur.jpg");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 }
@@ -15,7 +15,7 @@ h1, h2, h3 {
 }
 
 #page-wrapper {
-	background: rgba(255,255,255,0.5);
+	background: rgba(255,255,255,0.95);
 }
 
 button {
@@ -24,8 +24,8 @@ button {
 	appearance: none; /* chrome */
 
 	border: none;
-	border-radius: 20px;
-	padding: 8px 8px;
+	border-radius: 10px;
+	padding: 4px 16px;
 	background-color: #6677cd;
 	color: white;
 	cursor: pointer;
@@ -102,11 +102,6 @@ button:hover {
 #requests {
 	position: relative;
 	left: 20px;
-}
-
-.btn {
-	padding: 0px;
-	margin: 2px;
 }
 
 .glyphicon-ok {
