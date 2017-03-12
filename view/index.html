@@ -2,6 +2,7 @@
 <html lang="en">
 
 	<head>
+
 		<title>Team Socially Dynamic</title>
 		<base href='/'>
 		<meta charset="utf-8"/>
@@ -87,6 +88,7 @@
 	</head>
 
 	<body ng-app="SD">
+
 		<div ng-controller="navController">
 			<!--<h1>{{navController}}</h1>-->
 			<!-- TODO: UNCOMMENT LINE ABOVE WHEN RUNNING SERVER -->
@@ -98,26 +100,29 @@
 			<nav class="navbar navbar-inverse navbar-fixed-top" ng-show="isNavbar" role="navigation">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/"><img src="images/studyr.png" class="img-responsive" alt="studyr logo" width="85" height="50"></a>
+					<a class="navbar-brand" href="/"><img src="images/studyr.png" class="img-responsive" title="studyr logo" width="85" height="50"></a>
 				</div>
 
 				<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 				<div class="navbar-header">
 					<ul class="nav navbar-nav side-nav">
 						<li class="active">
-							<a href="/"><span style=""><img src="images/profile.png" class="img-responsive" alt="profile" width="60" height="60"></span></a>
+							<a href="/"><span style=""><img alt="My Profile" src="images/profile.png" class="img-responsive" title="profile" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span  ng-click="getFriendList()" onclick="openNav()" style=""><img src="images/contacts.png" class="img-responsive" alt="contacts" width="60" height="60"></span></a>
+							<a href=""><span  ng-click="getFriendList()" onclick="toggleNav()" style=""><img title="Contacts" src="images/contacts.png" class="img-responsive" alt="Contacts" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="openNav()" style=""><img src="images/inbox.png" class="img-responsive" alt="inbox" width="60" height="60"></span></a>
+							<a href=""><span ng-click="getInbox(inbox.Wait)" style=""onclick="toggleNav()" style=""><img title="Inbox" src="images/inbox.png" class="img-responsive" alt="Inbox" width="60" height="60"></span></a>
 						</li>
 						<li>
-							<a href=""><span ng-click="getMatch(matching.Class)" style="" onclick="openNav()" style=""><img src="images/partner match.png" class="img-responsive" alt="partner match" width="60" height="60"></span></a>
-						</li>
+							<a href=""><span ng-click="getGroup()" style="" onclick="toggleNav()" style=""><img title="Groups" src="images/group.png" class="img-responsive" alt="Groups" width="60" height="60"></span></a>
+						</li>	
+						<li>
+							<a href=""><span ng-click="getMatch(matching.Class)" style="" onclick="toggleNav()" style=""><img title="Find Partner Match" src="images/partner match.png" class="img-responsive" alt="Find Partner Match" width="60" height="60"></span></a>
+						</li>					
 						<li ng-click="logout()">
-							<a href=""><img src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
+							<a href=""><img title="Log out" src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
 						</li>
 					</ul>
 				</div>
@@ -128,7 +133,9 @@
 				<div class="row">	
 					<div class="col-lg-12">
 						<div id="mySlidenav" class="slidenav" ng-show="isNavbar">
-						  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+
+							<!--Contact expand nav -->
 						  	<div ng-show="navBarContents.contacts">
 								<div ng-repeat="friend in friendList" >
 								  <a ng-href="/profile/{{friend._id}}">
@@ -138,6 +145,10 @@
 								  <div class="row"> <div class="col-sm-4"><a> M </a></div><div class="col-sm-4"> <a> J </a></div> </div>
 								</div>
 							</div>
+
+
+
+							<!--INBOX -->
 						  	<div ng-show="navBarContents.inbox">
 
 						  		<div class="row"> 
@@ -166,6 +177,26 @@
 								<h3> Messages </h3>
 								</div> 
 							</div>
+
+							<div ng-show="navBarContents.group">
+								<div class="row">
+									<div class="col-sm-9">
+									</div>
+									<div class="col-sm-3">
+										<span ng-click="toCreateGroup()" class="login_anchor glyphicon glyphicon-plus"></span>
+									</div>
+								</div>
+								<div ng-repeat="group in groupList" >
+								  <a ng-href="/group/{{group._id}}">
+								  	{{group.GroupName}}
+								  </a>
+								  <!-- ng-href="/conversation/{{friend.ConversationID}}" -->
+								  <div class="row"> <div class="col-sm-4"><a> M </a></div><div class="col-sm-4"> <a> J </a></div> </div>
+								</div>
+							</div>
+
+
+
 						  	<div ng-show="navBarContents.partnerMatch">
 						  		<div class="row"> 
 									<div class="col-sm-1"></div>
@@ -184,8 +215,8 @@
 						  		</div>
 						  		
 								<div>
-									<div class="list-group">
-										<a ng-href="/profile/{{match._id}}" class="list-group-item borderless" ng-repeat="match in matchList">
+									<div class="list-group nav_list-group">
+										<a ng-href="/profile/{{match._id}}" class="list-group-item nav_list-group-item borderless" ng-repeat="match in matchList">
 											{{match.FirstName}} {{match.LastName}}
 											<span class="badge badge-default badge-pill pull-right">{{match.Match}}</span>
 										</a>
@@ -212,14 +243,17 @@
 
     <!-- Scripts -->
 	<script>
-	function openNav() {
-		document.getElementById("mySlidenav").style.width = "330px";
+	var naTo = false;
+	function toggleNav() {
+		if (!naTo) {
+			document.getElementById("mySlidenav").style.width = "330px";
+			naTo = true;
+		}
+		else {
+			document.getElementById("mySlidenav").style.width = "0";
+			naTo = false;
+		}
 		//document.getElementById("main").style.marginLeft = "350px";
-	}
-
-	function closeNav() {
-		document.getElementById("mySlidenav").style.width = "0";
-		//document.getElementById("main").style.marginLeft= "0";
 	}
 	</script>
 
@@ -235,7 +269,7 @@
 	<!-- This is the Firebase script for use in all controllers -->
 	<script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
-    <script src="/socket/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 	
 	<!-- OUR master app.js file -->
 	<script src="controller/app.js"></script>
@@ -245,6 +279,7 @@
 	<script src="controller/loginController.js"></script>
 	<script src="controller/profileController.js"></script>
 	<script src="controller/conversationController.js"></script>
+	
 	<script src="controller/navController.js"></script>
 	<script src="controller/createGroupController.js"></script>
 	<script src="controller/groupConversationController.js"></script>
