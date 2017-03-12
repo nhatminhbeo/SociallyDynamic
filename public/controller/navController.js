@@ -194,4 +194,39 @@ function($scope, authService, $location ,$http, $rootScope) {
         $scope.conversationList[index].Unseen = 0;
         $location.path('/conversation/' + conversationId);
     };
+
+    $scope.converse = function (otherId) {
+        var currentUser = authService.Auth.$getAuth();
+        $http({
+            method: "GET",
+            url: "/api/conversation",
+            headers: {
+                "first": currentUser.uid,
+                "second": otherId
+            }
+        }).then(function (data) {
+            console.log(data);
+            if (data.data["ConversationID"]) {
+                console.log("Conversation Exist, going to /conversation/" + data.data["ConversationID"]);
+                $location.path("/conversation/" + data.data["ConversationID"]);
+            }
+            else {
+                console.log("Conversation doesn't exist");
+                $http({
+                    method: "POST",
+                    url: "/api/conversation",
+                    data: {
+                        "First": currentUser.uid,
+                        "Second": otherId
+                    }
+                }).then(function (data) {
+                    if(data.data["ConversationID"]) {
+                        console.log("New conversation created, going to /conversation/" + data.data["ConversationID"]);
+                        return $location.path("/conversation/" + data.data["ConversationID"]);
+                    }
+                });
+            }
+        });
+
+    };
 }]);
