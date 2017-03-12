@@ -82,7 +82,7 @@ if(currentUser){
 	    });
 	}
 
-    // Delete the group as the owner
+    // Go to a group member's profile page
 	$scope.profilePage = function(person){
 		console.log($scope.memberMap);
 		console.log(person);
