@@ -37,7 +37,9 @@ module.exports.route = function (app, dirname) {
 		res.sendFile(dirname + "/view/scenes/" + req.params.name + ".html");
 	});
 
+
 	app.get('*', function(req,res){
 		res.sendFile(dirname + "/view/index.html");
 	});
+
 };
