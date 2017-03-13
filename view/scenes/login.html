@@ -4,13 +4,15 @@
 <div ng-hide="isLoggedIn">
 <div ng-show="isLogin">
 	<div class="form-group">
-		<label for="emailLogin">Email address </label>
-		<input type="text" autocomplete="off" class="form-control" placeholder="Email" id="emailLogin" ng-model="email"></input>
-		<label for="passwordLogin">Password </label>
-		<input type="password" autocomplete="off" class="form-control" placeholder="Password" id="passwordLogin" ng-model="password"></input>
-		<br>
-		<button ng-click="signIn()">Sign In</button>
-		<button ng-click="changeForm()">Don't have an account? Sign Up!</button>
+		<form>
+			<label for="emailLogin">Email address </label>
+			<input type="text" autocomplete="off" class="form-control" placeholder="Email" id="emailLogin" ng-model="email"></input>
+			<label for="passwordLogin">Password </label>
+			<input type="password" autocomplete="off" class="form-control" placeholder="Password" id="passwordLogin" ng-model="password"></input>
+			<br>
+			<button type="submit" ng-click="signIn()">Sign In</button>
+			<button ng-click="changeForm()">Don't have an account? Sign Up!</button>
+		</form>
 	</div>
 </div>
 </div>
@@ -20,7 +22,7 @@
 	<br>
 	<button ng-click="changeForm()">Return to the Home Page</button>
 	<br><br>
-
+	<form>
 	<div class="form-group">
 		<label for="exampleInputEmail1">First Name</label>
     	<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name" ng-model="firstName">
@@ -125,7 +127,8 @@
     	<textarea style="resize:none;" class="form-control" id="Bio" rows="5" ng-model="bio"></textarea>
     </div>
 
-    <button ng-click="createAccount()">Sign Up</button>
+    <button type="submit" ng-click="createAccount()">Sign Up</button>
     <button ng-click="changeForm()">Cancel</button>
+    </form>
 </div>
 </div>
