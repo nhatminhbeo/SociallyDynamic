@@ -192,16 +192,23 @@ module.exports.deleteGroupWithId = function (req, res) {
 //  Author: 
 // ================================================================================
 module.exports.postGroupWithIdUser = function (req, res) {
-	var studentGroup = new StudentGroup({
-		GroupID: req.params.id,
-		StudentID: req.body.StudentID //TODO need to verify name of this field. studentID?
+
+
+	models.Promise.each(req.body.StudentList, function (StudentID) {
+
+		return StudentGroup({
+			GroupID: req.params.id,
+			StudentID: StudentID //TODO need to verify name of this field. studentID?
+		}).save();
+
 	});
 
-	studentGroup.save(function(err){
-		if (err) 
-			return res.status(400).send(err);
+	.then(function () {
+		return res.status(200).send('Saved student in group(postGroupWithIdUser)');		
+	})
 
-		return res.status(200).send('Saved student in group(postGroupWithIdUser)');
+	.then(null, function() {
+		return res.status(400).send('failed');
 	});
 };
 
