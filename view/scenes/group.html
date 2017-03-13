@@ -3,17 +3,36 @@
 <!-- div to display group profile -->
 <div class="groupDisplay">
 	
-	<h1> Study Groups </h1>
+	<div>
+		<div class="row">
+			<div class="col-sm-6" style="">
+				<h1> Study Groups </h1>
+			</div>
+	    	<!-- delete group button if admin -->
+	    	<div class="col-sm-2"> </div>
+			<div class="col-sm-4" ng-show="isOwner" style="position:relative; padding-top: 27px;">
+				<button class="btn btn-danger" ng-click="deleteGroup()" style="float:right;">Delete</button>	
+			</div>
 
-	    <!-- delete group button if admin -->
-		<div ng-show="isOwner">
-				<button position: fixed; class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-top: 1%; margin-left:90%">Delete</button>	
+			<!--leave group button if not admin -->
+			<div class="col-sm-4" ng-show="notOwner" style="position:relative; padding-top: 27px;">
+				<button class="btn btn-danger" ng-click="leaveGroup()" style="float:right;">Leave</button>	
+			</div> 
 		</div>
+	</div>
+<!--
+<div class ="container-fluid">
+  <div class ="row">s
+    <div class ="col-md-6 col-sm-6">
+        First Div
+    </div>
+    <div class ="col-md-6 col-sm-6">
+        Second Div
+     </div>
+  </div>
+</div>
+-->
 
-		<!-- leave group button if not admin -->
-		<div ng-show="notOwner">
-				<button class="btn btn-primary" ng-click="leaveGroup()" style="display:block;margin-left:90%">Leave</button>	
-		</div>
 
         <!-- group data -->
 	    <div id="groupPic" style="display:block;text-align:center; margin:0 auto;">
@@ -42,8 +61,9 @@
 
 
 	    <!-- add new person into group -->
-		<button class="btn btn-primary" ng-show="tempAddButton" ng-click="showMemberForm()" style="display:block;margin-left:83%">Add Member</button>
-
+	    <div style="">
+			<button class="btn btn-primary" ng-show="tempAddButton" ng-click="showMemberForm()" style="display:block;margin-left:84%">Add Member</button>
+		</div>
 
 		<div ng-show="add"> 
 			<div class="row">

@@ -538,7 +538,7 @@ $http, currentUser, $routeParams) {
                     console.log("Friend request exists");
                 }
 
-                $scope.friendBtn = "Check Yor Inbox";
+                $scope.friendBtn = "Check Your Inbox";
                 $scope.reqRec = true;
             }
         });
