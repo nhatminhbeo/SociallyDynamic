@@ -1,6 +1,6 @@
-app.controller('groupController', ['$scope', 'authService', '$location', 'currentUser', '$http', '$rootScope', '$routeParams',
+app.controller('groupController', ['$scope', 'authService', '$location', 'currentUser', '$http', '$rootScope', '$routeParams', '$route',
 function($scope, authService, $location, 
-currentUser, $http, $rootScope, $routeParams){
+currentUser, $http, $rootScope, $routeParams, $route){
 
 	$scope.isOwner;
 	$scope.notOwner;
@@ -32,6 +32,7 @@ if(currentUser){
 	$scope.owner = "";
 	$scope.groupname = "";
 	$scope.memberID = "";
+	$scope.memberMapID = {};
 
     // Retrives the entire list of group members
     var getGroupInfo = function(){
@@ -49,6 +50,7 @@ if(currentUser){
             for (var i = 0; i < data.data.Member.length; i++){
                 $scope.members.push(data.data.Member[i].FirstName + " " + data.data.Member[i].LastName);
                 $scope.memberMap[data.data.Member[i].FirstName + " " + data.data.Member[i].LastName] = data.data.Member[i]._id;
+                $scope.memberMapID[data.data.Member[i]._id] = [data.data.Member[i].FirstName + " " + data.data.Member[i].LastName];
             }
 
             console.log(data.data.GroupName);
@@ -144,7 +146,7 @@ if(currentUser){
         console.log("id: " + id);
         console.log("name: " + name);
 
-        if (!$scope.selectedMembers[id]) {
+        if (!$scope.selectedMembers[id] && !$scope.memberMapID[id]) {
             console.log("No stuff");
             $scope.selectedMembers[id] = name;
         }
@@ -174,7 +176,7 @@ if(currentUser){
 	        console.log("joined group");
 	        $scope.tempAddButton = true;
 			$scope.add = false;
-	        $location.path('/group/' + $routeParams.id);
+	        $route.reload();
 	    });
 	} 
 

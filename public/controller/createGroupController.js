@@ -62,7 +62,7 @@ $http, currentUser, $routeParams) {
         }
 
         // check that all boxes are filled in
-        if (name == "" || info == "" || memberList.length == 0) {
+        if (name == "" || memberList.length == 0) {
             alert("Please make sure all fields are filled in.");
             return;
         }

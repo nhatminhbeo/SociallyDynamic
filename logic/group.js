@@ -201,7 +201,7 @@ module.exports.postGroupWithIdUser = function (req, res) {
 			StudentID: StudentID //TODO need to verify name of this field. studentID?
 		}).save();
 
-	});
+	})
 
 	.then(function () {
 		return res.status(200).send('Saved student in group(postGroupWithIdUser)');		
