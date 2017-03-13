@@ -52,7 +52,7 @@ $http, currentUser, $routeParams) {
     // create group
     $scope.createGroup = function() {
         var name = $scope.groupName.trim();
-        var info = $scope.groupInfo;
+        //var info = $scope.groupInfo;
         var memberList = [];
         
         // make final list of members

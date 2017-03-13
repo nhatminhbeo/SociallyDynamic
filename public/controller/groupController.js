@@ -4,7 +4,10 @@ currentUser, $http, $rootScope, $routeParams){
 
 	$scope.isOwner;
 	$scope.notOwner;
-
+	$scope.tempAddButton = true;
+	$scope.add = false;
+	$scope.selectedMembers = {};
+	$scope.friendsFilter = "";
 
 	 //logout
     $scope.logout = function() {
@@ -28,6 +31,7 @@ if(currentUser){
 	$scope.memberMap = {};
 	$scope.owner = "";
 	$scope.groupname = "";
+	$scope.memberID = "";
 
     // Retrives the entire list of group members
     var getGroupInfo = function(){
@@ -114,6 +118,78 @@ if(currentUser){
 	$scope.goToGroupMessage = function(){
 	    $location.path('/group/conversation/' + $routeParams.id);
 	}
+
+
+
+	// Add a new member into the already created group
+	$scope.showMemberForm = function() {
+		$scope.add = true;
+		$scope.tempAddButton = false;
+	}
+
+    $http({
+        method: "GET",
+        url: "/api/student/friend/" + currentUser.uid
+    }).then(function (data) {
+        console.log(data);
+        $scope.data = data.data;
+        for (var i = 0; i < data.data.length; i++) {
+            $scope.data[i]["Name"] = $scope.data[i]["FirstName"] + " " + $scope.data[i]["LastName"]
+        }
+        console.log(data);
+    });
+
+	// add member into temp selected member list
+    $scope.listMembers = function(id, name) {
+        console.log("id: " + id);
+        console.log("name: " + name);
+
+        if (!$scope.selectedMembers[id]) {
+            console.log("No stuff");
+            $scope.selectedMembers[id] = name;
+        }
+        
+        console.log($scope.selectedMembers);
+    }
+
+   	// POST into the group
+    $scope.addNewMember = function() {
+		 //REST: POST:/api/group/:id/user
+		console.log("trying to join group");
+		var memberList = [];
+        
+        // get list if student IDs
+        for (var key in $scope.selectedMembers) {
+            console.log("key: " + key);
+            memberList.push(key);
+        }
+
+		 $http({
+		 	method: "POST",
+			url: "/api/group/" + $routeParams.id + "/user",
+		 	data : {
+		 		StudentList : memberList
+		 	}
+		}).then(function(data){
+	        console.log("joined group");
+	        $scope.tempAddButton = true;
+			$scope.add = false;
+	        $location.path('/group/' + $routeParams.id);
+	    });
+	} 
+
+	// delete selected members
+    $scope.deleteMembers = function(id) {
+        delete $scope.selectedMembers[id];
+        console.log($scope.selectedMembers);
+    }
+
+    // cancel create group
+    $scope.cancel = function() {
+    	$scope.tempAddButton = true;
+		$scope.add = false;
+        $location.path('/group/' + $routeParams.id) ;
+    }
 
 	// Render group page
 	getGroupInfo();

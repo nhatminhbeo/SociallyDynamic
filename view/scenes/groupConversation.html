@@ -4,7 +4,7 @@
 <!-- top bar displays name of person user is talking to-->
 
 <div id = "header">
-   <h1 style= "text-align: center; font-size: 120%;" >{{GroupName}}</h1>
+   <h1 style= "text-align: center; font-size: 120%;">{{GroupName}}</h1>
 </div>
 
 
@@ -13,6 +13,9 @@
 	<!-- chat bubble views start -->
 	<div id="scroll" class="scroll" style= scroll>
 		<ul style = "list-style-type: none"> 
+			<div ng-show = "showButton" class="convo_center">
+				<button ng-click="showMoreMessages()">Show More Messages</button>
+			</div>
 			<div ng-repeat = "message in messages track by $index"> 
 
 				<div class = "row"  >
@@ -25,7 +28,7 @@
 						</div>
 						<div ng-if = "message.Sender != currentUserid">
 							<p>
-								<div class = "friend_speech">{{message.SenderFirstName}} {{message.SenderLastName}}: {{message.Content}} </div>
+								<div class = "friend_speech"> {{message.SenderFirstName}} {{message.SenderLastName}}: {{message.Content}} </div>
 							</p>
 						</div>
 					</div>
@@ -55,6 +58,3 @@
 
 
 <scr></scr>
-
-
-

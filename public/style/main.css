@@ -70,6 +70,7 @@ button:hover {
 }
 
 .nav {
+	border: 0px;
 	padding-bottom: 0px;
 	margin-bottom: 0px;
 }
@@ -95,12 +96,12 @@ button:hover {
 
 .badge {
 	vertical-align: bottom;
-	display: inline
-	padding: 0px;
+	display: inline;
 }
 
 #requests {
 	position: relative;
+	padding-bottom: 0px;
 	left: 20px;
 	color: white;
 }
@@ -116,6 +117,16 @@ button:hover {
 .glyphicon-plus {
 	color: #818181;
 }
-.glyphicon-send {
+.glyphicon-envelope {
 	color: blue;
+}
+
+#tabFirst {
+	border-color: #818181;
+	border-right: solid;
+	padding-right: 18px;
+}
+
+#tabLast {
+
 }
