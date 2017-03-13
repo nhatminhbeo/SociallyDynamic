@@ -7,7 +7,7 @@
 
 	    <!-- delete group button if admin -->
 		<div ng-show="isOwner">
-				<button class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-left:90%">Delete</button>	
+				<button position: fixed; class="btn btn-primary" ng-click="deleteGroup()" style="display:block;margin-top: 1%; margin-left:90%">Delete</button>	
 		</div>
 
 		<!-- leave group button if not admin -->
@@ -20,7 +20,7 @@
 			<img src="http://geekxgirls.com/images/_comics/totoro-gifs-04.gif" style="width:200px;height:200px;display:block;margin-right:auto;margin-left:auto;" />
 		</div>
 		    <!-- message button -->
-			<span ng-click="goToGroupMessage()" style="display:block; margin-left: 60%;" class="login_anchor glyphicon glyphicon-send"></span>
+			<span ng-click="goToGroupMessage()" style="display:block; margin-left: 60%;" class="login_anchor glyphicon glyphicon-envelope"></span>
 		 	<h1 style="text-align:center; clear: both"> {{groupname}} </h1>
 
 		<!-- display group bio
@@ -39,4 +39,47 @@
 				</a>
 			</ul>
 	    </div>
+
+
+	    <!-- add new person into group -->
+		<button class="btn btn-primary" ng-show="tempAddButton" ng-click="showMemberForm()" style="display:block;margin-left:83%">Add Member</button>
+
+
+		<div ng-show="add"> 
+			<div class="row">
+   			<div class="col-sm-6">
+			<label for="memberList">Add Members</label>
+    		<input type="text" class="form-control" id="memberList" placeholder="Add Members" ng-model="friendsFilter">
+
+			<ul class="list-group">
+		    
+			<!-- autocomplete filter -->  
+		    <a class="list-group-item" ng-repeat="person in data | filter:{Name: friendsFilter} | limitTo:quantity track by $index" ng-show="friendsFilter" ng-click="listMembers(person._id, person.Name)">
+		    	{{person.Name}}
+		    </a>
+		 
+
+		    </ul>
+		    </div>
+
+
+		    <!-- display inputs -->
+		    <div class="col-sm-2"> </div>
+			<div class="col-sm-4">
+				<ul class="list-group">
+					<label>Selected Members</label>
+						<!-- get list of inputted members; also able to delete a member-->
+						<a class="list-group-item" ng-repeat="(memberkey,membervalue) in selectedMembers"
+						ng-click="deleteMembers(memberkey)">
+							{{membervalue}}
+						</a>
+				</ul>
+			</div>
+			</div> 
+
+			<!-- add button -->
+			<button class="btn btn-primary" ng-click="addNewMember()" style="display:block;float: right">Add</button>
+			<button class="btn btn-primary" ng-click="cancel()"> Cancel </button>
+			</div>
+		</div>
 </div>

@@ -13,8 +13,8 @@
 	<!-- chat bubble views start -->
 	<div id="scroll" class="scroll" style= scroll>
 		<ul style = "list-style-type: none"> 
-			<div ng-show = "showButton">
-				<button ng-click="showMoreMessages()" class="btn btn-default">Show more messages</button>
+			<div ng-show = "showButton" class="convo_center">
+				<button ng-click="showMoreMessages()">Show More Messages</button>
 			</div>
 			<div ng-repeat = "message in messages track by $index"> 
 

@@ -1,6 +1,6 @@
 {
   "name": "SociallyDynamic",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Socially Dynamic Team Project",
   "main": "server.js",
   "engines": {
