@@ -2,7 +2,7 @@
 // File: /routes/friend.js
 // Description: Serve API functions to requests at route /api/friend/*
 // Author: Minh Tran Quoc
-// Last updated: Feb 12 2017
+// Last updated: Mar 4 2017
 // ===========================================================================
 
 //    Path                    |   Method    |   Purpose / Brief Description
@@ -12,6 +12,7 @@
 //    /api/friend/            |   GET       |   Get the friendship between two students described in request body
 //    /api/friend/            |   POST      |   Create new friendship between two students described in request body
 //    /api/friend/            |   DELETE    |   Delete a friendship between two students described in request body 
+//    /api/friend/request     |   GET      	|   Get friend reqeust status between two students
 //    /api/friend/request     |   POST      |   Create new friend request from sender to receiver described in request body
 //    /api/friend/request     |   DELETE    |   Delete a friend request from sender to receiver described in request body
 // ===============================================================================================================================================

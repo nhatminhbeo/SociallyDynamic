@@ -2,7 +2,7 @@
 // File: /view/public.js
 // Description: Serve html files to public route
 // Author: Minh Tran Quoc
-// Last updated: Feb 12 2017
+// Last updated: Mar 14 2017
 // ===========================================================================
 
 // ==============================================================================================================================
@@ -11,25 +11,19 @@
 //    Path          |   Method    |   Purpose / Brief Description
 // ==============================================================================================================================
 //    /             |   GET       |   Home page -- sends public/view/index.html
-//    /login        |   GET       |   Login page -- sends public/view/login.hmtl
-//    /group        |   GET       |   General Group page -- sends public/view/groups.html
-//    /group/:id    |   GET       |   A Specific Group page -- sends public/view/group.html
-//    /profile/:id  |   GET       |   View a student's profile -- sends public/view/user.html
-//    /match        |   GET       |   Show possible matches page -- sends public/view/match.html
+//    /:name        |   GET       |   Delegate to Angular Routing -- sends public/view/index.html 
+//    /*	        |   GET       |   Delegate to Angular Routing -- sends public/view/index.html 
+//    /scenes/:name |   GET       |   Serve view partials for Angular view
 // ==============================================================================================================================
 
 module.exports.route = function (app, dirname) {
 
 	app.get('/', function (req, res) {
-		console.log('hello world');
-		console.log(dirname + "/view/index.html");
 		res.sendFile(dirname + "/view/index.html");
 	});
 
 	// this is to make sure our 404 page gets displayed if some random route is typed in the URL bar 
 	app.get('/:name', function (req, res) {
-			console.log('hello world');
-			console.log(dirname + "/view/index.html");
 			res.sendFile(dirname + "/view/index.html");
 	});
 

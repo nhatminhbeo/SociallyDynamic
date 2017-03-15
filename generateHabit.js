@@ -1,3 +1,10 @@
+// ===========================================================================
+// File: generateHabit.js
+// Description: Generate Habit based on data in data/ directory
+// Author: Minh Tran Quoc
+// Last updated: Mar 14 2017
+// ===========================================================================
+
 var models = require("./logic/general");
 var fs = require("fs");
 var obj = JSON.parse(fs.readFileSync("data/json/habits.json", 'utf8'));

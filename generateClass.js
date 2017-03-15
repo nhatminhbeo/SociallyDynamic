@@ -1,3 +1,10 @@
+// ===========================================================================
+// File: generateClass.js
+// Description: Generate Class based on data in data/ directory
+// Author: Minh Tran Quoc
+// Last updated: Mar 14 2017
+// ===========================================================================
+
 var models = require("./logic/general");
 var fs = require('fs');
 var obj = JSON.parse(fs.readFileSync('data/json/classes.json', 'utf8'));

@@ -1,8 +1,8 @@
 // ===========================================================================
 // File: /logic/match.js
 // Description: Export API functions that handle requests at /api/match/*
-// Author:
-// Last updated: Feb 12 2017
+// Author: Minh Tran Quoc
+// Last updated: Mar 14 2017
 // ===========================================================================
 
 var models = require('./general');
@@ -19,10 +19,12 @@ var models = require('./general');
 // ================================================================================
 //  Function: getMatchClassWithId
 //  REST: GET:/api/match/class/:id
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
+//  Description: Get a list of potential partners for student described by
+//				 id, priority class
+//  Expected input (req.params.id): id of a student
+//  Expected output (res): List of students with same major with _id, FirstName,
+//							LastName, Match, [Classes], field.
+//  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.getMatchClassWithId = function (req, res) {
 
@@ -90,10 +92,12 @@ module.exports.getMatchClassWithId = function (req, res) {
 // ================================================================================
 //  Function: getMatchHabitWithId
 //  REST: GET:/api/match/habit/:id
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
+//  Description: Get a list of potential partners for student described
+//				 by id, priority habit
+//  Expected input (req.params.id): id of a student
+//  Expected output (res): List of students with same major with _id, FirstName,
+//							LastName, Match, [Habits], field.
+//  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.getMatchHabitWithId = function (req, res) {
 
@@ -148,7 +152,6 @@ module.exports.getMatchHabitWithId = function (req, res) {
 		for (entry in map) {
 			list.push(map[entry]);
 		}
-		console.log(list);
 		list.sort(compare);
 		return res.status(200).json(list);
 	})
@@ -164,10 +167,12 @@ module.exports.getMatchHabitWithId = function (req, res) {
 // ================================================================================
 //  Function: getMatchMajorWithId
 //  REST: GET:/api/match/major/:id
-//  Description:
-//  Expected input (req.body):
-//  Expected output (res):
-//  Author: 
+//  Description: Get a list of potential partners for student described
+//				 by id, priority major
+//  Expected input (req.params): id of a student
+//  Expected output (res): list of students with same major with _id, FirstName,
+//							LastName, Major field.
+//  Author: Minh Tran Quoc
 // ================================================================================
 module.exports.getMatchMajorWithId = function (req, res) {
 
@@ -209,6 +214,7 @@ module.exports.getMatchMajorWithId = function (req, res) {
 	});
 };
 
+// Compare function to compare matches of students
 var compare =function (a, b) {
 	if (a["Match"] > b["Match"]) {
 		return -1;

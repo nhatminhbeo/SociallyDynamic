@@ -1,14 +1,20 @@
 // ===========================================================================
 // File: /logic/message.js
 // Description: Export API functions that handle requests at /api/message/*
-// Author:
-// Last updated: Feb 12 2017
+// Author: Minh Tran Quoc
+// Last updated: Mar 14 2017
 // ===========================================================================
 
 // ===============================================================================================================================================
+//    Path                    |   Method    |   Purpose / Brief Description
+// ===============================================================================================================================================
 //                                   Message systems (PM)
 // ===============================================================================================================================================
-//    /api/conversation/:id   |   GET       |   Return messages in an interval of a certain conversation defined in parameter.
+//    /api/conversatoin/           |   GET       |   Return convesation id between two students
+//    /api/conversation/           |   POST      |   Create conversation between two students
+//    /api/conversation/:id        |   GET 	     |   Return the 15 sorted messages starting from ith message
+//    /api/conversation/:id        |   PUT 	     |   Update "seen" field of conversation between 2 students
+//    /api/group/conversation/:id  |   GET 	     |   Return the 15 sorted messages starting from ith message of a group conversation
 // ===============================================================================================================================================
 
 var models = require('./general');

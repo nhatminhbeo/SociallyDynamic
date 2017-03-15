@@ -15,6 +15,7 @@
 // ===============================================================================================================================================
 
 var api = require('../logic/inbox');
+
 module.exports.route = function(app) {
 	app.get('/api/inbox/message/:id', api.getInboxMessageWithId);
 	app.get('/api/inbox/friend/:id', api.getInboxFriendWithId);
