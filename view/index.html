@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
+<head>
 
-		<title>Team Socially Dynamic</title>
-		<base href='/'>
-		<meta charset="utf-8"/>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+	<title>Team Socially Dynamic</title>
+	<base href='/'>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
 
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-		<title>Team Socially Dynamic</title>
+	<title>Team Socially Dynamic</title>
 
-		<!-- Bootstrap Core CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap Core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-		<!-- Custom CSS -->
-		<link href="css/sb-admin.css" rel="stylesheet">
+	<!-- Custom CSS -->
+	<link href="css/sb-admin.css" rel="stylesheet">
 
-		<!-- Style for Slidebar -->
-		<style>
+	<!-- Style for Slidebar -->
+	<style>
 
 		.slidenav {
 			height: 100%;
@@ -70,259 +70,259 @@
 			margin-left: 140px;
 		}
 
-		</style>
+	</style>
 
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
 			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+			<![endif]-->
 
-		<!-- Custom Global CSS -->
-		<link rel="stylesheet" type="text/css" href="style/main.css">
+			<!-- Custom Global CSS -->
+			<link rel="stylesheet" type="text/css" href="style/main.css">
 
-		<!-- Custom Global Partial CSS -->
-		<link href="style/profile.css" rel="stylesheet">
-		<link href="style/login.css" rel="stylesheet">		
-	</head>
+			<!-- Custom Global Partial CSS -->
+			<link href="style/profile.css" rel="stylesheet">
+			<link href="style/login.css" rel="stylesheet">		
+		</head>
 
-	<body ng-app="SD">
+		<body ng-app="SD">
 
-		<div ng-controller="navController">
-			<!--<h1>{{navController}}</h1>-->
-			<!-- TODO: UNCOMMENT LINE ABOVE WHEN RUNNING SERVER -->
-		
-			
-			<div id="wrapper">
+			<div ng-controller="navController">
+				<!--<h1>{{navController}}</h1>-->
+				<!-- TODO: UNCOMMENT LINE ABOVE WHEN RUNNING SERVER -->
+				
+				
+				<div id="wrapper">
 
-			<!-- Navigation -->
-			<nav class="navbar navbar-inverse navbar-fixed-top" ng-show="isNavbar" role="navigation">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/"><img src="images/studyr.png" class="img-responsive" title="studyr logo" width="85" height="50"></a>
-				</div>
+					<!-- Navigation -->
+					<nav class="navbar navbar-inverse navbar-fixed-top" ng-show="isNavbar" role="navigation">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<a class="navbar-brand" href="/"><img src="images/studyr.png" class="img-responsive" title="studyr logo" width="85" height="50"></a>
+						</div>
 
-				<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-				<div class="navbar-header">
-					<ul class="nav navbar-nav side-nav">
-						<li class="active">
-							<a href="/"><span style=""><img alt="My Profile" src="images/profile.png" class="img-responsive" title="profile" width="60" height="60"></span></a>
-						</li>
-						<li>
-							<a href=""><span  onclick="toggleNav(1)" ng-click="getFriendList()" style=""><img title="Contacts" src="images/contacts.png" class="img-responsive" alt="Contacts" width="60" height="60"></span></a>
-						</li>
-						<li>
-							<a href=""><span onclick="toggleNav(2)"ng-click="getInbox(inbox.Wait)"  style=""><img title="Inbox" src="images/inbox.png" class="img-responsive" alt="Inbox" width="60" height="60"></span></a>
-						</li>
-						<li>
-							<a href=""><span onclick="toggleNav(3)" ng-click="getGroup()" style=""><img title="Groups" src="images/group.png" class="img-responsive" alt="Groups" width="60" height="60"></span></a>
-						</li>	
-						<li>
-							<a href=""><span onclick="toggleNav(4)" ng-click="getMatch(matching.Class)" style=""><img title="Find Partner Match" src="images/partner match.png" class="img-responsive" alt="Find Partner Match" width="60" height="60"></span></a>
-						</li>					
-						<li ng-click="logout()">
-							<a href=""><img title="Log out" src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
-						</li>
-					</ul>
-				</div>
-				<!-- /.navbar-collapse -->
-			</nav>
+						<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+						<div class="navbar-header">
+							<ul class="nav navbar-nav side-nav">
+								<li class="active">
+									<a href="/"><span style=""><img alt="My Profile" src="images/profile.png" class="img-responsive" title="profile" width="60" height="60"></span></a>
+								</li>
+								<li>
+									<a href=""><span  onclick="toggleNav(1)" ng-click="getFriendList()" style=""><img title="Contacts" src="images/contacts.png" class="img-responsive" alt="Contacts" width="60" height="60"></span></a>
+								</li>
+								<li>
+									<a href=""><span onclick="toggleNav(2)"ng-click="getInbox(inbox.Wait)"  style=""><img title="Inbox" src="images/inbox.png" class="img-responsive" alt="Inbox" width="60" height="60"></span></a>
+								</li>
+								<li>
+									<a href=""><span onclick="toggleNav(3)" ng-click="getGroup()" style=""><img title="Groups" src="images/group.png" class="img-responsive" alt="Groups" width="60" height="60"></span></a>
+								</li>	
+								<li>
+									<a href=""><span onclick="toggleNav(4)" ng-click="getMatch(matching.Class)" style=""><img title="Find Partner Match" src="images/partner match.png" class="img-responsive" alt="Find Partner Match" width="60" height="60"></span></a>
+								</li>					
+								<li ng-click="logout()">
+									<a href=""><img title="Log out" src="images/logout.png" class="img-responsive" alt="logout" width="60" height="60"></a>
+								</li>
+							</ul>
+						</div>
+						<!-- /.navbar-collapse -->
+					</nav>
 
-			<div class="container-fluid">
-				<div class="row">	
-					<div class="col-lg-12">
-						<div id="mySlidenav" class="slidenav" ng-show="isNavbar">
-
-
-							<!--Contact expand nav -->
-						  	<div id="requests" ng-show="navBarContents.contacts">
-						  		<h3>Contacts</h3>
-						  		<hr/>
-								<div class="row"> 
-								<div class="col-sm-5"></div>
-								<div class="col-sm-4">
-								<div class="loader" ng-show="loading"></div> 
-								</div>
-								</div>
-								
-								<div ng-repeat="friend in friendList track by $index">
-									
-									<div class="login_anchor">
-										<span ng-click="goToProfile(friend._id)">{{friend.FirstName}} {{friend.LastName}}</span>
-										<span ng-click="converse(friend._id)" class="glyphicon glyphicon-envelope"></span>
-									</div>
-									
-								
-									
-								
-								  <!-- ng-href="/conversation/{{friend.ConversationID}}" -->
-								</div>
-							</div>
+					<div class="container-fluid">
+						<div class="row">	
+							<div class="col-lg-12">
+								<div id="mySlidenav" class="slidenav" ng-show="isNavbar">
 
 
-
-							<!--INBOX -->
-						  	<div id="requests" ng-show="navBarContents.inbox">
-						  		<h3>Inbox</h3>
-						  		<hr/>
-
-						  		<div class="row"> 
-									<div class="col-sm-1"></div>
-									<ul class="nav nav-tabs">
-							  		<div class="col-sm-5"> <div id="tabFirst"> <li class="active login_anchor" ng-click="getRequests()">Requests</li></div></div>  
-							  		<div class="col-sm-5"> <div id="tabLast"> <li class="login_anchor" ng-click="getMessages()">Messages</li></div></div> 
-									<div class="col-sm-1"></div></ul>
-						  		</div>
-						  		<hr/>
-								<div id="requests" ng-show="inboxToggles.requests">
-								<div class="row"> 
-									<div class="col-sm-5"></div>
-									<div class="col-sm-4">
-									<div class="loader" ng-show="loading"></div> 
-									</div>
-							  	</div>
-									<div class="row" ng-repeat="friendRequest in friendRequestList track by $index">
-										<div class="col-sm-7">
-											<div class="login_anchor" ng-click="goToProfile(friendRequest.OtherID)">
-											{{friendRequest.FirstName}} {{friendRequest.LastName}}
+									<!--Contact expand nav -->
+									<div id="requests" ng-show="navBarContents.contacts">
+										<h3>Contacts</h3>
+										<hr/>
+										<div class="row"> 
+											<div class="col-sm-5"></div>
+											<div class="col-sm-4">
+												<div class="loader" ng-show="loading"></div> 
 											</div>
-										</div>
-										<div class="col-sm-5">
-											<span ng-click="responseFriend(res.accept,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-ok"></span>
-											<span ng-click="responseFriend(res.deny,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-remove"></span>
-										</div>
-									</div>
-								</div>
-								<div id="requests" ng-show="inboxToggles.conversations">
-									<div class="row" ng-repeat="conversation in conversationList track by $index">
-										<div class="col-sm-7">
-											<div class="login_anchor" ng-click="goToConversation(conversation.ConversationID, $index)">
-											{{conversation.FirstName}} {{conversation.LastName}}
-											</div>
-										</div>
-										<div class="col-sm-5">
-											<span style="color:white; position:relative; bottom:5px;"class="badge badge-default badge-pill">{{conversation.Unseen}}</span>
-										</div>
-									</div>
-								</div> 
-							</div>
-
-							<div id="requests" ng-show="navBarContents.group">
-									
-								<h3>Groups</h3> 
-								<span style="position:absolute; right:10%;" ng-click="toCreateGroup()" class="login_anchor glyphicon glyphicon-plus"></span>
-								<hr/>
-								<div class="row"> 
-									<div class="col-sm-5"></div>
-									<div class="col-sm-4">
-									<div class="loader" ng-show="loading"></div> 
-									</div>
-							  	</div>
-								<div ng-repeat="group in groupList">
-										<div class="login_anchor">
-									  		<span ng-click="goToGroup(group._id)"> {{group.GroupName}}</span> <span ng-click="toGroupConversation(group._id)" class="glyphicon glyphicon-envelope"></span>
 										</div>
 										
-								</div>
-							</div>
-
-
-						  	<div id="requests" ng-show="navBarContents.partnerMatch">
-						  		<h3>Match by</h3>
-						  		<hr/>
-						  		<div class="row"> 
-									<ul class="nav nav-tabs">
-							  		<div class="col-sm-4"> <div id="tabFirst"> <li class="active login_anchor" ng-click="getMatch(matching.Class)">Class</li></div></div>  
-							  		<div class="col-sm-4"> <div id="tabFirst"> <li class="login_anchor"ng-click="getMatch(matching.Major)">Major</li></div> </div>
-							  		<div class="col-sm-3"> <div id="tabLast">  <li class="login_anchor"ng-click="getMatch(matching.Habit)">Habit</li></div></div>
-									<div class="col-sm-1"></div></ul>
-						  		</div>
-						  		<hr/>
-						  		<div class="row"> 
-									  <div class="col-sm-5"></div>
-									  <div class="col-sm-4">
-									   <div class="loader" ng-show="loading"></div> 
-									   </div>
-							  		
-						  		</div>
-						  		
-									<div ng-repeat="match in matchList">
-									
-										<div class="login_anchor" ng-click="goToProfile(match._id)"> 
-											{{match.FirstName}} {{match.LastName}}
-											<span style="color:white; position:relative; bottom:5px;" class="badge badge-default badge-pill">{{match.Match}}</span>
+										<div ng-repeat="friend in friendList track by $index">
+											
+											<div class="login_anchor">
+												<span ng-click="goToProfile(friend._id)">{{friend.FirstName}} {{friend.LastName}}</span>
+												<span ng-click="converse(friend._id)" class="glyphicon glyphicon-envelope"></span>
+											</div>
+											
+											
+											
+											
+											<!-- ng-href="/conversation/{{friend.ConversationID}}" -->
 										</div>
 									</div>
-									</div>
+
+
+
+									<!--INBOX -->
+									<div id="requests" ng-show="navBarContents.inbox">
+										<h3>Inbox</h3>
+										<hr/>
+
+										<div class="row"> 
+											<div class="col-sm-1"></div>
+											<ul class="nav nav-tabs">
+												<div class="col-sm-5"> <div id="tabFirst"> <li class="active login_anchor" ng-click="getRequests()">Requests</li></div></div>  
+												<div class="col-sm-5"> <div id="tabLast"> <li class="login_anchor" ng-click="getMessages()">Messages</li></div></div> 
+												<div class="col-sm-1"></div></ul>
+											</div>
+											<hr/>
+											<div id="requests" ng-show="inboxToggles.requests">
+												<div class="row"> 
+													<div class="col-sm-5"></div>
+													<div class="col-sm-4">
+														<div class="loader" ng-show="loading"></div> 
+													</div>
+												</div>
+												<div class="row" ng-repeat="friendRequest in friendRequestList track by $index">
+													<div class="col-sm-7">
+														<div class="login_anchor" ng-click="goToProfile(friendRequest.OtherID)">
+															{{friendRequest.FirstName}} {{friendRequest.LastName}}
+														</div>
+													</div>
+													<div class="col-sm-5">
+														<span ng-click="responseFriend(res.accept,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-ok"></span>
+														<span ng-click="responseFriend(res.deny,friendRequest.OtherID,$index)" class="login_anchor glyphicon glyphicon-remove"></span>
+													</div>
+												</div>
+											</div>
+											<div id="requests" ng-show="inboxToggles.conversations">
+												<div class="row" ng-repeat="conversation in conversationList track by $index">
+													<div class="col-sm-7">
+														<div class="login_anchor" ng-click="goToConversation(conversation.ConversationID, $index)">
+															{{conversation.FirstName}} {{conversation.LastName}}
+														</div>
+													</div>
+													<div class="col-sm-5">
+														<span style="color:white; position:relative; bottom:5px;"class="badge badge-default badge-pill">{{conversation.Unseen}}</span>
+													</div>
+												</div>
+											</div> 
+										</div>
+
+										<div id="requests" ng-show="navBarContents.group">
+											
+											<h3>Groups</h3> 
+											<span style="position:absolute; right:10%;" ng-click="toCreateGroup()" class="login_anchor glyphicon glyphicon-plus"></span>
+											<hr/>
+											<div class="row"> 
+												<div class="col-sm-5"></div>
+												<div class="col-sm-4">
+													<div class="loader" ng-show="loading"></div> 
+												</div>
+											</div>
+											<div ng-repeat="group in groupList">
+												<div class="login_anchor">
+													<span ng-click="goToGroup(group._id)"> {{group.GroupName}}</span> <span ng-click="toGroupConversation(group._id)" class="glyphicon glyphicon-envelope"></span>
+												</div>
+												
+											</div>
+										</div>
+
+
+										<div id="requests" ng-show="navBarContents.partnerMatch">
+											<h3>Match by</h3>
+											<hr/>
+											<div class="row"> 
+												<ul class="nav nav-tabs">
+													<div class="col-sm-4"> <div id="tabFirst"> <li class="active login_anchor" ng-click="getMatch(matching.Class)">Class</li></div></div>  
+													<div class="col-sm-4"> <div id="tabFirst"> <li class="login_anchor"ng-click="getMatch(matching.Major)">Major</li></div> </div>
+													<div class="col-sm-3"> <div id="tabLast">  <li class="login_anchor"ng-click="getMatch(matching.Habit)">Habit</li></div></div>
+													<div class="col-sm-1"></div></ul>
+												</div>
+												<hr/>
+												<div class="row"> 
+													<div class="col-sm-5"></div>
+													<div class="col-sm-4">
+														<div class="loader" ng-show="loading"></div> 
+													</div>
+													
+												</div>
+												
+												<div ng-repeat="match in matchList">
+													
+													<div class="login_anchor" ng-click="goToProfile(match._id)"> 
+														{{match.FirstName}} {{match.LastName}}
+														<span style="color:white; position:relative; bottom:5px;" class="badge badge-default badge-pill">{{match.Match}}</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>						
 								</div>
-							</div>						
+							</div>
 						</div>
+						
 					</div>
+
 				</div>
 				
+				<div ng-view>
+				</div>	
 			</div>
-
-		</div>
-		
-		<div ng-view>
-		</div>	
-	</div>
-	<!-- end of bootstrap stuff -->
+			<!-- end of bootstrap stuff -->
 
 
-    <!-- Scripts -->
-	<script>
-	var naTo = false;
-	var currentTab = 0;
-	function toggleNav(a) {
-		
-		if(naTo && currentTab != a){
-			currentTab = a;
-			return;
-		}
-		if (!naTo) {
-			document.getElementById("mySlidenav").style.width = "25%";
-			naTo = true;
-			currentTab = a;
-		}
-		else {
-			document.getElementById("mySlidenav").style.width = "0";
-			naTo = false;
-		}
+			<!-- Scripts -->
+			<script>
+				var naTo = false;
+				var currentTab = 0;
+				function toggleNav(a) {
+					
+					if(naTo && currentTab != a){
+						currentTab = a;
+						return;
+					}
+					if (!naTo) {
+						document.getElementById("mySlidenav").style.width = "25%";
+						naTo = true;
+						currentTab = a;
+					}
+					else {
+						document.getElementById("mySlidenav").style.width = "0";
+						naTo = false;
+					}
 		//document.getElementById("main").style.marginLeft = "350px";
 	}
-	</script>
+</script>
 
-	<script src="/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 
 </body>
 
-	<!-- script files -->
-	
-	<!-- master Anguar library files -->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+<!-- script files -->
 
-	<!-- This is the Firebase script for use in all controllers -->
-	<script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
-	<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+<!-- master Anguar library files -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
-	
-	<!-- OUR master app.js file -->
-	<script src="controller/app.js"></script>
+<!-- This is the Firebase script for use in all controllers -->
+<script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
+<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 
-	<!-- OUR controller files! -->
-	<script src="services/authService.js"></script>
-	<script src="controller/loginController.js"></script>
-	<script src="controller/profileController.js"></script>
-	<script src="controller/conversationController.js"></script>
-	
-	<script src="controller/navController.js"></script>
-	<script src="controller/createGroupController.js"></script>
-	<script src="controller/groupConversationController.js"></script>
-	<script src="controller/groupController.js"></script>
 
-	<link rel = "stylesheet" href = "style/conversation.css">
+<!-- OUR master app.js file -->
+<script src="controller/app.js"></script>
+
+<!-- OUR controller files! -->
+<script src="services/authService.js"></script>
+<script src="controller/loginController.js"></script>
+<script src="controller/profileController.js"></script>
+<script src="controller/conversationController.js"></script>
+
+<script src="controller/navController.js"></script>
+<script src="controller/createGroupController.js"></script>
+<script src="controller/groupConversationController.js"></script>
+<script src="controller/groupController.js"></script>
+
+<link rel = "stylesheet" href = "style/conversation.css">
 </html>
