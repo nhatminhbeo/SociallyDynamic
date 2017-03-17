@@ -33,7 +33,9 @@ h1, h2, h3 {
 #page-wrapper {
 	background: rgba(255,255,255,0.95);
 	border-radius: 20px; 
+	margin-top: 7%;
 }
+
 
 button {
 	-webkit-appearance: none; /* safari */

@@ -1,5 +1,4 @@
-
-<div class="login_button_margin">
+<div id="page-wrapper-login">
 <img href="/" src="images/studyr.png" style="width:40%;height:40%;"/>
 <div ng-hide="isLoggedIn">
 <div ng-show="isLogin" style="max-width: 200%; margin: 0; ">
@@ -10,10 +9,8 @@
 			<label for="passwordLogin">Password </label>
 			<input type="password" autocomplete="off" class="form-control" placeholder="Password" id="passwordLogin" ng-model="password"></input>
 			<br>
-			<div class="row">
 			<button type="submit" ng-click="signIn()" style="max-height: 10%; max-width: 50% ; margin: 0;">Sign In</button>
 			<button ng-click="changeForm()" style="max-height: 10%; max-width: 100%; float: right;">Don't have an account? Sign Up!</button>
-			</div>
 		</form>
 	</div>
 </div>
