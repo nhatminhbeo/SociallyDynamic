@@ -3,7 +3,7 @@ app.controller('loginController', ['$scope', 'authService', '$location', 'logged
 function($scope, authService, $location, 
 loggedIn, $http, $rootScope){
 
-
+	$rootScope.login_screen = true;
 	$rootScope.currentUser = loggedIn;
 	$rootScope.hello = "HELLO WORLD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 

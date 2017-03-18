@@ -1,79 +1,81 @@
-<br>
+<div id="page-wrapper">
+	<br>
 
-<div class="profile_pic">
-	<img src="images/profile.png" />
-</div>
-
-<div class="profile_info">
-
-	<div ng-show="DEBUG">
-		<button ng-click="changeView()">{{viewMode}}</button>
+	<div class="profile_pic">
+		<img src="images/profile.png" />
 	</div>
 
-	<h1>{{firstName}} {{lastName}}</h1>
+	<div class="profile_info">
 
-	<h3>{{major}}</h3>
-	<input type="text" class="form-control" placeholder="Search Majors" ng-model="majorFilter" ng-show="isEdit_major"/>
-	<ul class="list-group">
-		<a class="list-group-item profile_anchor" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity track by $index" ng-click="changeMajor(major)" ng-show="majorFilter">
-			{{major}}
-		</a>
-	</ul>
+		<div ng-show="DEBUG">
+			<button ng-click="changeView()">{{viewMode}}</button>
+		</div>
 
-	<div ng-hide="isSelf">
-		<button ng-click="addFriend()" ng-disabled="reqRec">{{friendBtn}}</button>
-	</div>
+		<h1>{{firstName}} {{lastName}}</h1>
 
-	<div ng-show="isSelf">
-		<button ng-click="modifyMajor()">{{majorBtn}}</button>
-	</div>
+		<h3>{{major}}</h3>
+		<input type="text" class="form-control" placeholder="Search Majors" ng-model="majorFilter" ng-show="isEdit_major"/>
+		<ul class="list-group">
+			<a class="list-group-item profile_anchor" ng-repeat="major in majors | filter:majorFilter | limitTo:quantity track by $index" ng-click="changeMajor(major)" ng-show="majorFilter">
+				{{major}}
+			</a>
+		</ul>
 
-	<h2>Class List</h2>
+		<div ng-hide="isSelf">
+			<button ng-click="addFriend()" ng-disabled="reqRec">{{friendBtn}}</button>
+		</div>
 
-	<div class="profile_list" ng-repeat="(classkey, classvalue) in classList">
-		<p class="classList">{{classkey}}<button ng-click="deleteClass(classkey)" ng-show="isEdit_classList">&times;</button></p>
-	</div>
-	
-	<input type="text" class="form-control" placeholder="Search Classes" ng-model="classFilter" ng-show="isEdit_classList"/>
-	<ul class="list-group">
-		<a class="list-group-item profile_anchor" ng-repeat="class in classes | filter:classFilter | limitTo:quantity track by $index" ng-click="addClass(class)" ng-show="classFilter">
-			{{class}}
-		</a>
-	</ul>
+		<div ng-show="isSelf">
+			<button ng-click="modifyMajor()">{{majorBtn}}</button>
+		</div>
 
-	<div ng-show="isSelf">
-		<button ng-click="modifyClassList()">{{classListBtn}}</button>	
-	</div>
+		<h2>Class List</h2>
 
-	<h2>User Bio</h2>
+		<div class="profile_list" ng-repeat="(classkey, classvalue) in classList">
+			<p class="classList">{{classkey}}<button ng-click="deleteClass(classkey)" ng-show="isEdit_classList">&times;</button></p>
+		</div>
+		
+		<input type="text" class="form-control" placeholder="Search Classes" ng-model="classFilter" ng-show="isEdit_classList"/>
+		<ul class="list-group">
+			<a class="list-group-item profile_anchor" ng-repeat="class in classes | filter:classFilter | limitTo:quantity track by $index" ng-click="addClass(class)" ng-show="classFilter">
+				{{class}}
+			</a>
+		</ul>
 
-	<textarea id="userBio" disabled="true" rows="8" ng-model="userBio">{{userBio}}</textarea>
-	<div ng-show="isSelf">
-		<button ng-click="modifyUserBio()">{{userBioBtn}}</button>	
-	</div>
-	
-	<h2>Study Habits</h2>
+		<div ng-show="isSelf">
+			<button ng-click="modifyClassList()">{{classListBtn}}</button>	
+		</div>
 
-	<div class="profile_list" ng-repeat="(habitkey, habitvalue) in studyHabit">
-		<p class="studyHabit">{{habitkey}}<button ng-click="deleteStudyHabit(habitkey)" ng-show="isEdit_studyHabit">&times;</button></p>
-	</div>
+		<h2>User Bio</h2>
 
-	<input type="text" class="form-control" placeholder="Search Study Habits" ng-model="studyHabitFilter" ng-show="isEdit_studyHabit" />
-	<ul class="list-group">
-		<a class="list-group-item profile_anchor" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity track by $index" ng-click="addStudyHabit(habit)" ng-show="studyHabitFilter">
-			{{habit}}
-		</a>
-	</ul>
+		<textarea id="userBio" disabled="true" rows="8" ng-model="userBio">{{userBio}}</textarea>
+		<div ng-show="isSelf">
+			<button ng-click="modifyUserBio()">{{userBioBtn}}</button>	
+		</div>
+		
+		<h2>Study Habits</h2>
 
-	<div ng-show="isSelf">
-		<button ng-click="modifyStudyHabit()">{{studyHabitBtn}}</button>	
-	</div>
+		<div class="profile_list" ng-repeat="(habitkey, habitvalue) in studyHabit">
+			<p class="studyHabit">{{habitkey}}<button ng-click="deleteStudyHabit(habitkey)" ng-show="isEdit_studyHabit">&times;</button></p>
+		</div>
 
-	<br/>
-	
-	<div id="profile_delete_button" ng-show="isSelf">
+		<input type="text" class="form-control" placeholder="Search Study Habits" ng-model="studyHabitFilter" ng-show="isEdit_studyHabit" />
+		<ul class="list-group">
+			<a class="list-group-item profile_anchor" ng-repeat="habit in studyHabits | filter:studyHabitFilter | limitTo:quantity track by $index" ng-click="addStudyHabit(habit)" ng-show="studyHabitFilter">
+				{{habit}}
+			</a>
+		</ul>
+
+		<div ng-show="isSelf">
+			<button ng-click="modifyStudyHabit()">{{studyHabitBtn}}</button>	
+		</div>
+
 		<br/>
-		<button ng-hide="true" ng-click="deleteUserProfile()">Delete Profile</button>	
+		
+		<div id="profile_delete_button" ng-show="isSelf">
+			<br/>
+			<button ng-hide="true" ng-click="deleteUserProfile()">Delete Profile</button>	
+		</div>
+		
 	</div>
-	
 </div>

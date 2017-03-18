@@ -1,3 +1,4 @@
+/*
 body{
 	margin: 40px auto;
 	max-width: 720px;
@@ -9,6 +10,21 @@ body{
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 }
+*/
+body{
+	margin: 40px auto;
+	max-width: 720px;
+	line-height: 1.6;
+	font-size: 18px;
+	color: #444;
+	padding: 0 10px;
+	background-image: url("/images/geisel_blue_blur.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+    background-position: center; 
+}
+
 
 h1, h2, h3 {
 	line-height:1.2;
@@ -16,7 +32,11 @@ h1, h2, h3 {
 
 #page-wrapper {
 	background: rgba(255,255,255,0.95);
+	border-radius: 20px; 
+
+	margin-top: 7%;
 }
+
 
 button {
 	-webkit-appearance: none; /* safari */
