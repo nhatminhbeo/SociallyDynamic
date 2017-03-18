@@ -1,60 +1,62 @@
-<!--<h1>Hello from conversation.html and {{conversationController}}</h1>-->
+<div id="page-wrapper">
+	<!--<h1>Hello from conversation.html and {{conversationController}}</h1>-->
 
 
-<!-- top bar displays name of person user is talking to-->
+	<!-- top bar displays name of person user is talking to-->
 
-<div id = "header">
-   <h1 style= "text-align: center; font-size: 120%;">{{GroupName}}</h1>
-</div>
+	<div id = "header">
+		<h1 style= "text-align: center; font-size: 120%;">{{GroupName}}</h1>
+	</div>
 
 
-<!--body of page-->
-<div>
-	<!-- chat bubble views start -->
-	<div id="scroll" class="scroll" style= scroll>
-		<ul style = "list-style-type: none"> 
-			<div ng-show = "showButton" class="convo_center">
-				<button ng-click="showMoreMessages()">Show More Messages</button>
-			</div>
-			<div ng-repeat = "message in messages track by $index"> 
+	<!--body of page-->
+	<div>
+		<!-- chat bubble views start -->
+		<div id="scroll" class="scroll" style= scroll>
+			<ul style = "list-style-type: none"> 
+				<div ng-show = "showButton" class="convo_center">
+					<button ng-click="showMoreMessages()">Show More Messages</button>
+				</div>
+				<div ng-repeat = "message in messages track by $index"> 
 
-				<div class = "row"  >
-					<div class = "col-sm-12">
+					<div class = "row"  >
+						<div class = "col-sm-12">
 
-						<div ng-if = "message.Sender == currentUserid">
-							<p>
-								<div class = "user_speech"> {{message.Content}}</div>
-							</p>
-						</div>
-						<div ng-if = "message.Sender != currentUserid">
-							<p>
-								<div class = "friend_speech"> {{message.SenderFirstName}} {{message.SenderLastName}}: {{message.Content}} </div>
-							</p>
+							<div ng-if = "message.Sender == currentUserid">
+								<p>
+									<div class = "user_speech"> {{message.Content}}</div>
+								</p>
+							</div>
+							<div ng-if = "message.Sender != currentUserid">
+								<p>
+									<div class = "friend_speech"> {{message.SenderFirstName}} {{message.SenderLastName}}: {{message.Content}} </div>
+								</p>
+							</div>
 						</div>
 					</div>
+					
 				</div>
-				
-			</div>
-		</ul>
+			</ul>
+		</div>
+		<!-- chat bubble views end -->
+
+		<!-- message boxes start-->
 	</div>
-<!-- chat bubble views end -->
+	<!--end of body -->
 
-<!-- message boxes start-->
+
+	<div id = "footer">
+
+		<form>
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Type a message..." ng-model = "message">
+				<div class="input-group-btn">
+					<button ng-click="userSendMessage()" class="btn btn-default" >Send</button>
+				</div>
+			</div>
+		</form>
+	</div> <!-- message box ends -->
+
+
+	<scr></scr>
 </div>
-<!--end of body -->
-
-
-<div id = "footer">
-
-  <form>
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Type a message..." ng-model = "message">
-      <div class="input-group-btn">
-        <button ng-click="userSendMessage()" class="btn btn-default" >Send</button>
-      </div>
-    </div>
-  </form>
- </div> <!-- message box ends -->
-
-
-<scr></scr>
