@@ -288,11 +288,11 @@ $http, currentUser, $routeParams) {
 
     };
 
-    $scope.manageFriend = function() {
+    $scope.addFriend = function() {
 
         // Add Frend 
         if (DEBUG) {
-            console.log("manageFriend() called");
+            console.log("addFriend() called");
         }
 
         // HTTP GET request to check if already friends
