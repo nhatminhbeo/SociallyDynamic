@@ -7,7 +7,7 @@
 
 // Initialize Mongodb + Mongoose
 var mongoose = require('mongoose');
-var dev_uri = "mongodb://SociallyDynamic:SociallyDynamic@ds135700.mlab.com:35700/sociallydynamic_test";
+var dev_uri = "mongodb://SociallyDynamic:SociallyDynamic@ds137040.mlab.com:37040/sociallydynamic2";
 mongoose.connect(dev_uri);
 Promise = require('bluebird');
 mongoose.Promise = Promise;

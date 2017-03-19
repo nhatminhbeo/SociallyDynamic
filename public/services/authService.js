@@ -2,12 +2,12 @@
 
 app.service('authService', ['$firebaseAuth', function($firebaseAuth) {
 	var config = {
-		apiKey: "AIzaSyAjoi07KYEJhZcu718XD-6lf-H6-LJg4T0",
-	    authDomain: "sdauth2.firebaseapp.com",
-	    databaseURL: "https://sdauth2.firebaseio.com",
-	    storageBucket: "sdauth2.appspot.com",
-	    messagingSenderId: "594282898711"
-	};
+	    apiKey: "AIzaSyASDCWsaRijj1cV4NR9pfo4NZNTp0oFt-A",
+	    authDomain: "sdauth3-de1e4.firebaseapp.com",
+	    databaseURL: "https://sdauth3-de1e4.firebaseio.com",
+	    storageBucket: "sdauth3-de1e4.appspot.com",
+	    messagingSenderId: "240896055276"
+	  };
 	firebase.initializeApp(config);
 	this.Auth = $firebaseAuth();
 	this.testvar2 = "testvar2 in auth.js";
