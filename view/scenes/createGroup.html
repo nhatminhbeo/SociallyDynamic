@@ -2,15 +2,15 @@
 
 <!-- div to display new group form-->
 <div id="page-wrapper">
-<div class="groupForm">
+    <div class="groupForm">
 
-<h1> Create Study Group </h1>
+        <h1> Create Study Group </h1>
 
-	<div class="create">
+        <div class="create">
 
-		<!-- add group name -->
-        <label>Group Name</label>
-        <input type="text" class="form-control" placeholder="Group Name" ng-model="groupName"/>  
+          <!-- add group name -->
+          <label>Group Name</label>
+          <input type="text" class="form-control" placeholder="Group Name" ng-model="groupName"/>  
 
         <!-- add group bio
         <label>About Group</label>
@@ -19,41 +19,41 @@
 
     <!-- add members -->
     <div class="row">
-    <div class="col-sm-6">
-    <label for="memberList">Add Members</label>
-    <input type="text" class="form-control" id="memberList" placeholder="Add Members" ng-model="friendsFilter">
+        <div class="col-sm-6">
+            <label for="memberList">Add Members</label>
+            <input type="text" class="form-control" id="memberList" placeholder="Add Members" ng-model="friendsFilter">
 
-    <!-- autocomplete contacts -->
-    <ul class="list-group">
-    
-	<!-- autocomplete filter -->  
-    <a class="list-group-item" ng-repeat="person in data | filter:{Name: friendsFilter} | limitTo:quantity track by $index" ng-show="friendsFilter" ng-click="addMembers(person._id, person.Name)">
-    	{{person.Name}}
-    </a>
- 
+            <!-- autocomplete contacts -->
+            <ul class="list-group">
+                
+               <!-- autocomplete filter -->  
+               <a class="list-group-item" ng-repeat="person in data | filter:{Name: friendsFilter} | limitTo:quantity track by $index" ng-show="friendsFilter" ng-click="addMembers(person._id, person.Name)">
+                   {{person.Name}}
+               </a>
+               
 
-    </ul>
-    </div>
+           </ul>
+       </div>
 
 
-    <!-- display inputs -->
-    <div class="col-sm-2"> </div>
-	<div class="col-sm-4">
-		<ul class="list-group">
-			<label>Selected Members</label>
-				<!-- get list of inputted members; also able to delete a member-->
-				<a class="list-group-item" ng-repeat="(memberkey,membervalue) in selectedMembers"
-				ng-click="deleteMembers(memberkey)">
-					{{membervalue}}
-				</a>
-		</ul>
-	</div>
-	</div>
-    
-    <!-- create group button -->
-    <div class="create-btn">
-        <button ng-model="stuff" class="btn btn-primary" type="button" style="float:right" ng-click="createGroup()"> Create </button>
-        <button class="btn btn-primary" ng-click="cancel()"> Cancel </button>
-    </div>
+       <!-- display inputs -->
+       <div class="col-sm-2"> </div>
+       <div class="col-sm-4">
+          <ul class="list-group">
+             <label>Selected Members</label>
+             <!-- get list of inputted members; also able to delete a member-->
+             <a class="list-group-item" ng-repeat="(memberkey,membervalue) in selectedMembers"
+             ng-click="deleteMembers(memberkey)">
+             {{membervalue}}
+         </a>
+     </ul>
+ </div>
+</div>
+
+<!-- create group button -->
+<div class="create-btn">
+    <button ng-model="stuff" class="btn btn-primary" type="button" style="float:right" ng-click="createGroup()"> Create </button>
+    <button class="btn btn-primary" ng-click="cancel()"> Cancel </button>
+</div>
 </div>
 </div>
